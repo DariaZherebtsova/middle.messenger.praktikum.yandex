@@ -1,0 +1,27 @@
+---
+title: Welcome from index.hbs
+stylesheets:
+  - index.scss
+  - ../../scss/chatList.scss
+  - ../../scss/preview.scss
+---
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>
+    Welcome
+  </title>
+
+  {{#block "styles"}}
+  {{#each stylesheets}}
+  <link href="{{this}}" rel="stylesheet" />
+  {{/each}}
+  {{/block}}
+</head>
+
+<body>
+  <h1>{{title}}</h1>
+  {{> chatList}}
+</body>
+</html>

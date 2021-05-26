@@ -1,0 +1,16 @@
+<section class='chat-list'>
+  <div class="chat-list__header">
+    <a href="./index.hbs">Профиль</a>
+  </div>
+  <div class="chat-list__search">
+    <input class="chat-list__search-input type="text" placeholder="Поиск">
+  </div>
+  <ul class="chat-list__preview-list">
+    {{#each chats}}
+    <li>
+      <hr>
+      {{> preview name=name lastMsg=lastMsg time=time}}
+    </li>
+    {{/each}}
+  </ul>
+</section>

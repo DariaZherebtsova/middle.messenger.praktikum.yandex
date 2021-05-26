@@ -1,0 +1,29 @@
+
+.chat-preview {
+    border: 1px solid rgb(128, 15, 15);
+    width: 200px;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .chat-preview__avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .chat-preview__content {
+    width: 100%;
+    border: 1px solid red;
+  }
+
+  .chat-preview__last-msg{
+    color: grey;
+  }
+
+  .chat-preview__last-msg-time{
+    width: 30px;
+    border: 1px solid red;
+    color: grey;
+    font-size: smaller;
+  }
