@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "parcel src/pages/main/index.hbs --no-cache",
-    "build": "parcel build src/pages/main/index.hbs --no-cache --no-source-maps --public-url ./"
+    "dev": "parcel src/pages/main/index.html --no-cache",
+    "build": "parcel build src/pages/main/index.html --no-cache --public-url ./"
   },
   "devDependencies": {
     "express": "^4.17.1",

@@ -1,3 +1,4 @@
+export const chatList = `
 <section class='chat-list'>
   <div class="chat-list__header">
     <a href="./index.hbs">Профиль</a>
@@ -9,8 +10,9 @@
     {{#each chats}}
     <li>
       <hr>
-      {{> preview name=name lastMsg=lastMsg time=time}}
+      {{> chatPreview name=name lastMsg=lastMsg time=time img=img}}
     </li>
     {{/each}}
   </ul>
 </section>
+`;

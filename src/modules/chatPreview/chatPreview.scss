@@ -1,6 +1,6 @@
 
 .chat-preview {
-    border: 1px solid rgb(128, 15, 15);
+    // border: 1px solid rgb(128, 15, 15);
     width: 200px;
 
     display: flex;
@@ -14,7 +14,8 @@
 
   .chat-preview__content {
     width: 100%;
-    border: 1px solid red;
+    margin-left: 8px;
+    // border: 1px solid red;
   }
 
   .chat-preview__last-msg{
@@ -23,7 +24,7 @@
 
   .chat-preview__last-msg-time{
     width: 30px;
-    border: 1px solid red;
+    // border: 1px solid red;
     color: grey;
     font-size: smaller;
   }
