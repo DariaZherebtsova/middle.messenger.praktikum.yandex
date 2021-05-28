@@ -1,7 +1,4 @@
-import {mainTempl} from './index.hbs.js';
-import {chatList} from '../../modules/chatList/chatList.hbs.js';
-import {chatPreview} from '../../modules/chatPreview/chatPreview.hbs.js';
-import testImg from '../../../static/img/no_img_circle.svg';
+import {mainTempl} from './authorization.hbs.js';
 
 const chatData = {
   chats: [
@@ -9,23 +6,18 @@ const chatData = {
       "name": "Илья",
       "lastMsg": "Привет",
       "time": "12:15",
-      "img": `${testImg}`
     },
     {
       "name": "Олег",
       "lastMsg": "До скорого",
       "time": "Пн",
-      "img": `${testImg}`
     },
   ],
   prefix: "Hello",
 }
 
 
-console.log('--testImg--', testImg);
-
-Handlebars.registerPartial("chatList", chatList);
-Handlebars.registerPartial("chatPreview", chatPreview);
+console.log('--mainTempl--', mainTempl);
 
 var template = Handlebars.compile(mainTempl);
 
