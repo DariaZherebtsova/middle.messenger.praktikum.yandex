@@ -1,30 +1,25 @@
 
 .chat-preview {
-    // border: 1px solid rgb(128, 15, 15);
-    width: 200px;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+}
 
-    display: flex;
-    justify-content: space-between;
-  }
+.chat-preview__avatar {
+  width: 47px;
+  height: 47px;
+}
 
-  .chat-preview__avatar {
-    width: 50px;
-    height: 50px;
-  }
+.chat-preview__content {
+  width: 100%;
+  padding: 10px;
+}
 
-  .chat-preview__content {
-    width: 100%;
-    margin-left: 8px;
-    // border: 1px solid red;
-  }
+.chat-preview__aside {
+  min-width: 40px;
+}
 
-  .chat-preview__last-msg{
-    color: grey;
-  }
-
-  .chat-preview__last-msg-time{
-    width: 30px;
-    // border: 1px solid red;
-    color: grey;
-    font-size: smaller;
-  }
+.chat-preview__chat-name {
+  margin-bottom: 4px;
+}

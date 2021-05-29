@@ -1,28 +1,30 @@
 .chat-list {
-  // border: 1px solid red;
   float: left;
-	width: 250px;
+  min-width: 310px;
+  padding: 10px;
+  border-right: 2px solid $light-grey;
 }
 
 .chat-list__header {
-    text-align: right;
-    margin-bottom: 10px;
-  }
+  text-align: right;
+  margin-bottom: 10px;
+}
 
-  .chat-list__search {
-    text-align: center;
-  }
+.chat-list__search {
+  text-align: center;
+}
 
-  .chat-list__search-input {
-    background-color: #EFEFEF;
-    border: transparent;
-    border-radius: 7px;
-    text-align: center;
-    width: 80%;
-    padding: 5px;
-  }
+.chat-list__search-input {
+  height: 32px;
+  background-color: $light-grey;
+  border: transparent;
+  border-radius: 7px;
+  text-align: center;
+  width: 80%;
+  padding: 5px;
+}
 
-  .chat-list__preview-list{
-    list-style-type: none;
-    padding: 0;
-  }
+.chat-list__preview-list{
+  list-style-type: none;
+  padding: 0;
+} 

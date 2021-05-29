@@ -4,10 +4,11 @@
   "description": "messenger",
   "main": "index.js",
   "scripts": {
+    "serve": "node server.js",
     "start": "parcel build src/pages/index.html src/pages/*/*.html --no-cache --public-url ./ && node server.js",
     "dev_main": "parcel src/pages/main/index.html --no-cache",
     "dev": "parcel src/pages/*.html --no-cache",
-    "build": "parcel build src/pages/index.html src/pages/*/*.html --no-cache --public-url ./"
+    "build": "parcel build src/pages/*.html --no-cache --public-url ./"
   },
   "devDependencies": {
     "express": "^4.17.1",
