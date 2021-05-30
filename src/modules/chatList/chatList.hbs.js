@@ -1,7 +1,7 @@
 export const chatList = `
 <section class='chat-list'>
   <div class="chat-list__header">
-    <a class="custom-link" href="./authorization.html">Профиль ❯</a>
+    <a class="custom-link" href="./profile.html">Профиль ❯</a>
   </div>
   <div class="chat-list__search">
     <input class="chat-list__search-input type="text" placeholder="Поиск">
