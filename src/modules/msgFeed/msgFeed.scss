@@ -41,9 +41,24 @@
 
   .msg-feed__feed {
     height: 100%;
+    padding: 10px;
+  }
+
+  .msg-feed__date {
+    text-align: center;
+    padding: 15px;
+    color: $grey;
   }
 
   .msg-feed__msg {
+    background: $light-grey;
+    border-radius: 15px;
+    border-top-left-radius: 1px;
+    max-width: 200px;
+    padding: 10px;
+  }
+
+  .msg-feed__msg-input {
     height: 52px;
     display: flex;
     justify-content: space-between;

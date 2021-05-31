@@ -2,6 +2,8 @@ export const chatList = `
 <section class='chat-list'>
   <div class="chat-list__header">
     <a class="custom-link" href="./authorization.html">❮ Вход</a>
+    <a class="custom-link" href="./404.html">404</a>
+    <a class="custom-link" href="./500.html">500</a>
     <a class="custom-link" href="./profile.html">Профиль ❯</a>
   </div>
   <div class="chat-list__search">

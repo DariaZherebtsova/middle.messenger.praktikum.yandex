@@ -1,6 +1,7 @@
 import {loginFormTmpl} from '../../layouts/loginForm/loginForm.hbs';
 
 const data = {
+  header: "Вход",
   fields: [
     {
       "label": "Логин",
@@ -17,17 +18,14 @@ const data = {
   ]
 }
 
-console.log('--loginFormTmpl--', loginFormTmpl);
-
 Handlebars.registerHelper("submitButton", function() {
-  return new Handlebars.SafeString('<button class="custom-button">Зарегистрироваться</button>');
+  return new Handlebars.SafeString('<button class="custom-button">Авторизоваться</button>');
 });
 Handlebars.registerHelper("loginLink", function() {
   return new Handlebars.SafeString('<a href="./registration.html">Нет аккаунта?</a>');
 });
 var template = Handlebars.compile(loginFormTmpl);
 var html = template(data);
-console.log('html', html);
 document.getElementById('root').innerHTML = html;
 
 let loginForm = document.getElementById('loginForm');

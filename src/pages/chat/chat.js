@@ -10,13 +10,13 @@ const chatData = {
   chats: [
     {
       "name": "Илья",
-      "lastMsg": "Слова - это капкан. Если ты неверно понял собеседника,то ...",
+      "lastMsg": "В траве сидел кузнечик ...",
       "time": "12:15",
       "img": `${noImgAvatar}`
     },
     {
       "name": "Олег",
-      "lastMsg": "Если заблудишься в лабиринте - бей зеркала. Выходи на свет...",
+      "lastMsg": "Представьте себе, представьте себе Совсем как огуречик...",
       "time": "Пн",
       "img": `${noImgAvatar}`
     },
@@ -25,20 +25,16 @@ const chatData = {
     test: 'testtt',
     attachBtnImg: `${attachBtnImg}`,
     sendBtnImg: `${sendBtnImg}`,
-    noImgAvatar: `${noImgAvatar}`
+    noImgAvatar: `${noImgAvatar}`,
+    name: "Илья",
+    date: "31 июня",
+    msg: "В траве сидел кузнечик, В траве сидел кузнечик, Совсем как огуречик Зелененький он был.",
   },
 }
-
-
-console.log('--sendBtnImg--', sendBtnImg);
 
 Handlebars.registerPartial("chatList", chatList);
 Handlebars.registerPartial("chatPreview", chatPreview);
 Handlebars.registerPartial("msgFeed", msgFeed);
-
 var template = Handlebars.compile(mainTempl);
-
 var html = template(chatData);
-console.log('html', html);
 document.getElementById('root').innerHTML = html;
-console.log('end');
