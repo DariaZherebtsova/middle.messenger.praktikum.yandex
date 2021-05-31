@@ -4,21 +4,26 @@ export const profileTempl = `
       <button class="profile__back-btn"><img src="{{backBtnImg}}"></button>
     </nav>
     <main class="profile__main">
-      <div class="profile__data">
-        <div class="profile__avatar">
-          <img src="{{noImgAvatarLarge}}">
+      <form id="profileForm">
+        <div class="profile__data">
+          <div class="profile__avatar">
+            <input type="image" name="avatar" src="{{noImgAvatarLarge}}" width="130">
+          </div>
+          <div class="profile__name">
+            Vano
+          </div>
+          {{#each fields}}
+          <div class="profile__input">
+            <label>{{label}}</label>
+            <input name="{{name}}" type="{{type}}" value="{{value}}"> 
+          </div>
+          {{/each}}
         </div>
-        <div class="profile__name">
-          Vano
+        <div class="profile__btn-box">
+          {{#submitButton}}{{body}}{{/submitButton}}
         </div>
-        {{#each fields}}
-        <div class="profile__input">
-          <label>{{label}}</label>
-          <input name="{{name}}" type="{{type}}" value="{{value}}"> 
-        </div>
-        {{/each}}
-      </div>
-      <div class="profile__menu">
+      </form>
+      <div class="profile__btn-box">
         {{#buttons}}{{body}}{{/buttons}}
       </div>
     </main>

@@ -8,7 +8,7 @@ body {
   justify-content: center;
 }
 
-.authorization-form {
+.login-form {
   width: 340px;
   height: 460px;
   background: $white;
@@ -17,7 +17,7 @@ body {
   padding-top: 20px;
 }
 
-.authorization-form__header {
+.login-form__header {
   text-align: center;
   font-family: Arial;
   font-size: 20px;
@@ -25,20 +25,20 @@ body {
   margin-bottom: 60px;
 }
 
-.authorization-form__form {
+.login-form__form {
   width: 84%;
   margin: auto;
 }
 
-.authorization-form__button-box {
+.login-form__button-box {
   margin-top: 140px;
 }
 
-.authorization-form__registration-link {
+.login-form__login-link {
   margin-top: 10px;
   text-align: center;
-}
 
-.authorization-form__registration-link a {
-  color: rgb(33, 136, 55);
+  a {
+    color: $green;
+  }
 }

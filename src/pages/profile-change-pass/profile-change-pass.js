@@ -13,7 +13,7 @@ const data = {
       "value": "111",
     },
     {
-      "label": "Новый парол",
+      "label": "Новый пароль",
       "name": "newPassword",
       "type": "password",
       "value": "1234",
@@ -27,16 +27,21 @@ const data = {
   ]
 }
 
-Handlebars.registerHelper("buttons", function() {
+Handlebars.registerHelper("submitButton", function() {
   return new Handlebars.SafeString('<button class="custom-button" type="submit">Сохранить</button>');
 });
-
-console.log('--profileTempl--', profileTempl);
-
 var template = Handlebars.compile(profileTempl);
-
 var html = template(data);
-console.log('html', html);
-// console.log('root', document.getElementById('root'));
 document.getElementById('root').innerHTML = html;
-console.log('end');
+
+let profileForm = document.getElementById('profileForm');
+profileForm.onsubmit = (e) => {
+    e.preventDefault();
+    let formData = new FormData(profileForm);
+		let result = {
+			oldPassword: formData.get('oldPassword'),
+			newPassword: formData.get('newPassword'),
+      newPasswordRepeat: formData.get('newPasswordRepeat'),
+		}
+    console.log('profileForm', result);
+  }

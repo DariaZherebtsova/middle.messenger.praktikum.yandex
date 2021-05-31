@@ -1,8 +1,11 @@
 $grey: #999999;
+$middle-grey:#cccbcb;
 $light-grey: #EFEFEF;
 $green: #3ea14c;
+$green-hover: #186328;
 $light-green: #a8e4b0;
 $white: #FFFFFF;
+$red: #e22323;
 
 * {
   box-sizing: border-box;
@@ -12,6 +15,14 @@ $white: #FFFFFF;
 hr {
   border: 1px solid $light-green;
   width: 100%;
+}
+
+input:disabled {
+  background-color: transparent;
+}
+
+input:focus {
+  outline: 0;
 }
 
 .font-size-smaller {
@@ -34,28 +45,33 @@ hr {
 .custom-input {
   width: 100%;
   margin-bottom: 10px;
-}
 
-.custom-input label {
-  display: block;
-  color: $grey;
-  font-size: smaller;
-}
+  label {
+    display: block;
+    color: $grey;
+    font-size: smaller;
+  }
+  
+  input {
+    border: none;
+    border-bottom: 1px solid $green; 
+    width: 100%;
 
-.custom-input input {
-  border: none;
-  border-bottom: 1px solid $green; 
-  width: 100%;
+    &:focus {
+      outline: 0;
+    }
+  }
 }
-.custom-input input:focus {
-  outline: 0;
-}
-
-.custom-button{
-  width: 100%;
+ 
+.custom-button {
+  width: 285px;
   height: 37px;
   background: $green;
   border: none;
   border-radius: 8px;
   color: $white;
+
+  &:hover {
+    background: $green-hover;
+  }
 }

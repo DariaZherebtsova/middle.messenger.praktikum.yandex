@@ -39,23 +39,31 @@ const data = {
     {
       "label": "Телефон",
       "name": "phone",
-      "value": "+7 (909) 967 30 30",
+      "value": "+7 (909) 999 99 99",
       "type": "phone",
     },
   ]
 }
 
-Handlebars.registerHelper("buttons", function() {
-  return new Handlebars.SafeString(
-    `<button class="profile__btn btn-change" onclick="document.location='./profile-change-data.html'">Изменить данные</button>
-     <button class="profile__btn btn-change" onclick="document.location='./profile-change-pass.html'">Изменить пароль</button>
-     <button class="profile__btn btn-exit">Выйти</button>`);
+Handlebars.registerHelper("submitButton", function() {
+  return new Handlebars.SafeString('<button class="custom-button" type="submit">Сохранить</button>');
 });
 var template = Handlebars.compile(profileTempl);
 var html = template(data);
 document.getElementById('root').innerHTML = html;
 
-var inputs = document.getElementsByTagName("input");
-for (var i = 0; i < inputs.length; i++) {
-  inputs[i].disabled = true;
-}
+let profileForm = document.getElementById('profileForm');
+profileForm.onsubmit = (e) => {
+    e.preventDefault();
+    let formData = new FormData(profileForm);
+		let result = {
+			first_name: formData.get('first_name'),
+			second_name: formData.get('second_name'),
+      display_name: formData.get('display_name'),
+      login: formData.get('login'),
+			email: formData.get('email'),
+			phone: formData.get('phone'),
+		}
+    console.log('profileForm', result);
+     
+  };

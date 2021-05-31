@@ -1,28 +1,42 @@
-import {mainTempl} from './authorization.hbs.js';
+import {loginFormTmpl} from '../../layouts/loginForm/loginForm.hbs';
 
-const chatData = {
-  chats: [
+const data = {
+  fields: [
     {
-      "name": "Илья",
-      "lastMsg": "Привет",
-      "time": "12:15",
+      "label": "Логин",
+      "name": "login",
+      "value": "vano2021",
+      "type": "text",
     },
     {
-      "name": "Олег",
-      "lastMsg": "До скорого",
-      "time": "Пн",
+      "label": "Пароль",
+      "name": "password",
+      "type": "password",
+      "value": "1234",
     },
-  ],
-  prefix: "Hello",
+  ]
 }
 
+console.log('--loginFormTmpl--', loginFormTmpl);
 
-console.log('--mainTempl--', mainTempl);
-
-var template = Handlebars.compile(mainTempl);
-
-var html = template(chatData);
+Handlebars.registerHelper("submitButton", function() {
+  return new Handlebars.SafeString('<button class="custom-button">Зарегистрироваться</button>');
+});
+Handlebars.registerHelper("loginLink", function() {
+  return new Handlebars.SafeString('<a href="./registration.html">Нет аккаунта?</a>');
+});
+var template = Handlebars.compile(loginFormTmpl);
+var html = template(data);
 console.log('html', html);
-// console.log('root', document.getElementById('root'));
 document.getElementById('root').innerHTML = html;
-console.log('end');
+
+let loginForm = document.getElementById('loginForm');
+loginForm.onsubmit = (e) => {
+    e.preventDefault();
+    let formData = new FormData(loginForm);
+		let result = {
+			login: formData.get('login'),
+			password: formData.get('password'),
+		}
+    console.log('loginForm', result);
+  }

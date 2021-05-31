@@ -6,8 +6,9 @@
 }
 
 .chat-list__header {
-  text-align: right;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .chat-list__search {
