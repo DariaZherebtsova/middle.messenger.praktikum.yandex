@@ -32,6 +32,7 @@ const chatData = {
   },
 }
 
+const Handlebars = require("handlebars");
 Handlebars.registerPartial("chatList", chatList);
 Handlebars.registerPartial("chatPreview", chatPreview);
 Handlebars.registerPartial("msgFeed", msgFeed);

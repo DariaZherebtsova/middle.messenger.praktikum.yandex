@@ -5,6 +5,7 @@ const data = {
   msg: "Мы уже фиксим",
 }
 
+const Handlebars = require("handlebars");
 var template = Handlebars.compile(errorPageTempl);
 var html = template(data);
 document.getElementById('root').innerHTML = html;

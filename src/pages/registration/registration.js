@@ -48,6 +48,7 @@ const data = {
   ]
 }
 
+const Handlebars = require("handlebars");
 Handlebars.registerHelper("submitButton", function() {
   return new Handlebars.SafeString('<button class="custom-button">Зарегистрироваться</button>');
 });

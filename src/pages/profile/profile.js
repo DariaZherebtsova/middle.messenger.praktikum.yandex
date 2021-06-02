@@ -45,6 +45,7 @@ const data = {
   ]
 }
 
+const Handlebars = require("handlebars");
 Handlebars.registerHelper("buttons", function() {
   return new Handlebars.SafeString(
     `<button class="profile__btn btn-change" onclick="document.location='./profile-change-data.html'">Изменить данные</button>
