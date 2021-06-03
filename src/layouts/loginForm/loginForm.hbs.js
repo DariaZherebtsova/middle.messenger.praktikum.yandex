@@ -15,7 +15,7 @@ export const loginFormTmpl = `
         <div class="login-form__button-box">
           {{#submitButton}}{{body}}{{/submitButton}}
         </div>
-        <div class="login-form__login-link">
+        <div class="login-form__link-box">
           {{#loginLink}}{{body}}{{/loginLink}}
         </div>
       </div>

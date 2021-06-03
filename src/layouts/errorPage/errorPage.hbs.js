@@ -1,8 +1,8 @@
 export const errorPageTempl = `
-<div class="errorPage-wrapper">
-  <main class="errorPage">
-    <div class="errorPage__code">{{code}}</div>
-    <div class="errorPage__msg">{{msg}}</div>
-    <a class="errorPage__link" href="./index.html">Назад к чатам</a>
+<div class="error-page-wrapper">
+  <main class="error-page">
+    <div class="error-page__code">{{code}}</div>
+    <div class="error-page__msg">{{msg}}</div>
+    <a class="error-page__link" href="./index.html">Назад к чатам</a>
   </main>
 </div>`

@@ -1,41 +1,33 @@
+import Handlebars from 'handlebars';
 import {loginFormTmpl} from '../../layouts/loginForm/loginForm.hbs';
+import getFormData from '../../utils/getFormData';
 
 const data = {
-  header: "Вход",
+  header: 'Вход',
   fields: [
     {
-      "label": "Логин",
-      "name": "login",
-      "value": "vano2021",
-      "type": "text",
+      'label': 'Логин',
+      'name': 'login',
+      'value': 'vano2021',
+      'type': 'text',
     },
     {
-      "label": "Пароль",
-      "name": "password",
-      "type": "password",
-      "value": "1234",
+      'label': 'Пароль',
+      'name': 'password',
+      'type': 'password',
+      'value': '1234',
     },
   ]
 }
 
-const Handlebars = require("handlebars");
-Handlebars.registerHelper("submitButton", function() {
+Handlebars.registerHelper('submitButton', function() {
   return new Handlebars.SafeString('<button class="custom-button">Авторизоваться</button>');
 });
-Handlebars.registerHelper("loginLink", function() {
-  return new Handlebars.SafeString('<a href="./registration.html">Нет аккаунта?</a>');
+Handlebars.registerHelper('loginLink', function() {
+  return new Handlebars.SafeString('<a class="custom-link color-green" href="./registration.html">Нет аккаунта?</a>');
 });
-var template = Handlebars.compile(loginFormTmpl);
-var html = template(data);
+const template = Handlebars.compile(loginFormTmpl);
+const html = template(data);
 document.getElementById('root').innerHTML = html;
 
-let loginForm = document.getElementById('loginForm');
-loginForm.onsubmit = (e) => {
-    e.preventDefault();
-    let formData = new FormData(loginForm);
-		let result = {
-			login: formData.get('login'),
-			password: formData.get('password'),
-		}
-    console.log('loginForm', result);
-  }
+getFormData( { formId: 'loginForm', formFields: ['login', 'password']});

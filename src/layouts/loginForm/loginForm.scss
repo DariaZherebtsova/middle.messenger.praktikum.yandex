@@ -44,11 +44,9 @@ body {
   margin-top: 40px;
 }
 
-.login-form__login-link {
+.login-form__link-box {
   margin-top: 10px;
   text-align: center;
-  padding-bottom: 30px;
-  a {
-    color: $green;
-  }
+  padding-bottom: 30px; 
 }
+

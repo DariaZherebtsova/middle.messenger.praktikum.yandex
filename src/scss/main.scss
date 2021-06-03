@@ -1,8 +1,8 @@
 $grey: #999999;
-$middle-grey:#cccbcb;
+$middle-grey: #cccbcb;
 $light-grey: #EFEFEF;
 $green: #3ea14c;
-$green-hover: #186328;
+$green-hover: #1d7730;
 $light-green: #a8e4b0;
 $white: #FFFFFF;
 $red: #e22323;
@@ -22,7 +22,7 @@ input:disabled {
 }
 
 input:focus {
-  outline: 0;
+  outline: 1px dotted $white;
 }
 
 .font-size-smaller {
@@ -33,13 +33,16 @@ input:focus {
   color: $grey;
 }
 
+.color-green {
+  color: $green;
+}
+
 .custom-link {
-  color: $grey;
   text-decoration: none;
 }
 
 .custom-link:hover {
-  color: $green;
+  color: $green-hover;
 }
 
 .custom-input {

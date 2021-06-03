@@ -7,22 +7,20 @@
 }
 
 .profile__nav {
-  width: 64px;
-  height: 100%;
-  background: $light-grey;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 64px;
+  height: 100%;
+  background: $light-grey;
   border-right: 1px solid $middle-grey;
 }
 
 .profile__back-btn {
-  width: 32px;
-  height: 32px;
+  padding-left: 10px;
   text-align: center;
   border: none;
   background-color: transparent;
-  padding-left: 10px;
 }
 
 .profile__main {
@@ -32,26 +30,24 @@
 .profile__data {
   width: 510px;
   min-height: 350px;
-  margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px auto 0;
 }
 
 .profile__avatar{
-  text-align: center;
   padding-bottom: 20px;
+  text-align: center;
 }
 
 .profile__name{
+  margin-bottom: 30px;
   text-align: center;
   font-size: x-large;
-  margin-bottom: 30px;
 }
 
 .profile__input {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #cccbcb;
+  border-bottom: 1px solid $middle-grey;
 
   label {
     width: 200px;
@@ -72,22 +68,21 @@
 }
 
 .profile__btn-box {
+  margin: 30px auto 0;
   width: 510px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
   text-align: center;
 }
 
 .profile__btn {
   width: 100%;
-  border: none;
-  border-bottom: 1px solid #cccbcb;
-  background-color: transparent;
   height: 33px;
-  text-align: left;
   padding: 0;
+  text-align: left;
   color: $green;
+  border: none;
+  border-bottom: 1px solid $middle-grey;
+  background-color: transparent;
+  transition: color 0.3s ease-in;
 }
 
 .btn-change:hover {

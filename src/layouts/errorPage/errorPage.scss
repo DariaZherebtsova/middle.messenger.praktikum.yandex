@@ -1,32 +1,33 @@
 @import "../../scss/main.scss";
 
-.errorPage-wrapper {
+.error-page-wrapper {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.errorPage {
+.error-page {
   text-align: center;
 }
 
-.errorPage__code {
+.error-page__code {
   font-weight: 500;
   font-size: 40px;
   padding-bottom: 15px;
 }
 
-.errorPage__msg {
+.error-page__msg {
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 60px;
 }
 
-.errorPage__link {
+.error-page__link {
   font-size: 11px;
   color: $green;
   text-decoration: none;
+  transition: color 0.3s ease-in;
   &:hover {
     color: $green-hover;
   }

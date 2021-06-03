@@ -1,7 +1,7 @@
 export const profileTempl = `
 <div class="profile-wrapper">
     <nav class="profile__nav">
-      <button class="profile__back-btn"><img src="{{backBtnImg}}"></button>
+      <button class="profile__back-btn" onclick="document.location='./index.html'"><img src="{{backBtnImg}}"></button>
     </nav>
     <main class="profile__main">
       <form id="profileForm">
