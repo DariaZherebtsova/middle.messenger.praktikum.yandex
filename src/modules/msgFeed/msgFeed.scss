@@ -1,0 +1,88 @@
+  .msg-feed{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .msg-feed__header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .msg-feed__avatar img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .msg-feed__name {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .msg-feed__header__menu {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .msg-feed__header__menu a {
+    width: 3px;
+    height: 15px;
+    background: url(../../../static/img/menu.png) no-repeat;
+  }
+
+  .msg-feed__feed {
+    height: 100%;
+    padding: 10px;
+  }
+
+  .msg-feed__date {
+    text-align: center;
+    padding: 15px;
+    color: $grey;
+  }
+
+  .msg-feed__msg {
+    background: $light-grey;
+    border-radius: 15px;
+    border-top-left-radius: 1px;
+    max-width: 200px;
+    padding: 10px;
+  }
+
+  .msg-feed__msg-input {
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .msg-feed__input {
+    width: 100%;
+    border-color: transparent;
+    border-radius: 30px;
+    background-color: $light-grey;
+  }
+
+  .msg-feed__attach-btn {
+    border: none;
+    background-color: transparent;
+    padding-left: 0;
+  }
+
+  .msg-feed__send-btn {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    padding-left: 10px;
+  }

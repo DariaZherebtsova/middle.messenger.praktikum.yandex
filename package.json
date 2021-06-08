@@ -1,0 +1,22 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "messenger",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node server.js",
+    "start": "parcel build src/pages/*.html --no-cache --public-url ./ && node server.js",
+    "build": "parcel build src/pages/*.html --no-cache --public-url ./"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.34.0"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

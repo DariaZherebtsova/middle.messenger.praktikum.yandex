@@ -1,0 +1,25 @@
+
+.chat-preview {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-preview__avatar {
+  width: 47px;
+  height: 47px;
+}
+
+.chat-preview__content {
+  width: 100%;
+  padding: 10px;
+}
+
+.chat-preview__aside {
+  min-width: 40px;
+}
+
+.chat-preview__chat-name {
+  margin-bottom: 4px;
+}

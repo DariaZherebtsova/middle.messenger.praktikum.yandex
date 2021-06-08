@@ -1,0 +1,11 @@
+@import "../../scss/main.scss";
+@import "../../modules/chatList/chatList.scss";
+@import "../../modules/chatPreview/chatPreview.scss";
+@import "../../modules/msgFeed/msgFeed.scss";
+
+.main-wrapper { 
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
+
