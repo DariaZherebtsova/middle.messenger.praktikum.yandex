@@ -27,4 +27,4 @@ export const profileTempl = `
         {{#buttons}}{{body}}{{/buttons}}
       </div>
     </main>
-  </div>`
+  </div>`;

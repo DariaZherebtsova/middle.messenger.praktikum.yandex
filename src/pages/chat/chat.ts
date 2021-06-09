@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
-import {mainTempl} from './chat.hbs.js';
-import {chatList} from '../../modules/chatList/chatList.hbs.js';
-import {chatPreview} from '../../modules/chatPreview/chatPreview.hbs.js';
-import {msgFeed} from '../../modules/msgFeed/msgFeed.hbs.js';
+import { mainTempl } from './chat.hbs';
+import { chatList } from '../../modules/chatList/chatList.hbs';
+import { chatPreview } from '../../modules/chatPreview/chatPreview.hbs';
+import { msgFeed } from '../../modules/msgFeed/msgFeed.hbs';
 import attachBtnImg from '../../../static/img/attach-btn.png';
 import sendBtnImg from '../../../static/img/send-btn.png';
 import noImgAvatar from '../../../static/img/no_img_circle.svg';
@@ -10,16 +10,16 @@ import noImgAvatar from '../../../static/img/no_img_circle.svg';
 const chatData = {
   chats: [
     {
-      'name': 'Илья',
-      'lastMsg': 'В траве сидел кузнечик ...',
-      'time': '12:15',
-      'img': `${noImgAvatar}`
+      name: 'Илья',
+      lastMsg: 'В траве сидел кузнечик ...',
+      time: '12:15',
+      img: `${noImgAvatar}`,
     },
     {
-      'name': 'Олег',
-      'lastMsg': 'Представьте себе, представьте себе Совсем как огуречик...',
-      'time': 'Пн',
-      'img': `${noImgAvatar}`
+      name: 'Олег',
+      lastMsg: 'Представьте себе, представьте себе Совсем как огуречик...',
+      time: 'Пн',
+      img: `${noImgAvatar}`,
     },
   ],
   msgFeedData: {
@@ -31,7 +31,7 @@ const chatData = {
     date: '31 июня',
     msg: 'В траве сидел кузнечик, В траве сидел кузнечик, Совсем как огуречик Зелененький он был.',
   },
-}
+};
 
 Handlebars.registerPartial('chatList', chatList);
 Handlebars.registerPartial('chatPreview', chatPreview);

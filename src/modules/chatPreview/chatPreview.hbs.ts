@@ -11,4 +11,4 @@ export const chatPreview = `
     <div class="font-size-smaller color-grey">{{time}}</div>
   </div>
 </div>
-`
+`;

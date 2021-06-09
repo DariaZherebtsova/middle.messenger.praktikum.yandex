@@ -20,4 +20,4 @@ export const msgFeed = `
     <input class="msg-feed__input" type="text" name="message">
     <button class="msg-feed__send-btn"><img src="{{msgFeedData.sendBtnImg}}"></button>
   </div>
-</section>`
+</section>`;

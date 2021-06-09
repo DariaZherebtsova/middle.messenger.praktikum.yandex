@@ -21,4 +21,4 @@ export const loginFormTmpl = `
       </div>
     </form>
   </div>
-</div>`
+</div>`;
