@@ -22,7 +22,7 @@ input:disabled {
 }
 
 input:focus {
-  outline: 1px dotted $white;
+  outline: 1px dotted $middle-grey;
 }
 
 .font-size-smaller {
@@ -60,10 +60,11 @@ input:focus {
     border-bottom: 1px solid $green; 
     width: 100%;
     padding-left: 0;
+  }
 
-    &:focus {
-      outline: 0;
-    }
+  span {
+    font-size: x-small;
+    color: $red;
   }
 }
  
