@@ -1,8 +1,6 @@
-
-export default function insertInDOM(query, block) {
+export default function insertInDOM(query: string, block): void {
   const root = document.querySelector(query);
-
-  // Можно завязаться на реализации вашего класса Block
-  root.appendChild(block.getContent());
-  return root;
+  if (root) {
+    root.appendChild(block.getWrapperElement());
+  }
 }

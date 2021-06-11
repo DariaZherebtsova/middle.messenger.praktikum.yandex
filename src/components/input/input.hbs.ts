@@ -1,5 +1,7 @@
 export const inputTmp = `
-  <label>{{label}}</label>
-  <input name="{{name}}" type="{{type}}" value="{{value}}">
-  <span class="error-message">{{error}}</span>
-`
+  <div class="input-wrapper">
+   <label>{{label}}</label>
+    <input name="{{name}}" type="{{type}}" value="{{value}}"> 
+  </div>
+  <p class="error-message">{{error}}</p>
+`;

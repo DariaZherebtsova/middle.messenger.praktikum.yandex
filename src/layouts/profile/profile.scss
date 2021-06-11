@@ -45,9 +45,12 @@
 }
 
 .profile__input {
-  display: flex;
-  justify-content: space-between;
   border-bottom: 1px solid $middle-grey;
+
+  .input-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
   label {
     width: 200px;
@@ -65,12 +68,24 @@
     height: 33px;
     color: $grey;
   }
+
+  .error-message{
+    font-size: x-small;
+    color: rgb(163, 15, 15);
+    text-align: end;
+    margin: 0;
+  }
 }
 
 .profile__btn-box {
   margin: 30px auto 0;
   width: 510px;
   text-align: center;
+}
+
+.submit-btn-box {
+  display: flex;
+  justify-content: center;
 }
 
 .profile__btn {

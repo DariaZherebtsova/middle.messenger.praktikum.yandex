@@ -6,34 +6,35 @@ export interface IEventBus {
 
 export class EventBus implements IEventBus {
   listeners: {};
+
   constructor() {
     this.listeners = {};
   }
- 
-  on(event, callback) {
+
+  on(event, callback: Function): void {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
- 
+
     this.listeners[event].push(callback);
   }
- 
-  off(event, callback) {
-        if (!this.listeners[event]) {
-      throw new Error(`Нет события: ${event}`);
-    }
- 
-    this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback
-    );
-  }
- 
-  emit(event, ...args) {
+
+  off(event, callback: Function): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
-    
-    this.listeners[event].forEach(function(listener) {
+
+    this.listeners[event] = this.listeners[event].filter(
+      (listener) => listener !== callback,
+    );
+  }
+
+  emit(event, ...args): void {
+    if (!this.listeners[event]) {
+      throw new Error(`Нет события: ${event}`);
+    }
+
+    this.listeners[event].forEach((listener) => {
       listener(...args);
     });
   }

@@ -1,15 +1,11 @@
-import { Block } from "../block/block";
 import Handlebars from 'handlebars';
-import { validate } from '../../utils/validate';
-import { inputTmp } from "./input.hbs";
+import { Block, IBlock } from '../block/block';
+import { validate } from '../../utils/validate/index';
+import { inputTmp } from './input.hbs';
 
-export interface IInputBlock {
-  props: {
-    wrapperClass?: string,
-  };
-  getElementForEvent(): HTMLElement;
-  getInputValue(): string;
-  getElementForErrorMessage(): HTMLElement;
+export interface IInputBlock extends IBlock {
+  inputElement: HTMLElement;
+  getElementForErrorMessage?(): HTMLElement;
 }
 
 export class Input extends Block {
@@ -18,18 +14,18 @@ export class Input extends Block {
     // Создаём враппер DOM-элемент input
     props = {
       ...props,
-      wrapperClass: 'custom-input',
       events: {
-        focus: event => {
+        focus: (event) => {
           console.log('focus on', event.target);
         },
-        blur: event => {
-          const resultValidate = validate(event.target.value, event.target.name)
+        blur: (event) => {
+          const resultValidate = validate(event.target.value, event.target.name);
+
           if (!resultValidate.valid) {
-            event.target.parentElement.querySelector('.error-message').textContent = resultValidate.message;
+            event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
           } else {
-            console.log('validate OK')
-            event.target.parentElement.querySelector('.error-message').textContent = '';
+            console.log('validate OK');
+            event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
           }
         },
       },
@@ -37,25 +33,26 @@ export class Input extends Block {
     super('div', props);
   }
 
-  getElementForEvent() {
-    return <HTMLElement>this.element.getElementsByTagName('input')[0];
+  get inputElement(): HTMLElement {
+    return this.element.getElementsByTagName('input')[0];
   }
 
-  getInputValue() {
-    return this.element.getElementsByTagName('input')[0].value;
+  getElementForEvent(): HTMLElement {
+    return this.inputElement;
   }
 
-  getElementForErrorMessage() {
-    console.log('---getElementForError', this.element.querySelector('.error-message'));
-    return this.element.querySelector('.error-message');
+  getElementForErrorMessage(): Element | void {
+    const errorMessageEl = this.element.querySelector('.error-message');
+    if (errorMessageEl) {
+      return errorMessageEl;
+    }
+    return undefined;
   }
 
-  render() {
-    // console.log('---Input render');
-    
+  render(): string {
     // В данном случае render возвращает строкой разметку из шаблонизатора
-    const template = Handlebars.compile(inputTmp);
-    // console.log('---Input props', this.props);
-    return template(this.props);
+    const hbsTemplateFn = Handlebars.compile(inputTmp);
+    const htmlStr = hbsTemplateFn(this.props);
+    return htmlStr;
   }
 }

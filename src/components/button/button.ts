@@ -1,22 +1,22 @@
-import { Block } from "../block/block";
-// Ваш реализованный шаблонизатор
 import Handlebars from 'handlebars';
-import { buttonTmp } from "./button.hbs";
+import { Block } from '../block/block';
+// Ваш реализованный шаблонизатор
+import { buttonTmp } from './button.hbs';
 
 export default class Button extends Block {
   constructor(props) {
     console.log('--- constructor Button');
     // Создаём враппер DOM-элемент button
-    props = {
-      ...props,
-      wrapperClass: 'custom-button',
-    };
-    super("button", props);
+    if (!props.wrapperClass) {
+      props.wrapperClass = 'custom-button';
+    }
+    super('button', props);
   }
 
-  render() {
+  render(): string {
     // В данном случае render возвращает строкой разметку из шаблонизатора
-    const template = Handlebars.compile(buttonTmp);
-    return template(this.props);
+    const hbsTemplateFn = Handlebars.compile(buttonTmp);
+    const htmlStr = hbsTemplateFn(this.props);
+    return htmlStr;
   }
 }

@@ -22,11 +22,11 @@ const data = {
   ],
 };
 
-let testPage = new TestPage(data.page);
+const testPage = new TestPage(data.page);
 insertInDOM('#root', testPage);
 
 for (let i = 0; i < 2; i += 1) {
   console.log('----', i);
-  let input1 = new Input(data.inputs[i]);
+  const input1 = new Input(data.inputs[i]);
   insertInDOM('.input-box', input1);
 }
