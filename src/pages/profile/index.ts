@@ -2,7 +2,7 @@ import ProfilePage from './profile';
 import insertInDOM from '../../utils/insertInDOM';
 import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
-import { validateAllInputs } from '../../utils/validate/index';
+import { validate, validateAllInputs } from '../../utils/validate/index';
 import Button from '../../components/button/button';
 import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
@@ -99,6 +99,19 @@ const data = {
   },
 };
 
+// соответствие правил валидации и имени инпута
+const validateRuleName = {
+  login: 'login',
+  password: 'password',
+  email: 'email',
+  phone: 'phone',
+  first_name: 'name',
+  second_name: 'name',
+  oldPassword: 'password',
+  newPassword: 'password',
+  newPasswordRepeat: 'password',
+};
+
 const profilePage = new ProfilePage(data.page);
 insertInDOM('#root', profilePage);
 
@@ -122,8 +135,14 @@ const inputs: {
 for (let i = 0; i < data.dataInputs.length; i += 1) {
   const props = {
     wrapperClass: 'profile__input',
-    validateRule: data.dataInputs[i].name,
+    validateRule: validateRuleName[data.dataInputs[i].name],
     ...data.dataInputs[i],
+    events: {
+      focus: (event) => {
+        console.log('focus on', event.target);
+      },
+      blur: (event) => onBlur(event),
+    },
   };
   const input = new Input(props);
   insertInDOM('.profile__input-box', input);
@@ -137,15 +156,18 @@ for (let i = 0; i < data.passwordInputs.length; i += 1) {
     wrapperClass: 'profile__input',
     validateRule: data.passwordInputs[i].name,
     ...data.passwordInputs[i],
+    events: {
+      focus: (event) => {
+        console.log('focus on', event.target);
+      },
+      blur: (event) => onBlur(event),
+    },
   };
   const input = new Input(props);
   insertInDOM('.profile__input-box', input);
   input.hide();
   inputs.passwordInputs.push(input);
 }
-const btn = `<button class="profile__btn btn-change" onclick="document.location='./profile-change-data.html'">Изменить данные</button>
-     <button class="profile__btn btn-change" onclick="document.location='./profile-change-pass.html'">Изменить пароль</button>
-     <button class="profile__btn btn-exit" onclick="document.location='./index.html'">Выйти</button>`;
 
 const buttons = [];
 for (let i = 0; i < data.buttons.length; i += 1) {
@@ -201,6 +223,19 @@ function onChangePassword(event) {
     dataset: 'passwordInputs',
   });
   submitBtn.show();
+}
+
+function onBlur(event) {
+  const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
+
+  if (!resultValidate.valid) {
+    // eslint-disable-next-line no-param-reassign
+    event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
+  } else {
+    console.log('validate OK');
+    // eslint-disable-next-line no-param-reassign
+    event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
+  }
 }
 
 function submit(event) {

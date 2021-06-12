@@ -6,8 +6,8 @@ export default function validatePassword(password: string): ValidationResult {
     message: '',
   };
 
-  if (!password.length) {
-    result.message = 'Введите пароль';
+  if (password.length < 8 || password.length > 20) {
+    result.message = 'В пароле должено быть от 8 до 20 символов';
     return result;
   }
 

@@ -11,7 +11,7 @@ export default class AuthorizationPage extends Block {
   }
 
   render(): string {
-    Handlebars.registerHelper('loginLink', () => new Handlebars.SafeString('<a class="custom-link color-green" href="./registration.html">Нет аккаунта?</a>'));
+    // Handlebars.registerHelper('loginLink', () => new Handlebars.SafeString('<a class="custom-link color-green" href="./registration.html">Нет аккаунта?</a>'));
     const hbsTemplateFn = Handlebars.compile(loginFormTmpl);
     const htmlStr = hbsTemplateFn(this.props);
     return htmlStr;

@@ -7,24 +7,6 @@ export class Input extends Block {
   constructor(props) {
     console.log('--- constructor Input');
     // Создаём враппер DOM-элемент input
-    props = {
-      ...props,
-      events: {
-        focus: (event) => {
-          console.log('focus on', event.target);
-        },
-        blur: (event) => {
-          const resultValidate = validate(event.target.value, event.target.name);
-
-          if (!resultValidate.valid) {
-            event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
-          } else {
-            console.log('validate OK');
-            event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
-          }
-        },
-      },
-    };
     super('div', props);
   }
 

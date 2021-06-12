@@ -16,8 +16,7 @@ export function validate(value: string, type: string): ValidationResult {
     password: validatePassword, // доделать
     email: validateEmail,
     phone: validatePhone,
-    first_name: validateName,
-    second_name: validateName,
+    name: validateName,
   };
 
   if (validateRule[type]) {

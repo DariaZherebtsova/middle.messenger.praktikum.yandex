@@ -1,4 +1,4 @@
-import AuthorizationPage from './authorization';
+import RegistrationPage from './registration';
 import insertInDOM from '../../utils/insertInDOM';
 import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
@@ -7,35 +7,76 @@ import { validate, validateAllInputs } from '../../utils/validate/index';
 
 const data = {
   page: {
-    header: 'Вход',
-    link: './registration.html',
-    linkText: 'Нет аккаунта?',
+    header: 'Регистрация',
+    link: './authorization.html',
+    linkText: 'Войти',
 
   },
   inputs: [
     {
+      label: 'Почта',
+      name: 'email',
+      value: 'pochta@yandex.ru',
+      type: 'email',
+    },
+    {
       label: 'Логин',
       name: 'login',
+      value: 'vano2021',
       type: 'text',
-      value: 'vano2022',
+    },
+    {
+      label: 'Имя',
+      name: 'first_name',
+      value: 'Иван',
+      type: 'text',
+    },
+    {
+      label: 'Фамилия',
+      name: 'second_name',
+      value: 'Иванов',
+      type: 'text',
+    },
+    {
+      label: 'Телефон',
+      name: 'phone',
+      value: '+7 (909) 999 99 99',
+      type: 'phone',
     },
     {
       label: 'Пароль',
       name: 'password',
       type: 'password',
-      value: '12345',
+      value: '1234',
+    },
+    {
+      label: 'Пароль (ещё раз)',
+      name: 'passwordRepeat',
+      type: 'password',
+      value: '1234',
     },
   ],
   button: {
-    text: 'Авторизация',
+    text: 'Зарегистрироваться',
     events: {
       click: (event) => submit(event),
     },
   },
 };
 
-const authorizationPage = new AuthorizationPage(data.page);
-insertInDOM('#root', authorizationPage);
+// соответствие правил валидации и имени инпута
+const validateRuleName = {
+  login: 'login',
+  email: 'email',
+  phone: 'phone',
+  first_name: 'name',
+  second_name: 'name',
+  password: 'password',
+  passwordRepeat: 'password',
+};
+
+const registrationPage = new RegistrationPage(data.page);
+insertInDOM('#root', registrationPage);
 
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
@@ -50,7 +91,7 @@ const inputs: IInputBlock[] = [];
 for (let i = 0; i < data.inputs.length; i += 1) {
   let props = {
     wrapperClass: 'custom-input',
-    validateRule: 'required',
+    validateRule: validateRuleName[data.inputs[i].name],
     ...data.inputs[i],
     events: {
       focus: (event) => {
@@ -75,7 +116,9 @@ function submit(event) {
 }
 
 function onBlur(event) {
-  const resultValidate = validate(event.target.value, 'required');
+  console.log('---onBlur ', validateRuleName[event.target.name]);
+  
+  const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
 
   if (!resultValidate.valid) {
     // eslint-disable-next-line no-param-reassign
