@@ -14,6 +14,8 @@ export default class Button extends Block {
   }
 
   render(): string {
+    console.log('---render Button', this.props);
+
     // В данном случае render возвращает строкой разметку из шаблонизатора
     const hbsTemplateFn = Handlebars.compile(buttonTmp);
     const htmlStr = hbsTemplateFn(this.props);

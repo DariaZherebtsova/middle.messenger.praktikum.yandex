@@ -27,6 +27,7 @@ export class Block {
     events?: object,
     wrapperClass?: string,
     extraClass?: string,
+    dataset?: string,
   } = {};
 
   eventBus: () => IEventBus;
@@ -93,6 +94,9 @@ export class Block {
     if (this.props.extraClass) {
       this._element.classList.add(this.props.extraClass);
     }
+    if (this.props.dataset) {
+      this._element.setAttribute('data-inputs', this.props.dataset);
+    }
   }
 
   init(): void {
@@ -110,7 +114,7 @@ export class Block {
   componentDidMount(): void {}
 
   _componentDidUpdate(oldProps, newProps): void {
-    // console.log('---componentDidUpdate---');
+    console.log('---componentDidUpdate---');
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -123,11 +127,14 @@ export class Block {
   }
 
   setProps = (nextProps): void => {
+    console.log('---setProps', nextProps);
+
     if (!nextProps) {
       return;
     }
 
     Object.assign(this.props, nextProps);
+    console.log('---this.props', this.props);
   };
 
   get element(): HTMLElement {
@@ -135,7 +142,7 @@ export class Block {
   }
 
   _render(): void {
-    // console.log('----_render---');
+    console.log('----_render---');
     const block: string = this.render();
 
     if (this.getElementForEvent()) {
@@ -143,6 +150,9 @@ export class Block {
     }
 
     this._element.innerHTML = block;
+    if (this.props.dataset) {
+      this.element.setAttribute('data-inputs', this.props.dataset);
+    }
 
     this._addEvents();
   }
@@ -165,10 +175,10 @@ export class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop, value) {
+        console.log(`---proxy set target=${target} prop=${prop} value=${value}`);
         target[prop] = value;
 
         // Запускаем обновление компоненты
-        // Плохой cloneDeep, в след итерации нужно заставлять добавлять cloneDeep им самим
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },

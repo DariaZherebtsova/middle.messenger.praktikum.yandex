@@ -1,8 +1,9 @@
 import AuthorizationPage from './authorization';
 import insertInDOM from '../../utils/insertInDOM';
-import { Input, IInputBlock } from '../../components/input/input';
+import { Input } from '../../components/input/input';
+import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
-import { validate } from '../../utils/validate/index';
+import { validateAllInputs } from '../../utils/validate/index';
 
 const data = {
   page: {
@@ -53,18 +54,5 @@ function submit(event) {
   console.log('sssssssssssubmit', event);
   event.preventDefault();
 
-  validateAllInputs();
-}
-
-function validateAllInputs() {
-  inputs.forEach((item) => {
-    console.log('input value', item.inputElement.value);
-    const resultValidate = validate(item.inputElement.value, item.props.validateRule);
-    if (!resultValidate.valid) {
-      item.getElementForErrorMessage().textContent = resultValidate.message;
-    } else {
-      console.log('validate OK');
-      item.getElementForErrorMessage().textContent = '';
-    }
-  });
+  validateAllInputs(inputs);
 }

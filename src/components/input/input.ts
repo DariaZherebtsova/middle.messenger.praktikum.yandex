@@ -3,11 +3,6 @@ import { Block, IBlock } from '../block/block';
 import { validate } from '../../utils/validate/index';
 import { inputTmp } from './input.hbs';
 
-export interface IInputBlock extends IBlock {
-  inputElement: HTMLElement;
-  getElementForErrorMessage?(): HTMLElement;
-}
-
 export class Input extends Block {
   constructor(props) {
     console.log('--- constructor Input');
