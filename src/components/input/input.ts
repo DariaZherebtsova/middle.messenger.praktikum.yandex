@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars';
-import { Block, IBlock } from '../block/block';
-import { validate } from '../../utils/validate/index';
+import { Block } from '../block/block';
 import { inputTmp } from './input.hbs';
 
 export class Input extends Block {
