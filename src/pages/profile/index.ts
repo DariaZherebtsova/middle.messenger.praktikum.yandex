@@ -131,7 +131,7 @@ const inputs: {
   dataInputs: [],
   passwordInputs: [],
 };
-// const dataInputs: IInputBlock[] = [];
+
 for (let i = 0; i < data.dataInputs.length; i += 1) {
   const props = {
     wrapperClass: 'profile__input',
@@ -150,7 +150,6 @@ for (let i = 0; i < data.dataInputs.length; i += 1) {
   inputs.dataInputs.push(input);
 }
 
-// const passwordInputs: IInputBlock[] = [];
 for (let i = 0; i < data.passwordInputs.length; i += 1) {
   const props = {
     wrapperClass: 'profile__input',
@@ -169,9 +168,9 @@ for (let i = 0; i < data.passwordInputs.length; i += 1) {
   inputs.passwordInputs.push(input);
 }
 
-const buttons = [];
+const buttons: Button[] = [];
 for (let i = 0; i < data.buttons.length; i += 1) {
-  let props = {
+  const props = {
     wrapperClass: 'profile__btn',
     ...data.buttons[i],
   };
@@ -185,11 +184,11 @@ submitBtn.hide();
 insertInDOM('.submit-btn-box', submitBtn);
 
 function onChangeData(event) {
-  console.log('-----changeData', event);
   event.preventDefault();
 
   // inputs disabled = false
   inputs.dataInputs.forEach(item => {
+    // eslint-disable-next-line no-param-reassign
     item.inputElement.disabled = false;
   });
   // скрыть блок profile__btn-box
@@ -201,7 +200,6 @@ function onChangeData(event) {
 }
 
 function onChangePassword(event) {
-  console.log('-----onChangePassword', event);
   event.preventDefault();
 
   // скрываем dataInputs
@@ -240,9 +238,6 @@ function onBlur(event) {
 
 function submit(event) {
   event.preventDefault();
-
-  console.log('--submit', event.target);
-  console.log('--dataset.inputs', event.target.dataset.inputs);
 
   if (validateAllInputs(inputs[event.target.dataset.inputs])) {
     // валидация прошла

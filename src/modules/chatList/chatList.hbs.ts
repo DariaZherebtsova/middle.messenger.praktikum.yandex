@@ -10,13 +10,3 @@ export const chatListTmpl = `
   </div>
   <ul class="chat-list__preview-list">
   </ul>`;
-
-  // убрать мусор
-  // <ul class="chat-list__preview-list">
-  //   {{#each chats}}
-  //   <li>
-  //     <hr>
-  //     {{> chatPreview name=name lastMsg=lastMsg time=time img=img}}
-  //   </li>
-  //   {{/each}}
-  // </ul>

@@ -6,9 +6,9 @@ const data = {
   msg: 'Не туда попали',
 };
 
-const template = Handlebars.compile(errorPageTempl);
-const html = template(data);
+const hbsTemplateFn = Handlebars.compile(errorPageTempl);
+const htmlStr = hbsTemplateFn(data);
 const root = document.getElementById('root');
 if (root) {
-  root.innerHTML = html;
+  root.innerHTML = htmlStr;
 }

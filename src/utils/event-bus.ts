@@ -5,13 +5,13 @@ export interface IEventBus {
 }
 
 export class EventBus implements IEventBus {
-  listeners: {};
+  listeners: Record<string, Array<()=>void>>;
 
   constructor() {
     this.listeners = {};
   }
 
-  on(event, callback: Function): void {
+  on(event: string, callback: () => void): void {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -19,7 +19,7 @@ export class EventBus implements IEventBus {
     this.listeners[event].push(callback);
   }
 
-  off(event, callback: Function): void {
+  off(event: string, callback: () => void): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
@@ -29,7 +29,7 @@ export class EventBus implements IEventBus {
     );
   }
 
-  emit(event, ...args): void {
+  emit(event: string, ...args: []): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

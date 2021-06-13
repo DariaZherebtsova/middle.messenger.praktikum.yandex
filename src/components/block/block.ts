@@ -1,14 +1,12 @@
 import { EventBus, IEventBus } from '../../utils/event-bus';
+import { IBlock, TProps } from './block.type';
 
-export interface IBlock {
-  props: {
-    wrapperClass?: string,
-  };
-  getElementForEvent(): HTMLElement;
-  getWrapperElement(): HTMLElement;
-}
+type Meta = {
+  tagName: string,
+  props: TProps,
+};
 
-export class Block {
+export class Block implements IBlock {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -18,17 +16,9 @@ export class Block {
 
   _element: HTMLElement = document.createElement('div');
 
-  _meta: {
-    tagName: string;
-    props?: object;
-  } | null = null;
+  _meta: Meta = <Meta>{};
 
-  props: {
-    events?: object,
-    wrapperClass?: string,
-    extraClass?: string,
-    dataset?: string,
-  } = {};
+  props: TProps = <TProps>{};
 
   eventBus: () => IEventBus;
 
@@ -38,13 +28,14 @@ export class Block {
    *
    * @returns {void}
    */
-  constructor(tagName = 'div', props = {}) {
+  constructor(tagName = 'div', props = <TProps>{}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
       props,
     };
 
+    // не знаю как их подружить
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
@@ -54,7 +45,7 @@ export class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus): void {
+  _registerEvents(eventBus: IEventBus): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -62,12 +53,9 @@ export class Block {
   }
 
   _addEvents(): void {
-    const { events = {} } = this.props;
+    const events = this.props.events ? this.props.events : {};
     const element = this.getElementForEvent();
     Object.keys(events).forEach((eventName) => {
-      // console.log('element', element);
-      // console.log('eventName', eventName);
-      // console.log('fn', events[eventName]);
       element.addEventListener(eventName, events[eventName]);
     });
   }
@@ -85,8 +73,7 @@ export class Block {
   }
 
   _createResources(): void {
-    // console.log('----_createResources---', this._meta?.tagName);
-    const tagName = this._meta?.tagName;
+    const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
     if (this.props.wrapperClass) {
       this._element.classList.add(this.props.wrapperClass);
@@ -100,41 +87,37 @@ export class Block {
   }
 
   init(): void {
-    // console.log('----init---', this._meta?.tagName);
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
   _componentDidMount(): void {
-    // console.log('----_componentDidMount---', this._meta?.tagName);
     this.componentDidMount();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidMount(): void {}
 
-  _componentDidUpdate(oldProps, newProps): void {
-    console.log('---componentDidUpdate---');
-    const response = this.componentDidUpdate(oldProps, newProps);
+  // _componentDidUpdate(oldProps: TProps, newProps: TProps)
+  _componentDidUpdate(): void {
+    const response = this.componentDidUpdate();
     if (!response) {
       return;
     }
     this._render();
   }
 
-  componentDidUpdate(oldProps, newProps): boolean {
+  // componentDidUpdate(oldProps: TProps, newProps: TProps)
+  componentDidUpdate(): boolean {
     return true;
   }
 
-  setProps = (nextProps): void => {
-    console.log('---setProps', nextProps);
-
+  setProps = (nextProps: TProps): void => {
     if (!nextProps) {
       return;
     }
 
     Object.assign(this.props, nextProps);
-    console.log('---this.props', this.props);
   };
 
   get element(): HTMLElement {
@@ -142,7 +125,6 @@ export class Block {
   }
 
   _render(): void {
-    console.log('----_render---');
     const block: string = this.render();
 
     if (this.getElementForEvent()) {
@@ -159,14 +141,11 @@ export class Block {
 
   render(): string { return ''; }
 
-  getWrapperElement(): HTMLElement | void {
+  getWrapperElement(): HTMLElement {
     return this.element;
   }
 
-  _makePropsProxy(props): void {
-    // console.log('---_makePropsProxy---');
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
+  _makePropsProxy(props): ProxyConstructor {
     const self = this;
 
     return new Proxy(props, {
@@ -175,7 +154,7 @@ export class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop, value) {
-        console.log(`---proxy set target=${target} prop=${prop} value=${value}`);
+        // eslint-disable-next-line no-param-reassign
         target[prop] = value;
 
         // Запускаем обновление компоненты

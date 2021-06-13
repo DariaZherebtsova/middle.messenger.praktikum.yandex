@@ -48,7 +48,7 @@ insertInDOM('.chat-page-wrapper', chatList);
 // создаем сhatPreview
 for (let i = 0; i < data.chats.length; i += 1) {
   const сhatPreview = new ChatPreview(data.chats[i]);
-  let сhatPreviewLi = document.createElement('li');
+  const сhatPreviewLi = document.createElement('li');
   сhatPreviewLi.appendChild(document.createElement('hr'));
   сhatPreviewLi.appendChild(сhatPreview.getWrapperElement());
   const previewList = document.querySelector('.chat-list__preview-list');

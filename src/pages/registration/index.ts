@@ -89,7 +89,7 @@ if (loginForm) {
 
 const inputs: IInputBlock[] = [];
 for (let i = 0; i < data.inputs.length; i += 1) {
-  let props = {
+  const props = {
     wrapperClass: 'custom-input',
     validateRule: validateRuleName[data.inputs[i].name],
     ...data.inputs[i],
@@ -109,15 +109,11 @@ const button = new Button(data.button);
 insertInDOM('.login-form__button-box', button);
 
 function submit(event) {
-  console.log('sssssssssssubmit', event);
   event.preventDefault();
-
   validateAllInputs(inputs);
 }
 
 function onBlur(event) {
-  console.log('---onBlur ', validateRuleName[event.target.name]);
-  
   const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
 
   if (!resultValidate.valid) {

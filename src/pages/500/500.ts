@@ -6,6 +6,9 @@ const data = {
   msg: 'Мы уже фиксим',
 };
 
-const template = Handlebars.compile(errorPageTempl);
-const html = template(data);
-document.getElementById('root').innerHTML = html;
+const hbsTemplateFn = Handlebars.compile(errorPageTempl);
+const htmlStr = hbsTemplateFn(data);
+const root = document.getElementById('root');
+if (root) {
+  root.innerHTML = htmlStr;
+}

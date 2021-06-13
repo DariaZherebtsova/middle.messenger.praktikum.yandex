@@ -10,7 +10,6 @@ const data = {
     header: 'Вход',
     link: './registration.html',
     linkText: 'Нет аккаунта?',
-
   },
   inputs: [
     {
@@ -48,7 +47,7 @@ if (loginForm) {
 
 const inputs: IInputBlock[] = [];
 for (let i = 0; i < data.inputs.length; i += 1) {
-  let props = {
+  const props = {
     wrapperClass: 'custom-input',
     validateRule: 'required',
     ...data.inputs[i],
@@ -59,7 +58,7 @@ for (let i = 0; i < data.inputs.length; i += 1) {
       blur: (event) => onBlur(event),
     },
   };
-  const input: IInputBlock = new Input(props);
+  const input: Input = new Input(props);
   insertInDOM('.login-form__input-box', input);
   inputs.push(input);
 }
@@ -68,7 +67,6 @@ const button = new Button(data.button);
 insertInDOM('.login-form__button-box', button);
 
 function submit(event) {
-  console.log('sssssssssssubmit', event);
   event.preventDefault();
 
   validateAllInputs(inputs);

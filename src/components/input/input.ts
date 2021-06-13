@@ -1,11 +1,13 @@
 import Handlebars from 'handlebars';
-import { Block } from '../block/block';
 import { inputTmp } from './input.hbs';
+import { Block } from '../block/block';
+import { IInputBlock } from './inputs.type';
 
-export class Input extends Block {
-  constructor(props) {
-    console.log('--- constructor Input');
-    // Создаём враппер DOM-элемент input
+import { TProps } from '../block/block.type';
+
+export class Input extends Block implements IInputBlock {
+  constructor(props: TProps) {
+    // Создаём враппер DOM-элемент для input
     super('div', props);
   }
 
@@ -26,7 +28,6 @@ export class Input extends Block {
   }
 
   render(): string {
-    // В данном случае render возвращает строкой разметку из шаблонизатора
     const hbsTemplateFn = Handlebars.compile(inputTmp);
     const htmlStr = hbsTemplateFn(this.props);
     return htmlStr;

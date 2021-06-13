@@ -1,6 +1,8 @@
-import { IBlock } from '../block/block';
+import { IBlock } from '../block/block.type';
 
 export interface IInputBlock extends IBlock {
   inputElement: HTMLElement;
-  getElementForErrorMessage(): HTMLElement;
+  getElementForErrorMessage?(): Element | void;
+  hide(): void;
+  show(): void;
 }

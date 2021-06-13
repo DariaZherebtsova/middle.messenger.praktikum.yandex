@@ -1,4 +1,4 @@
-export default function getFormData({ formId, formFields }) {
+export default function getFormData({ formId, formFields }): Record<string, string> {
   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById(formId);
   const result = {};
   if (form) {
