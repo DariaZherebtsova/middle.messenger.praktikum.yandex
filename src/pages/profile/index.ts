@@ -109,6 +109,7 @@ const validateRuleName = {
   phone: 'phone',
   first_name: 'name',
   second_name: 'name',
+  display_name: 'required',
   oldPassword: 'password',
   newPassword: 'password',
   newPasswordRepeat: 'password',
@@ -155,7 +156,7 @@ for (let i = 0; i < data.dataInputs.length; i += 1) {
 for (let i = 0; i < data.passwordInputs.length; i += 1) {
   const props: TProps = {
     wrapperClass: 'profile__input',
-    validateRule: data.passwordInputs[i].name,
+    validateRule: validateRuleName[data.passwordInputs[i].name],
     ...data.passwordInputs[i],
     events: {
       focus: (event) => {
