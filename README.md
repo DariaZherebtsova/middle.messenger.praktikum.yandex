@@ -1,3 +1,5 @@
+https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/7
+
 ## Описание
 
 Пилю чатик. Пока только макеты сверстала.
