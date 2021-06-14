@@ -4,6 +4,7 @@ import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
 import { validate, validateAllInputs } from '../../utils/validate/index';
+import { HTTPrequest } from '../../utils/HTTPrequest';
 
 const data = {
   page: {
@@ -108,11 +109,6 @@ for (let i = 0; i < data.inputs.length; i += 1) {
 const button = new Button(data.button);
 insertInDOM('.login-form__button-box', button);
 
-function submit(event) {
-  event.preventDefault();
-  validateAllInputs(inputs);
-}
-
 function onBlur(event) {
   const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
 
@@ -123,5 +119,16 @@ function onBlur(event) {
     console.log('validate OK');
     // eslint-disable-next-line no-param-reassign
     event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
+  }
+}
+
+function submit(event) {
+  event.preventDefault();
+  if (validateAllInputs(inputs)) {
+    // валидация прошла
+
+    // отправляем форму
+    const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
+    new HTTPrequest().post('https://chats', { data: new FormData(form) });
   }
 }

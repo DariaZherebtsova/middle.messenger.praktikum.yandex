@@ -6,6 +6,8 @@ import { validate, validateAllInputs } from '../../utils/validate/index';
 import Button from '../../components/button/button';
 import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
+import { TProps } from '../../components/block/block.type';
+import { HTTPrequest } from '../../utils/HTTPrequest';
 
 const data = {
   page: {
@@ -115,7 +117,7 @@ const validateRuleName = {
 const profilePage = new ProfilePage(data.page);
 insertInDOM('#root', profilePage);
 
-const profileForm = document.getElementById('profileForm');
+const profileForm = document.getElementById('profile-form');
 if (profileForm) {
   profileForm.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
@@ -133,7 +135,7 @@ const inputs: {
 };
 
 for (let i = 0; i < data.dataInputs.length; i += 1) {
-  const props = {
+  const props: TProps = {
     wrapperClass: 'profile__input',
     validateRule: validateRuleName[data.dataInputs[i].name],
     ...data.dataInputs[i],
@@ -151,7 +153,7 @@ for (let i = 0; i < data.dataInputs.length; i += 1) {
 }
 
 for (let i = 0; i < data.passwordInputs.length; i += 1) {
-  const props = {
+  const props: TProps = {
     wrapperClass: 'profile__input',
     validateRule: data.passwordInputs[i].name,
     ...data.passwordInputs[i],
@@ -170,7 +172,7 @@ for (let i = 0; i < data.passwordInputs.length; i += 1) {
 
 const buttons: Button[] = [];
 for (let i = 0; i < data.buttons.length; i += 1) {
-  const props = {
+  const props: TProps = {
     wrapperClass: 'profile__btn',
     ...data.buttons[i],
   };
@@ -217,9 +219,7 @@ function onChangePassword(event) {
     item.hide();
   });
   // показать profile__submitBtn-box
-  submitBtn.setProps({
-    dataset: 'passwordInputs',
-  });
+  submitBtn.setProps({ dataset: 'passwordInputs' });
   submitBtn.show();
 }
 
@@ -243,6 +243,8 @@ function submit(event) {
     // валидация прошла
 
     // отправляем форму
+    const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('profile-form');
+    new HTTPrequest().post('https://chats', { data: new FormData(form) });
 
     // возвращаемся в профиль
     setTimeout(() => {

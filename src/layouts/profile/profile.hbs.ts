@@ -3,7 +3,7 @@ export const profileTempl = `
     <button class="profile__back-btn" onclick="document.location='./index.html'"><img src="{{backBtnImg}}"></button>
   </nav>
   <main class="profile__main">
-    <form id="profileForm">
+    <form id="profile-form">
       <div class="profile__data">
         <div class="profile__avatar">
           <input type="image" name="avatar" src="{{noImgAvatarLarge}}" width="130">

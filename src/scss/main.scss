@@ -1,16 +1,16 @@
 $dark-grey: #494848;
-$grey: #999999;
+$grey: #999;
 $middle-grey: #cccbcb;
-$light-grey: #EFEFEF;
+$light-grey: #efefef;
 $green: #3ea14c;
 $green-hover: #1d7730;
 $light-green: #a8e4b0;
-$white: #FFFFFF;
+$white: #fff;
 $red: #e22323;
 
 * {
   box-sizing: border-box;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
 }
 
 hr {
@@ -37,7 +37,7 @@ input:disabled {
 input:focus {
   // outline: 1px dotted $middle-grey;
   outline: none;
-  box-shadow: 0px 0px 2px $grey;
+  box-shadow: 0 0 2px $grey;
 }
 
 .custom-input {
@@ -49,10 +49,10 @@ input:focus {
     color: $grey;
     font-size: smaller;
   }
-  
+
   input {
     border: none;
-    border-bottom: 1px solid $green; 
+    border-bottom: 1px solid $green;
     width: 100%;
     padding-left: 0;
   }
@@ -63,7 +63,7 @@ input:focus {
     margin: 0;
   }
 }
- 
+
 .custom-button {
   width: 285px;
   height: 37px;

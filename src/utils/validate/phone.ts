@@ -6,7 +6,6 @@ export default function validatePhone(phone: string): ValidationResult {
     message: '',
   };
   const emailRegex = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
-  console.log('validatePhone', emailRegex.test(phone));
   if (!emailRegex.test(phone)) {
     result.message = 'Не корректный телефон';
     return result;

@@ -19,12 +19,9 @@ export class Input extends Block implements IInputBlock {
     return this.inputElement;
   }
 
-  getElementForErrorMessage(): Element | void {
+  getElementForErrorMessage(): Element | null {
     const errorMessageEl = this.element.querySelector('.error-message');
-    if (errorMessageEl) {
-      return errorMessageEl;
-    }
-    return undefined;
+    return errorMessageEl;
   }
 
   render(): string {

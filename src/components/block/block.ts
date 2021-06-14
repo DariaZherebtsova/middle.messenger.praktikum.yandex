@@ -35,7 +35,6 @@ export class Block implements IBlock {
       props,
     };
 
-    // не знаю как их подружить
     this.props = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
@@ -145,15 +144,15 @@ export class Block implements IBlock {
     return this.element;
   }
 
-  _makePropsProxy(props): ProxyConstructor {
+  _makePropsProxy(props: TProps): TProps {
     const self = this;
 
     return new Proxy(props, {
-      get(target, prop) {
+      get(target, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set(target, prop: string, value) {
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
 

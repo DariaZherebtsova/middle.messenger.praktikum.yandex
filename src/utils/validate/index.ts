@@ -13,7 +13,7 @@ export function validate(value: string, type: string): ValidationResult {
   const validateRule = {
     required: requred,
     login: validateLogin,
-    password: validatePassword, // доделать
+    password: validatePassword,
     email: validateEmail,
     phone: validatePhone,
     name: validateName,
@@ -32,7 +32,6 @@ export function validate(value: string, type: string): ValidationResult {
 export function validateAllInputs(inputs: IInputBlock[]): boolean {
   let result = true;
   inputs.forEach((item) => {
-    // console.log('input value', item.inputElement.value);
     const resultValidate = validate(item.inputElement.value, item.props.validateRule);
     if (!resultValidate.valid) {
       // eslint-disable-next-line no-param-reassign
