@@ -1,28 +1,21 @@
-$grey: #999999;
+$dark-grey: #494848;
+$grey: #999;
 $middle-grey: #cccbcb;
-$light-grey: #EFEFEF;
+$light-grey: #efefef;
 $green: #3ea14c;
 $green-hover: #1d7730;
 $light-green: #a8e4b0;
-$white: #FFFFFF;
+$white: #fff;
 $red: #e22323;
 
 * {
   box-sizing: border-box;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
 }
 
 hr {
   border: 1px solid $light-green;
   width: 100%;
-}
-
-input:disabled {
-  background-color: transparent;
-}
-
-input:focus {
-  outline: 1px dotted $white;
 }
 
 .font-size-smaller {
@@ -37,12 +30,14 @@ input:focus {
   color: $green;
 }
 
-.custom-link {
-  text-decoration: none;
+input:disabled {
+  background-color: transparent;
 }
 
-.custom-link:hover {
-  color: $green-hover;
+input:focus {
+  // outline: 1px dotted $middle-grey;
+  outline: none;
+  box-shadow: 0 0 2px $grey;
 }
 
 .custom-input {
@@ -54,19 +49,21 @@ input:focus {
     color: $grey;
     font-size: smaller;
   }
-  
+
   input {
     border: none;
-    border-bottom: 1px solid $green; 
+    border-bottom: 1px solid $green;
     width: 100%;
     padding-left: 0;
+  }
 
-    &:focus {
-      outline: 0;
-    }
+  .error-message {
+    font-size: x-small;
+    color: $red;
+    margin: 0;
   }
 }
- 
+
 .custom-button {
   width: 285px;
   height: 37px;
@@ -74,8 +71,17 @@ input:focus {
   border: none;
   border-radius: 8px;
   color: $white;
+  transition: background 0.3s ease-in;
 
   &:hover {
     background: $green-hover;
   }
+}
+
+.custom-link {
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  color: $green-hover;
 }
