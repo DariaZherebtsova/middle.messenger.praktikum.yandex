@@ -9,6 +9,6 @@
         "noUnusedParameters": true,
         "sourceMap": true,
         "strictNullChecks": true,
-        "esModuleInterop": true,
-     }
+        "esModuleInterop": true
+    }
 }
