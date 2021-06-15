@@ -49,7 +49,7 @@ const data = {
       label: 'Телефон',
       name: 'phone',
       value: '+7 (909) 967 30 30',
-      type: 'phone',
+      type: 'tel',
     },
   ],
   passwordInputs: [
@@ -77,14 +77,14 @@ const data = {
       text: 'Изменить данные',
       extraClass: 'btn-change',
       events: {
-        click: (event) => onChangeData(event),
+        click: (event: Event) => onChangeData(event),
       },
     },
     {
       text: 'Изменить пароль',
       extraClass: 'btn-change',
       events: {
-        click: (event) => onChangePassword(event),
+        click: (event: Event) => onChangePassword(event),
       },
     },
     {
@@ -96,13 +96,13 @@ const data = {
     text: 'Сохранить',
     dataset: 'dataInputs',
     events: {
-      click: (event) => submit(event),
+      click: (event: Event) => submit(event),
     },
   },
 };
 
 // соответствие правил валидации и имени инпута
-const validateRuleName = {
+const validateRuleName: Record<string, string> = {
   login: 'login',
   password: 'password',
   email: 'email',
@@ -120,17 +120,14 @@ insertInDOM('#root', profilePage);
 
 const profileForm = document.getElementById('profile-form');
 if (profileForm) {
-  profileForm.addEventListener('keydown', (event) => {
+  profileForm.addEventListener('keydown', (event: Event) => {
     if (event.code === 'Enter') {
       event.preventDefault();
     }
   });
 }
 
-const inputs: {
-  dataInputs: IInputBlock[],
-  passwordInputs: IInputBlock[],
-} = {
+const inputs: Record<string, IInputBlock[]> = {
   dataInputs: [],
   passwordInputs: [],
 };
@@ -141,10 +138,10 @@ for (let i = 0; i < data.dataInputs.length; i += 1) {
     validateRule: validateRuleName[data.dataInputs[i].name],
     ...data.dataInputs[i],
     events: {
-      focus: (event) => {
+      focus: (event: Event) => {
         console.log('focus on', event.target);
       },
-      blur: (event) => onBlur(event),
+      blur: (event: Event) => onBlur(event),
     },
   };
   const input = new Input(props);
@@ -159,10 +156,10 @@ for (let i = 0; i < data.passwordInputs.length; i += 1) {
     validateRule: validateRuleName[data.passwordInputs[i].name],
     ...data.passwordInputs[i],
     events: {
-      focus: (event) => {
+      focus: (event: Event) => {
         console.log('focus on', event.target);
       },
-      blur: (event) => onBlur(event),
+      blur: (event: Event) => onBlur(event),
     },
   };
   const input = new Input(props);
@@ -186,7 +183,7 @@ const submitBtn = new Button(data.submitBtn);
 submitBtn.hide();
 insertInDOM('.submit-btn-box', submitBtn);
 
-function onChangeData(event) {
+function onChangeData(event: Event) {
   event.preventDefault();
 
   // inputs disabled = false
@@ -202,7 +199,7 @@ function onChangeData(event) {
   submitBtn.show();
 }
 
-function onChangePassword(event) {
+function onChangePassword(event: Event) {
   event.preventDefault();
 
   // скрываем dataInputs
@@ -224,50 +221,68 @@ function onChangePassword(event) {
   submitBtn.show();
 }
 
-function onBlur(event) {
-  const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
+function onBlur(event: Event) {
+  const inputEl: HTMLElement | null = <HTMLElement>event.target;
+  if (inputEl === null) {
+    return;
+  }
+
+  const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
 
   if (!resultValidate.valid) {
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
+    inputEl.parentElement?.parentElement?.querySelector('.error-message').textContent = resultValidate.message;
   } else {
     console.log('validate OK');
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
+    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = '';
   }
 }
 
-function submit(event) {
+function submit(event: Event) {
   event.preventDefault();
 
-  if (validateAllInputs(inputs[event.target.dataset.inputs])) {
+  const inputEl: HTMLElement | null = <HTMLElement>event.target;
+  if (inputEl === null) {
+    return;
+  }
+
+  const inputsName: string = <string>inputEl.dataset.inputs;
+  if (validateAllInputs(inputs[inputsName])) {
     // валидация прошла
+
+    if (inputsName === 'passwordInputs') {
+      // сравниваю пароли
+
+    }
 
     // отправляем форму
     const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('profile-form');
-    new HTTPrequest().post('https://chats', { data: new FormData(form) });
-
-    // возвращаемся в профиль
-    setTimeout(() => {
-      if (event.target.dataset.inputs === 'dataInputs') {
-        inputs.dataInputs.forEach(item => {
-          // eslint-disable-next-line no-param-reassign
-          item.inputElement.disabled = true;
-        });
-      } else {
-        inputs.passwordInputs.forEach(item => {
-          item.hide();
-        });
-        inputs.dataInputs.forEach(item => {
+    new HTTPrequest().post('https://chats', { data: new FormData(form) })
+      .catch((err) => {
+        console.error('profile form submit error', err);
+      })
+      .finally(() => {
+        // возвращаемся в профиль
+        if (inputsName === 'dataInputs') {
+          inputs.dataInputs.forEach(item => {
+            // eslint-disable-next-line no-param-reassign
+            item.inputElement.disabled = true;
+          });
+        } else {
+          inputs.passwordInputs.forEach(item => {
+            item.hide();
+          });
+          inputs.dataInputs.forEach(item => {
+            item.show();
+          });
+        }
+        // показать блок profile__btn-box
+        buttons.forEach(item => {
           item.show();
         });
-      }
-      // показать блок profile__btn-box
-      buttons.forEach(item => {
-        item.show();
+        // скрыть profile__submitBtn-box
+        submitBtn.hide();
       });
-      // скрыть profile__submitBtn-box
-      submitBtn.hide();
-    }, 500);
   }
 }

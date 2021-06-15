@@ -14,11 +14,11 @@ export class Block implements IBlock {
     FLOW_RENDER: 'flow:render',
   };
 
-  _element: HTMLElement = document.createElement('div');
+  private _element: HTMLElement = document.createElement('div');
 
-  _meta: Meta = <Meta>{};
+  private _meta: Meta = <Meta>{};
 
-  props: TProps = <TProps>{};
+  public props: TProps = <TProps>{};
 
   eventBus: () => IEventBus;
 
@@ -44,14 +44,14 @@ export class Block implements IBlock {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus: IEventBus): void {
+  private _registerEvents(eventBus: IEventBus): void {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _addEvents(): void {
+  private _addEvents(): void {
     const events = this.props.events ? this.props.events : {};
     const element = this.getElementForEvent();
     Object.keys(events).forEach((eventName) => {
@@ -59,11 +59,11 @@ export class Block implements IBlock {
     });
   }
 
-  getElementForEvent(): HTMLElement {
+  public getElementForEvent(): HTMLElement {
     return this._element;
   }
 
-  _removeEvents(): void {
+  private _removeEvents(): void {
     const { events = {} } = this.props;
     const element = this.getElementForEvent();
     Object.keys(events).forEach((eventName) => {
@@ -71,7 +71,7 @@ export class Block implements IBlock {
     });
   }
 
-  _createResources(): void {
+  private _createResources(): void {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
     if (this.props.wrapperClass) {
@@ -90,28 +90,27 @@ export class Block implements IBlock {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidMount(): void {
+  private _componentDidMount(): void {
     this.componentDidMount();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidMount(): void {}
 
-  // _componentDidUpdate(oldProps: TProps, newProps: TProps)
-  _componentDidUpdate(): void {
-    const response = this.componentDidUpdate();
+  private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
+    const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
     }
     this._render();
   }
 
-  // componentDidUpdate(oldProps: TProps, newProps: TProps)
-  componentDidUpdate(): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
     return true;
   }
 
-  setProps = (nextProps: TProps): void => {
+  public setProps = (nextProps: TProps): void => {
     if (!nextProps) {
       return;
     }
@@ -123,7 +122,7 @@ export class Block implements IBlock {
     return this._element;
   }
 
-  _render(): void {
+  private _render(): void {
     const block: string = this.render();
 
     if (this.getElementForEvent()) {
@@ -138,13 +137,13 @@ export class Block implements IBlock {
     this._addEvents();
   }
 
-  render(): string { return ''; }
+  public render(): string { return ''; }
 
-  getWrapperElement(): HTMLElement {
+  public getWrapperElement(): HTMLElement {
     return this.element;
   }
 
-  _makePropsProxy(props: TProps): TProps {
+  private _makePropsProxy(props: TProps): TProps {
     const self = this;
 
     return new Proxy(props, {
@@ -166,17 +165,17 @@ export class Block implements IBlock {
     });
   }
 
-  _createDocumentElement(tagName: string): HTMLElement {
+  private _createDocumentElement(tagName: string): HTMLElement {
     return document.createElement(tagName);
   }
 
-  show(): void {
+  public show(): void {
     if (this.element) {
       this.element.style.display = 'block';
     }
   }
 
-  hide(): void {
+  public hide(): void {
     if (this.element) {
       this.element.style.display = 'none';
     }

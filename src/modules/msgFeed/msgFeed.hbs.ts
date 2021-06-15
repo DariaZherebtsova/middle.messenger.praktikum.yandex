@@ -10,12 +10,12 @@ export const msgFeedTmpl = `
   </div>
   <hr>
   <div class="msg-feed__feed">
-    <div class="msg-feed__date font-size-smaller">{{date}}</div>
+    <time class="msg-feed__date font-size-smaller">{{date}}</time>
     <div class="msg-feed__msg">{{msg}}</div>
   </div>
   <hr>
-  <div class="msg-feed__msg-input">
-    <button class="msg-feed__attach-btn"><img src="{{attachBtnImg}}"></button>
+  <form id="send-msg-form" class="msg-feed__send-msg-form">
+    <button type="button" class="msg-feed__attach-btn"><img src="{{attachBtnImg}}"></button>
     <input class="msg-feed__input" type="text" name="message">
-    <button class="msg-feed__send-btn"><img src="{{sendBtnImg}}"></button>
-  </div>`;
+    <button type="submit" class="msg-feed__send-btn"><img src="{{sendBtnImg}}"></button>
+  </form>`;

@@ -4,6 +4,7 @@ import { chatPageTmpl } from './chat.hbs';
 import СhatList from '../../modules/chatList/chatList';
 import ChatPreview from '../../modules/chatPreview/chatPreview';
 import MsgFeed from '../../modules/msgFeed/msgFeed';
+import { HTTPrequest } from '../../utils/HTTPrequest';
 import attachBtnImg from '../../../static/img/attach-btn.png';
 import sendBtnImg from '../../../static/img/send-btn.png';
 import noImgAvatar from '../../../static/img/no_img_circle.svg';
@@ -60,3 +61,22 @@ for (let i = 0; i < data.chats.length; i += 1) {
 // создаем msgFeed
 const msgFeed = new MsgFeed(data.msgFeed);
 insertInDOM('.chat-page-wrapper', msgFeed);
+
+const sendMsgForm: HTMLFormElement | null = <HTMLFormElement>document.getElementById('send-msg-form');
+if (sendMsgForm) {
+  sendMsgForm.addEventListener('keydown', (event: Event) => {
+    if (event.code === 'Enter') {
+      event.preventDefault();
+
+      sendMsg();
+    }
+  });
+}
+
+function sendMsg() {
+  // отправляем форму
+  new HTTPrequest().post('https://chats', { data: new FormData(<HTMLFormElement>sendMsgForm) })
+    .catch((err) => {
+      console.error('sendMsg error', err);
+    });
+}

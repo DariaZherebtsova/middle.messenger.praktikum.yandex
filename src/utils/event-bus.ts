@@ -1,7 +1,7 @@
 export interface IEventBus {
-  on(event, callback): void;
-  off(event, callback): void;
-  emit(event, ...args): void;
+  on(event: string, callback: () => void): void;
+  off(event: string, callback: () => void): void;
+  emit(event: string, ...args: []): void;
 }
 
 export class EventBus implements IEventBus {
