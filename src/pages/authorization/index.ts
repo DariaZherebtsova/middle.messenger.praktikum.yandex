@@ -29,7 +29,7 @@ const data = {
   button: {
     text: 'Авторизация',
     events: {
-      click: (event) => submit(event),
+      click: (event: Event) => submit(event),
     },
   },
 };
@@ -39,7 +39,7 @@ insertInDOM('#root', authorizationPage);
 
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
-  loginForm.addEventListener('keydown', (event) => {
+  loginForm.addEventListener('keydown', (event: Event) => {
     if (event.code === 'Enter') {
       event.preventDefault();
     }
@@ -53,10 +53,10 @@ for (let i = 0; i < data.inputs.length; i += 1) {
     validateRule: 'required',
     ...data.inputs[i],
     events: {
-      focus: (event) => {
+      focus: (event: Event) => {
         console.log('focus on', event.target);
       },
-      blur: (event) => onBlur(event),
+      blur: (event: Event) => onBlur(event),
     },
   };
   const input: Input = new Input(props);
@@ -67,20 +67,24 @@ for (let i = 0; i < data.inputs.length; i += 1) {
 const button = new Button(data.button);
 insertInDOM('.login-form__button-box', button);
 
-function onBlur(event) {
-  const resultValidate = validate(event.target.value, 'required');
+function onBlur(event: Event) {
+  const inputEl: HTMLElement | null = <HTMLElement>event.target;
+  if (inputEl === null) {
+    return;
+  }
+  const resultValidate = validate(inputEl.value, 'required');
 
   if (!resultValidate.valid) {
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
+    inputEl.value.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
   } else {
     console.log('validate OK');
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
+    inputEl.value.parentElement.parentElement.querySelector('.error-message').textContent = '';
   }
 }
 
-function submit(event) {
+function submit(event: Event) {
   event.preventDefault();
 
   if (validateAllInputs(inputs)) {
@@ -88,6 +92,9 @@ function submit(event) {
 
     // отправляем форму
     const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
-    new HTTPrequest().post('https://chats', { data: new FormData(form) });
+    new HTTPrequest().post('https://chats', { data: new FormData(form) })
+      .catch((err) => {
+        console.error('loginForm submit error', err);
+      });
   }
 }

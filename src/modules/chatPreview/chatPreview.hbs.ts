@@ -7,5 +7,5 @@ export const chatPreviewTmpl = `
     <div class="font-size-smaller color-grey">{{lastMsg}}</div>
   </div>
   <div class="chat-preview__aside">
-    <div class="font-size-smaller color-grey">{{time}}</div>
+    <time class="font-size-smaller color-grey">{{time}}</time>
   </div>`;

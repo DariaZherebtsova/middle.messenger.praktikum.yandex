@@ -42,7 +42,7 @@ const data = {
       label: 'Телефон',
       name: 'phone',
       value: '+7 (909) 999 99 99',
-      type: 'phone',
+      type: 'tel',
     },
     {
       label: 'Пароль',
@@ -60,13 +60,13 @@ const data = {
   button: {
     text: 'Зарегистрироваться',
     events: {
-      click: (event) => submit(event),
+      click: (event: Event) => submit(event),
     },
   },
 };
 
 // соответствие правил валидации и имени инпута
-const validateRuleName = {
+const validateRuleName: Record<string, string> = {
   login: 'login',
   email: 'email',
   phone: 'phone',
@@ -81,7 +81,7 @@ insertInDOM('#root', registrationPage);
 
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
-  loginForm.addEventListener('keydown', (event) => {
+  loginForm.addEventListener('keydown', (event: Event) => {
     if (event.code === 'Enter') {
       event.preventDefault();
     }
@@ -95,10 +95,10 @@ for (let i = 0; i < data.inputs.length; i += 1) {
     validateRule: validateRuleName[data.inputs[i].name],
     ...data.inputs[i],
     events: {
-      focus: (event) => {
+      focus: (event: Event) => {
         console.log('focus on', event.target);
       },
-      blur: (event) => onBlur(event),
+      blur: (event: Event) => onBlur(event),
     },
   };
   const input: IInputBlock = new Input(props);
@@ -109,26 +109,40 @@ for (let i = 0; i < data.inputs.length; i += 1) {
 const button = new Button(data.button);
 insertInDOM('.login-form__button-box', button);
 
-function onBlur(event) {
-  const resultValidate = validate(event.target.value, validateRuleName[event.target.name]);
+function onBlur(event: Event) {
+  const inputEl: HTMLElement | null = <HTMLElement>event.target;
+  if (inputEl === null) {
+    return;
+  }
+  const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
 
   if (!resultValidate.valid) {
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
+    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
   } else {
     console.log('validate OK');
     // eslint-disable-next-line no-param-reassign
-    event.target.parentElement.parentElement.querySelector('.error-message').textContent = '';
+    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = '';
   }
 }
 
-function submit(event) {
+function submit(event: Event) {
   event.preventDefault();
   if (validateAllInputs(inputs)) {
     // валидация прошла
 
+    // сравниваю пароли
+    if (inputs[5].inputElement.value !== inputs[6].inputElement.value) {
+      inputs[5].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      inputs[6].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      return;
+    }
+
     // отправляем форму
     const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
-    new HTTPrequest().post('https://chats', { data: new FormData(form) });
+    new HTTPrequest().post('https://chats', { data: new FormData(form) })
+      .catch((err) => {
+        console.error('registration form submit error', err);
+      });
   }
 }
