@@ -7,7 +7,7 @@ enum METHODS {
 
 function queryStringify(data: Record<string, string>) {
   // трансформация GET-параметров
-  if (data !== null && typeof data !== 'object') {
+  if (data === null || typeof data !== 'object') {
     throw new Error('Data must be object');
   }
   let result = '?';
