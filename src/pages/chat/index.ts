@@ -4,9 +4,9 @@ import { chatPageTmpl } from './chat.hbs';
 import СhatList from '../../modules/chatList/chatList';
 import ChatPreview from '../../modules/chatPreview/chatPreview';
 import MsgFeed from '../../modules/msgFeed/msgFeed';
+import { Input } from '../../components/input/input';
+import Button from '../../components/button/button';
 import { HTTPrequest } from '../../utils/HTTPrequest';
-import attachBtnImg from '../../../static/img/attach-btn.png';
-import sendBtnImg from '../../../static/img/send-btn.png';
 import noImgAvatar from '../../../static/img/no_img_circle.svg';
 
 const data = {
@@ -25,8 +25,19 @@ const data = {
     },
   ],
   msgFeed: {
-    attachBtnImg: `${attachBtnImg}`,
-    sendBtnImg: `${sendBtnImg}`,
+    attachBtn: {
+      wrapperClass: 'msg-feed__attach-btn',
+    },
+    sendBtn: {
+      wrapperClass: 'msg-feed__send-btn',
+      events: {
+        click: (event: Event) => submit(event),
+      },
+    },
+    msgInput: {
+      type: 'text',
+      name: 'message',
+    },
     noImgAvatar: `${noImgAvatar}`,
     name: 'Илья',
     date: '31 июня',
@@ -62,6 +73,22 @@ for (let i = 0; i < data.chats.length; i += 1) {
 const msgFeed = new MsgFeed(data.msgFeed);
 insertInDOM('.chat-page-wrapper', msgFeed);
 
+const attachBtn = new Button(data.msgFeed.attachBtn);
+attachBtn.getWrapperElement().setAttribute('type', 'button');
+insertInDOM('.msg-feed__send-msg-form', attachBtn);
+
+const inputBlock = new Input(data.msgFeed.msgInput);
+const input = inputBlock.getElementForEvent();
+input.classList.add('msg-feed__input');
+const box = document.querySelector('.msg-feed__send-msg-form');
+if (box) {
+  box.appendChild(input);
+}
+
+const sendBtn = new Button(data.msgFeed.sendBtn);
+attachBtn.getWrapperElement().setAttribute('type', 'submit');
+insertInDOM('.msg-feed__send-msg-form', sendBtn);
+
 const sendMsgForm: HTMLFormElement | null = <HTMLFormElement>document.getElementById('send-msg-form');
 if (sendMsgForm) {
   sendMsgForm.addEventListener('keydown', (event: Event) => {
@@ -79,4 +106,10 @@ function sendMsg() {
     .catch((err) => {
       console.error('sendMsg error', err);
     });
+}
+
+function submit(event: Event) {
+  event.preventDefault();
+
+  sendMsg();
 }

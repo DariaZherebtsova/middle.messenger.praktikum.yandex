@@ -15,7 +15,4 @@ export const msgFeedTmpl = `
   </div>
   <hr>
   <form id="send-msg-form" class="msg-feed__send-msg-form">
-    <button type="button" class="msg-feed__attach-btn"><img src="{{attachBtnImg}}"></button>
-    <input class="msg-feed__input" type="text" name="message">
-    <button type="submit" class="msg-feed__send-btn"><img src="{{sendBtnImg}}"></button>
   </form>`;
