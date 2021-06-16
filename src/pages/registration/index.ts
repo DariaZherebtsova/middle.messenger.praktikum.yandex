@@ -131,6 +131,13 @@ function submit(event: Event) {
   if (validateAllInputs(inputs)) {
     // валидация прошла
 
+    // сравниваю пароли
+    if (inputs[5].inputElement.value !== inputs[6].inputElement.value) {
+      inputs[5].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      inputs[6].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      return;
+    }
+
     // отправляем форму
     const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
     new HTTPrequest().post('https://chats', { data: new FormData(form) })

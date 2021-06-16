@@ -57,7 +57,7 @@ const data = {
       label: 'Старый пароль',
       name: 'oldPassword',
       type: 'password',
-      value: '111',
+      value: '1111',
     },
     {
       label: 'Новый пароль',
@@ -253,7 +253,12 @@ function submit(event: Event) {
 
     if (inputsName === 'passwordInputs') {
       // сравниваю пароли
-
+      // eslint-disable-next-line max-len
+      if (inputs.passwordInputs[1].inputElement.value !== inputs.passwordInputs[2].inputElement.value) {
+        inputs.passwordInputs[1].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        inputs.passwordInputs[2].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        return;
+      }
     }
 
     // отправляем форму

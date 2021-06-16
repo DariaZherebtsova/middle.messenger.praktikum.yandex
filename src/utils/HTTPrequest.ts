@@ -1,13 +1,13 @@
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
-};
+enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
 
-function queryStringify(data) {
+function queryStringify(data: Record<string, string>) {
   // трансформация GET-параметров
-  if (typeof data !== 'object') {
+  if (data !== null && typeof data !== 'object') {
     throw new Error('Data must be object');
   }
   let result = '?';
@@ -19,8 +19,8 @@ function queryStringify(data) {
 
 type Options = {
   headers?: Record<string, string>,
-  method?,
-  data?,
+  method?: METHODS,
+  data?: Record<string, string> | FormData,
   timeout?: number,
 };
 
@@ -64,7 +64,7 @@ export class HTTPrequest {
       xhr.open(
         method,
         isGet && !!data
-          ? `${url}${queryStringify(data)}`
+          ? `${url}${queryStringify(<Record<string, string>>data)}`
           : url,
       );
 
@@ -84,8 +84,12 @@ export class HTTPrequest {
 
       if (isGet || !data) {
         xhr.send();
+      } else if (data.constructor.name === 'FormData') {
+        xhr.send(<FormData>data);
       } else {
-        xhr.send(data);
+        const json = JSON.stringify(data);
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
       }
     });
   };

@@ -36,6 +36,7 @@ export function validateAllInputs(inputs: IInputBlock[]): boolean {
     if (!resultValidate.valid) {
       // eslint-disable-next-line no-param-reassign
       item.getElementForErrorMessage().textContent = resultValidate.message;
+      console.log('ERR  ', resultValidate.message);
       result = false;
     } else {
       console.log('OK');
