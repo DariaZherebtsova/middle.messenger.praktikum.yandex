@@ -127,9 +127,9 @@ if (profileForm) {
   });
 }
 
-const inputs: Record<string, IInputBlock[]> = {
-  dataInputs: [],
-  passwordInputs: [],
+const inputs: Record<string, Record<string, IInputBlock>> = {
+  dataInputs: {},
+  passwordInputs: {},
 };
 
 for (let i = 0; i < data.dataInputs.length; i += 1) {
@@ -147,8 +147,9 @@ for (let i = 0; i < data.dataInputs.length; i += 1) {
   const input = new Input(props);
   insertInDOM('.profile__input-box', input);
   input.inputElement.disabled = true;
-  inputs.dataInputs.push(input);
+  inputs.dataInputs[data.dataInputs[i].name] = input;
 }
+const dataInputs = Object.values(inputs.dataInputs);
 
 for (let i = 0; i < data.passwordInputs.length; i += 1) {
   const props: TProps = {
@@ -165,8 +166,13 @@ for (let i = 0; i < data.passwordInputs.length; i += 1) {
   const input = new Input(props);
   insertInDOM('.profile__input-box', input);
   input.hide();
-  inputs.passwordInputs.push(input);
+  inputs.passwordInputs[data.passwordInputs[i].name] = input;
 }
+const passwordInputs = Object.values(inputs.passwordInputs);
+const allInputs = {
+  ...inputs.dataInputs,
+  ...inputs.passwordInputs,
+};
 
 const buttons: Button[] = [];
 for (let i = 0; i < data.buttons.length; i += 1) {
@@ -187,7 +193,7 @@ function onChangeData(event: Event) {
   event.preventDefault();
 
   // inputs disabled = false
-  inputs.dataInputs.forEach(item => {
+  dataInputs.forEach(item => {
     // eslint-disable-next-line no-param-reassign
     item.inputElement.disabled = false;
   });
@@ -203,12 +209,12 @@ function onChangePassword(event: Event) {
   event.preventDefault();
 
   // скрываем dataInputs
-  inputs.dataInputs.forEach(item => {
+  dataInputs.forEach(item => {
     item.hide();
   });
 
   // показываем passwordInputs
-  inputs.passwordInputs.forEach(item => {
+  passwordInputs.forEach(item => {
     item.show();
   });
 
@@ -226,16 +232,20 @@ function onBlur(event: Event) {
   if (inputEl === null) {
     return;
   }
-
-  const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
-
-  if (!resultValidate.valid) {
-    // eslint-disable-next-line no-param-reassign
-    inputEl.parentElement?.parentElement?.querySelector('.error-message').textContent = resultValidate.message;
-  } else {
-    console.log('validate OK');
-    // eslint-disable-next-line no-param-reassign
-    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = '';
+  const inputName = inputEl.getAttribute('name');
+  if (inputName === null) {
+    return;
+  }
+  const inputBlock = allInputs[inputName];
+  const msgEl = inputBlock.getElementForErrorMessage();
+  if (msgEl) {
+    const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
+    if (!resultValidate.valid) {
+      msgEl.textContent = resultValidate.message;
+    } else {
+      console.log('validate OK');
+      msgEl.textContent = '';
+    }
   }
 }
 
@@ -248,15 +258,15 @@ function submit(event: Event) {
   }
 
   const inputsName: string = <string>inputEl.dataset.inputs;
-  if (validateAllInputs(inputs[inputsName])) {
+  if (validateAllInputs(Object.values(inputs[inputsName]))) {
     // валидация прошла
 
     if (inputsName === 'passwordInputs') {
       // сравниваю пароли
-      // eslint-disable-next-line max-len
-      if (inputs.passwordInputs[1].inputElement.value !== inputs.passwordInputs[2].inputElement.value) {
-        inputs.passwordInputs[1].getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        inputs.passwordInputs[2].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      const { newPassword, newPasswordRepeat } = inputs.passwordInputs;
+      if (newPassword.inputElement.value !== newPasswordRepeat.inputElement.value) {
+        newPassword.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        newPasswordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
         return;
       }
     }
@@ -270,15 +280,15 @@ function submit(event: Event) {
       .finally(() => {
         // возвращаемся в профиль
         if (inputsName === 'dataInputs') {
-          inputs.dataInputs.forEach(item => {
+          dataInputs.forEach(item => {
             // eslint-disable-next-line no-param-reassign
             item.inputElement.disabled = true;
           });
         } else {
-          inputs.passwordInputs.forEach(item => {
+          passwordInputs.forEach(item => {
             item.hide();
           });
-          inputs.dataInputs.forEach(item => {
+          dataInputs.forEach(item => {
             item.show();
           });
         }

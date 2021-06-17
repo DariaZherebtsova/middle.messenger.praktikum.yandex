@@ -46,7 +46,7 @@ if (loginForm) {
   });
 }
 
-const inputs: IInputBlock[] = [];
+const inputs: Record<string, IInputBlock> = {};
 for (let i = 0; i < data.inputs.length; i += 1) {
   const props = {
     wrapperClass: 'custom-input',
@@ -61,7 +61,7 @@ for (let i = 0; i < data.inputs.length; i += 1) {
   };
   const input: Input = new Input(props);
   insertInDOM('.login-form__input-box', input);
-  inputs.push(input);
+  inputs[data.inputs[i].name] = input;
 }
 
 const button = new Button(data.button);
@@ -72,22 +72,27 @@ function onBlur(event: Event) {
   if (inputEl === null) {
     return;
   }
-  const resultValidate = validate(inputEl.value, 'required');
-
-  if (!resultValidate.valid) {
-    // eslint-disable-next-line no-param-reassign
-    inputEl.value.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
-  } else {
-    console.log('validate OK');
-    // eslint-disable-next-line no-param-reassign
-    inputEl.value.parentElement.parentElement.querySelector('.error-message').textContent = '';
+  const inputName = inputEl.getAttribute('name');
+  if (inputName === null) {
+    return;
+  }
+  const inputBlock = inputs[inputName];
+  const msgEl = inputBlock.getElementForErrorMessage();
+  if (msgEl) {
+    const resultValidate = validate(inputEl.value, 'required');
+    if (!resultValidate.valid) {
+      msgEl.textContent = resultValidate.message;
+    } else {
+      console.log('validate OK');
+      msgEl.textContent = '';
+    }
   }
 }
 
 function submit(event: Event) {
   event.preventDefault();
 
-  if (validateAllInputs(inputs)) {
+  if (validateAllInputs(Object.values(inputs))) {
     // валидация прошла
 
     // отправляем форму

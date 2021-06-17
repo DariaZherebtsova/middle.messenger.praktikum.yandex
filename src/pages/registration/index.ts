@@ -88,7 +88,7 @@ if (loginForm) {
   });
 }
 
-const inputs: IInputBlock[] = [];
+const inputs: Record<string, IInputBlock> = {};
 for (let i = 0; i < data.inputs.length; i += 1) {
   const props = {
     wrapperClass: 'custom-input',
@@ -103,7 +103,7 @@ for (let i = 0; i < data.inputs.length; i += 1) {
   };
   const input: IInputBlock = new Input(props);
   insertInDOM('.login-form__input-box', input);
-  inputs.push(input);
+  inputs[data.inputs[i].name] = input;
 }
 
 const button = new Button(data.button);
@@ -114,27 +114,33 @@ function onBlur(event: Event) {
   if (inputEl === null) {
     return;
   }
-  const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
-
-  if (!resultValidate.valid) {
-    // eslint-disable-next-line no-param-reassign
-    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = resultValidate.message;
-  } else {
-    console.log('validate OK');
-    // eslint-disable-next-line no-param-reassign
-    inputEl.parentElement.parentElement.querySelector('.error-message').textContent = '';
+  const inputName = inputEl.getAttribute('name');
+  if (inputName === null) {
+    return;
+  }
+  const inputBlock = inputs[inputName];
+  const msgEl = inputBlock.getElementForErrorMessage();
+  if (msgEl) {
+    const resultValidate = validate(inputEl.value, validateRuleName[inputEl.name]);
+    if (!resultValidate.valid) {
+      msgEl.textContent = resultValidate.message;
+    } else {
+      console.log('validate OK');
+      msgEl.textContent = '';
+    }
   }
 }
 
 function submit(event: Event) {
   event.preventDefault();
-  if (validateAllInputs(inputs)) {
+  if (validateAllInputs(Object.values(inputs))) {
     // валидация прошла
 
     // сравниваю пароли
-    if (inputs[5].inputElement.value !== inputs[6].inputElement.value) {
-      inputs[5].getElementForErrorMessage().textContent = 'Пароли не совпадают';
-      inputs[6].getElementForErrorMessage().textContent = 'Пароли не совпадают';
+    const { password, passwordRepeat } = inputs;
+    if (password.inputElement.value !== passwordRepeat.inputElement.value) {
+      password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+      passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
       return;
     }
 
