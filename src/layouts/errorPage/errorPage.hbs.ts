@@ -5,4 +5,4 @@ export const errorPageTempl = `
     <div class="error-page__msg">{{msg}}</div>
     <a class="error-page__link" href="./index.html">Назад к чатам</a>
   </main>
-</div>`
+</div>`;

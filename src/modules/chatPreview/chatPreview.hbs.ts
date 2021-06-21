@@ -1,5 +1,4 @@
-export const chatPreview = `
-<div class="chat-preview">
+export const chatPreviewTmpl = `
   <div class="chat-preview__avatar">
     <img src="{{img}}">
   </div>
@@ -8,7 +7,5 @@ export const chatPreview = `
     <div class="font-size-smaller color-grey">{{lastMsg}}</div>
   </div>
   <div class="chat-preview__aside">
-    <div class="font-size-smaller color-grey">{{time}}</div>
-  </div>
-</div>
-`
+    <time class="font-size-smaller color-grey">{{time}}</time>
+  </div>`;

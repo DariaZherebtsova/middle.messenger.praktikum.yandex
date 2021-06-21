@@ -2,6 +2,12 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/7
 
 ## Описание
 
+##### sprint 2
+
+Перешла на TypeScript, внедрила компонентный подход, добавила валидацию для инпутов, подготовила класс для работы с запросами. Провела линтинг ts кода и стилей.
+
+##### sprint 1
+
 Пилю чатик. Пока только макеты сверстала.
 
 ## UI
@@ -14,6 +20,11 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/7
 - `npm run build` — сборка
 - `npm run serve` — запуск dev-сервера
 - `npm run start` — сборка и запуск dev-сервера
+
+#### Линтинг
+
+- `npm run eslint`
+- `npm run stylelint`
 
 ## Деплой с Netlify
 

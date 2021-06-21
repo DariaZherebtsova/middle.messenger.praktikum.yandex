@@ -1,5 +1,4 @@
-export const chatList = `
-<section class='chat-list'>
+export const chatListTmpl = `
   <div class="chat-list__header">
     <a class="custom-link color-grey" href="./authorization.html">❮ Вход</a>
     <a class="custom-link color-grey" href="./404.html">404</a>
@@ -10,12 +9,4 @@ export const chatList = `
     <input class="chat-list__search-input type="text" placeholder="Поиск">
   </div>
   <ul class="chat-list__preview-list">
-    {{#each chats}}
-    <li>
-      <hr>
-      {{> chatPreview name=name lastMsg=lastMsg time=time img=img}}
-    </li>
-    {{/each}}
-  </ul>
-</section>
-`;
+  </ul>`;

@@ -33,21 +33,24 @@
   margin: 30px auto 0;
 }
 
-.profile__avatar{
+.profile__avatar {
   padding-bottom: 20px;
   text-align: center;
 }
 
-.profile__name{
+.profile__name {
   margin-bottom: 30px;
   text-align: center;
   font-size: x-large;
 }
 
 .profile__input {
-  display: flex;
-  justify-content: space-between;
   border-bottom: 1px solid $middle-grey;
+
+  .input-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
   label {
     width: 200px;
@@ -63,7 +66,18 @@
     text-align: right;
     border-color: transparent;
     height: 33px;
-    color: $grey;
+    color: $dark-grey;
+
+    &:disabled {
+      color: $grey;
+    }
+  }
+
+  .error-message {
+    font-size: x-small;
+    color: $red;
+    text-align: end;
+    margin: 0;
   }
 }
 
@@ -71,6 +85,11 @@
   margin: 30px auto 0;
   width: 510px;
   text-align: center;
+}
+
+.submit-btn-box {
+  display: flex;
+  justify-content: center;
 }
 
 .profile__btn {
