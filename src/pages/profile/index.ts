@@ -8,6 +8,7 @@ import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { HTTPrequest } from '../../utils/HTTPrequest';
+import { router } from '../../router/router';
 
 export function initProfilePage(rootQuery: string): ProfilePage {
   const data = {
@@ -190,8 +191,10 @@ export function initProfilePage(rootQuery: string): ProfilePage {
   submitBtn.hide();
   insertInDOM('.submit-btn-box', submitBtn);
 
-  function onChangeData(event: Event) {
+  function onChangeData(event: Event): void {
     event.preventDefault();
+
+    router.history.pushState({}, '', 'profile/edit-data');
 
     // inputs disabled = false
     dataInputs.forEach(item => {

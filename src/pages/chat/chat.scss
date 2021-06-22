@@ -1,7 +1,7 @@
 @import "../../scss/main.scss";
-@import "../../modules/chatList/chatList.scss";
-@import "../../modules/chatPreview/chatPreview.scss";
-@import "../../modules/msgFeed/msgFeed.scss";
+@import "./components/chatList/chatList.scss";
+@import "./components/chatPreview/chatPreview.scss";
+@import "./components/msgFeed/msgFeed.scss";
 
 .chat-page-wrapper {
   height: 100vh;

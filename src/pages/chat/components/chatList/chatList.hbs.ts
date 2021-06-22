@@ -3,7 +3,7 @@ export const chatListTmpl = `
     <a class="custom-link color-grey" href="./authorization.html">❮ Вход</a>
     <a class="custom-link color-grey" href="./404.html">404</a>
     <a class="custom-link color-grey" href="./500.html">500</a>
-    <a class="custom-link color-grey" href="./profile.html">Профиль ❯</a>
+    <a class="chat-list__profile-link custom-link color-grey" href="./profile.html">Профиль ❯</a>
   </div>
   <div class="chat-list__search">
     <input class="chat-list__search-input type="text" placeholder="Поиск">

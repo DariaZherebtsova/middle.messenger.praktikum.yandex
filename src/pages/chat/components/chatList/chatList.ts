@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
-import { Block } from '../../components/block/block';
+import { Block } from '../../../../components/block/block';
 import { chatListTmpl } from './chatList.hbs';
-import { TProps } from '../../components/block/block.type';
+import { TProps } from '../../../../components/block/block.type';
 
 export default class СhatList extends Block {
   constructor(props: TProps) {
