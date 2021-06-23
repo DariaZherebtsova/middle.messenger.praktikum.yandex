@@ -1,14 +1,16 @@
 // import { LoginFormModel } from './types';
 import { IInputBlock } from '../components/input/inputs.type';
-import AuthAPI from '../api/auth-api';
+import UresAPI from '../api/user-api';
 import { router } from '../router/router';
 import { validateAllInputs } from '../utils/validate/index';
 
-const authAPI = new AuthAPI();
+const userAPI = new UresAPI();
+// const userLoginValidator = validateLoginFields(validateRules);
 
-class UserRegistrationController {
-  public async signup(inputs: Record<string, IInputBlock>) {
-    console.log('---UserRegistrationController login');
+class UserProfileController {
+  // public async login(data: LoginFormModel) {
+  public async profile(inputs: Record<string, IInputBlock>) {
+    console.log('---UserProfileController profile');
     try {
       // Запускаем крутилку
       console.log('---try');
@@ -18,16 +20,8 @@ class UserRegistrationController {
         throw new Error('данные не прошли валидацию');
       }
 
-      // сравниваю пароли
-      const { password, passwordRepeat } = inputs;
-      if (password.inputElement.value !== passwordRepeat.inputElement.value) {
-        password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        return;
-      }
-
       console.log('---data', prepareDataToRequest(inputs));
-      const userID = authAPI.signup(prepareDataToRequest(inputs));
+      const userID = userAPI.profile(prepareDataToRequest(inputs));
 
       // router.go('/chats');
 
@@ -38,7 +32,7 @@ class UserRegistrationController {
   }
 }
 
-export const userRegistrationController = new UserRegistrationController();
+export const userProfileController = new UserProfileController();
 
 function prepareDataToRequest(inputs: Record<string, IInputBlock>) {
   const result: Record<string, string> = {};

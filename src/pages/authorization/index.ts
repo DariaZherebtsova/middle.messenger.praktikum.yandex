@@ -5,7 +5,7 @@ import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
 import { validate, validateAllInputs } from '../../utils/validate/index';
 import { HTTPrequest } from '../../utils/HTTPrequest';
-import { userLoginController } from '../../controllers/user-login';
+import { userAuthController } from '../../controllers/user-auth';
 import { router } from '../../router/router';
 
 export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
@@ -95,7 +95,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
   function submit(event: Event) {
     event.preventDefault();
     console.log('----auth submit');
-    userLoginController.login(inputs);
+    userAuthController.signin(inputs);
 
     // if (validateAllInputs(Object.values(inputs))) {
     //   // валидация прошла

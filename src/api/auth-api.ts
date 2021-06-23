@@ -1,8 +1,8 @@
 import { HTTPrequest } from '../utils/HTTPrequest';
-import { BaseAPI } from './base-api';
+import { BaseAPI, baseUrl } from './base-api';
 import { SignInRequest, SignUpRequest } from '../controllers/types';
 
-const authAPIInstance = new HTTPrequest('https://ya-praktikum.tech/api/v2/auth');
+const authAPIInstance = new HTTPrequest(`${baseUrl}/auth`);
 
 export default class LoginAPI extends BaseAPI {
   public signin(user: SignInRequest): Promise<Record<string, string>> {

@@ -137,7 +137,7 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
   function submit(event: Event) {
     event.preventDefault();
     console.log('----registration submit');
-    userRegistrationController.login(inputs);
+    userRegistrationController.signup(inputs);
 
     // if (validateAllInputs(Object.values(inputs))) {
     //   // валидация прошла

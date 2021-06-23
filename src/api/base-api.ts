@@ -1,3 +1,5 @@
+export const baseUrl = 'https://ya-praktikum.tech/api/v2';
+
 export class BaseAPI {
   // На случай, если забудете переопределить метод и используете его, — выстрелит ошибка
   create() { throw new Error('Not implemented'); }

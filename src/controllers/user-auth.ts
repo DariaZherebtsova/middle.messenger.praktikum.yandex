@@ -1,16 +1,15 @@
 // import { LoginFormModel } from './types';
 import { IInputBlock } from '../components/input/inputs.type';
-import LoginAPI from '../api/login-api';
+import AuthAPI from '../api/auth-api';
 import { router } from '../router/router';
 import { validateAllInputs } from '../utils/validate/index';
 
-const loginApi = new LoginAPI();
+const authAPI = new AuthAPI();
 // const userLoginValidator = validateLoginFields(validateRules);
 
-class UserLoginController {
+class UserAuthController {
   // public async login(data: LoginFormModel) {
-  //  
-  public async login(inputs: Record<string, IInputBlock>) {
+  public async signin(inputs: Record<string, IInputBlock>) {
     console.log('---UserLoginController login');
     try {
       // Запускаем крутилку
@@ -22,7 +21,7 @@ class UserLoginController {
       }
 
       console.log('---data', prepareDataToRequest(inputs));
-      const userID = loginApi.signin(prepareDataToRequest(inputs));
+      const userID = authAPI.signin(prepareDataToRequest(inputs));
 
       // router.go('/chats');
 
@@ -33,7 +32,7 @@ class UserLoginController {
   }
 }
 
-export const userLoginController = new UserLoginController();
+export const userAuthController = new UserAuthController();
 
 function prepareDataToRequest(inputs: Record<string, IInputBlock>) {
   const result: Record<string, string> = {};

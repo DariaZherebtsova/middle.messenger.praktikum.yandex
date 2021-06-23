@@ -8,6 +8,7 @@ import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { HTTPrequest } from '../../utils/HTTPrequest';
+import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../router/router';
 
 export function initProfileEditDataPage(rootQuery: string): ProfilePage {
@@ -131,26 +132,24 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
 
   function submit(event: Event) {
     event.preventDefault();
+    console.log('----edit data submit');
+    userProfileController.profile(inputs);
 
-    const inputEl: HTMLElement | null = <HTMLElement>event.target;
-    if (inputEl === null) {
-      return;
-    }
 
-    if (validateAllInputs(Object.values(inputs))) {
-      // валидация прошла
+    // if (validateAllInputs(Object.values(inputs))) {
+    //   // валидация прошла
 
-      // отправляем форму
-      const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('profile-form');
-      new HTTPrequest().post('https://chats', { data: new FormData(form) })
-        .catch((err) => {
-          console.error('profile form submit error', err);
-        })
-        .finally(() => {
-          // возвращаемся в профиль
-          router.go('/profile');
-        });
-    }
+    //   // отправляем форму
+    //   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('profile-form');
+    //   new HTTPrequest().post('https://chats', { data: new FormData(form) })
+    //     .catch((err) => {
+    //       console.error('profile form submit error', err);
+    //     })
+    //     .finally(() => {
+    //       // возвращаемся в профиль
+    //       router.go('/profile');
+    //     });
+    // }
   }
 
   return profileEditDataPage;
