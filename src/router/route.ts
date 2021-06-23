@@ -10,7 +10,7 @@ export default class Route {
   _props: Record<string, string>;
 
   constructor(pathname: string, view: (rootQuery:string) => Block, props: Record<string, string>) {
-    console.log('constructor Route pathname', pathname);
+    // console.log('constructor Route pathname', pathname);
 
     this._pathname = pathname;
     this._blockInit = view;
@@ -37,8 +37,6 @@ export default class Route {
   }
 
   match(pathname: string): boolean {
-    console.log('---match pathname', pathname);
-    console.log('---match this._pathname', this._pathname);
     return isEqual(pathname, this._pathname);
   }
 
@@ -48,7 +46,7 @@ export default class Route {
     if (!this._block) {
       this._block = this._blockInit(this._props.rootQuery);
       // this._block = initProfilePage();
-      console.log('render this._block', this._block);
+      // console.log('render this._block', this._block);
 
       // render(this._props.rootQuery, this._block);
       return;
@@ -63,7 +61,7 @@ function isEqual(lhs, rhs) {
 }
 
 function render(query, block) {
-  console.log('render block', block);
+  // console.log('render block', block);
 
   const root = document.querySelector(query);
   root.textContent = block.getWrapperElement();

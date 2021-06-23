@@ -36,7 +36,7 @@ class Router {
   start(): void {
     console.log('start window.location.pathname', window.location.pathname);
     window.onpopstate = (event => {
-      console.log('----------onpopstate----------', event.currentTarget.location.pathname);
+      // console.log('----------onpopstate----------', event.currentTarget.location.pathname);
       this._onRoute(event.currentTarget.location.pathname);
     }).bind(this);
 
@@ -44,7 +44,7 @@ class Router {
   }
 
   _onRoute(pathname:string): void {
-    console.log('_onRoute pathname', pathname);
+    // console.log('_onRoute pathname', pathname);
 
     const route = this.getRoute(pathname);
 
@@ -52,7 +52,7 @@ class Router {
       return;
     }
 
-    console.log('---_currentRoute', this._currentRoute);
+    // console.log('---_currentRoute', this._currentRoute);
     
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
@@ -78,7 +78,7 @@ class Router {
   }
 
   getRoute(pathname: string): Route {
-    console.log('---getRoute');
+    // console.log('---getRoute');
     return this.routes.find(route => route.match(pathname));
   }
 }
