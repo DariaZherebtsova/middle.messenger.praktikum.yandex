@@ -5,6 +5,7 @@ import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
 import { validate, validateAllInputs } from '../../utils/validate/index';
 import { HTTPrequest } from '../../utils/HTTPrequest';
+import { userRegistrationController } from '../../controllers/user-registration';
 
 export function initRegistrationPage(rootQuery:string): RegistrationPage {
   console.log('---initRegistrationPage rootQuery', rootQuery);
@@ -50,13 +51,13 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
         label: 'Пароль',
         name: 'password',
         type: 'password',
-        value: '1234',
+        value: '12344321',
       },
       {
         label: 'Пароль (ещё раз)',
         name: 'passwordRepeat',
         type: 'password',
-        value: '1234',
+        value: '12344321',
       },
     ],
     button: {
@@ -135,24 +136,27 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
 
   function submit(event: Event) {
     event.preventDefault();
-    if (validateAllInputs(Object.values(inputs))) {
-      // валидация прошла
+    console.log('----registration submit');
+    userRegistrationController.login(inputs);
 
-      // сравниваю пароли
-      const { password, passwordRepeat } = inputs;
-      if (password.inputElement.value !== passwordRepeat.inputElement.value) {
-        password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        return;
-      }
+    // if (validateAllInputs(Object.values(inputs))) {
+    //   // валидация прошла
 
-      // отправляем форму
-      const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
-      new HTTPrequest().post('https://chats', { data: new FormData(form) })
-        .catch((err) => {
-          console.error('registration form submit error', err);
-        });
-    }
+    //   // сравниваю пароли
+    //   const { password, passwordRepeat } = inputs;
+    //   if (password.inputElement.value !== passwordRepeat.inputElement.value) {
+    //     password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+    //     passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+    //     return;
+    //   }
+
+    //   // отправляем форму
+    //   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
+    //   new HTTPrequest().post('https://chats', { data: new FormData(form) })
+    //     .catch((err) => {
+    //       console.error('registration form submit error', err);
+    //     });
+    // }
   }
   return registrationPage;
 }

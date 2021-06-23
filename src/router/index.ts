@@ -5,6 +5,7 @@ import { initAuthorizationPage } from '../pages/authorization/index';
 import { initRegistrationPage } from '../pages/registration/index';
 import { initProfileEditDataPage } from '../pages/profileEditData/index';
 import { initProfileEditPasswordPage } from '../pages/profileEditPassword/index';
+import 'regenerator-runtime/runtime';
 
 router
   .use('/', initChatPage)
