@@ -33,12 +33,31 @@
   margin: 30px auto 0;
 }
 
+.profile__avatar-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  .avatar-input {
+    display: none;
+  }
+
+  .avatar-label {
+    cursor: pointer;
+
+    .avatar-img {
+      border-radius: 50%;
+    }
+  }
+}
+
 .profile__avatar {
   padding-bottom: 20px;
   text-align: center;
 }
 
 .profile__name {
+  margin-top: 20px;
   margin-bottom: 30px;
   text-align: center;
   font-size: x-large;

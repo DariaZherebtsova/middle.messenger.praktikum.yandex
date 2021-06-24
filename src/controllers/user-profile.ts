@@ -20,8 +20,11 @@ class UserProfileController {
         throw new Error('данные не прошли валидацию');
       }
 
+      // отправляем данные
       console.log('---data', prepareDataToRequest(inputs));
       const userID = userAPI.profile(prepareDataToRequest(inputs));
+
+      // отправляем аватар
 
       // router.go('/chats');
 

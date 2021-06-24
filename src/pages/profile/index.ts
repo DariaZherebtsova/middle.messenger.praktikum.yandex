@@ -4,7 +4,7 @@ import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
 import backBtnImg from '../../../static/img/back-btn.png';
-import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
+import noImgAvatarLarge from '../../../static/img/ava.JPG';
 import { TProps } from '../../components/block/block.type';
 import { router } from '../../router/router';
 
