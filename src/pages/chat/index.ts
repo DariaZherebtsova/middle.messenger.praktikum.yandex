@@ -127,5 +127,29 @@ export function initChatPage(rootQuery:string): ChatPage {
     });
   }
 
+  const authLink = document.getElementsByClassName('chat-list__auth-link')[0];
+  if (authLink) {
+    authLink.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/auth');
+    });
+  }
+
+  const page404Link = document.getElementsByClassName('chat-list__404-link')[0];
+  if (page404Link) {
+    page404Link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/404');
+    });
+  }
+
+  const page500Link = document.getElementsByClassName('chat-list__500-link')[0];
+  if (page500Link) {
+    page500Link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/500');
+    });
+  }
+
   return chatPage;
 }

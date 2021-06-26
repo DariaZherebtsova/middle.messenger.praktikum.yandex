@@ -4,7 +4,6 @@ import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import { validate, validateAllInputs } from '../../utils/validate/index';
 import Button from '../../components/button/button';
-import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { HTTPrequest } from '../../utils/HTTPrequest';
@@ -14,7 +13,6 @@ import { router } from '../../router/router';
 export function initProfileEditDataPage(rootQuery: string): ProfilePage {
   const data = {
     page: {
-      backBtnImg,
       noImgAvatarLarge,
     },
     inputs: [
@@ -87,6 +85,13 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
     });
   }
 
+  const btnBack = document.getElementsByClassName('profile__back-btn')[0];
+  if (btnBack) {
+    btnBack.addEventListener('click', () => {
+      router.go('/profile');
+    });
+  }
+
   const inputs: Record<string, IInputBlock> = {};
   for (let i = 0; i < data.inputs.length; i += 1) {
     const props: TProps = {
@@ -151,6 +156,15 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
     //     });
     // }
   }
+
+  const avatarForm = document.getElementById('profile-avatar');
+  const avatarInput = document.getElementById('avatar');
+  avatarInput.addEventListener('change', event => {
+    const form = new FormData(avatarForm);
+  
+  });
+
+    
 
   return profileEditDataPage;
 }

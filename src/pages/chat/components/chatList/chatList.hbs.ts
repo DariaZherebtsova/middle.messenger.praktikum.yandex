@@ -1,9 +1,9 @@
 export const chatListTmpl = `
   <div class="chat-list__header">
-    <a class="custom-link color-grey" href="./authorization.html">❮ Вход</a>
-    <a class="custom-link color-grey" href="./404.html">404</a>
-    <a class="custom-link color-grey" href="./500.html">500</a>
-    <a class="chat-list__profile-link custom-link color-grey" href="./profile.html">Профиль ❯</a>
+    <a class="chat-list__auth-link custom-link color-grey">❮ Выход</a>
+    <a class="chat-list__404-link custom-link color-grey">404</a>
+    <a class="chat-list__500-link custom-link color-grey">500</a>
+    <a class="chat-list__profile-link custom-link color-grey">Профиль ❯</a>
   </div>
   <div class="chat-list__search">
     <input class="chat-list__search-input type="text" placeholder="Поиск">

@@ -3,7 +3,6 @@ import insertInDOM from '../../utils/insertInDOM';
 import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
-import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/ava.JPG';
 import { TProps } from '../../components/block/block.type';
 import { router } from '../../router/router';
@@ -11,7 +10,6 @@ import { router } from '../../router/router';
 export function initProfilePage(rootQuery: string): ProfilePage {
   const data = {
     page: {
-      backBtnImg,
       noImgAvatarLarge,
     },
     inputs: [
@@ -86,6 +84,13 @@ export function initProfilePage(rootQuery: string): ProfilePage {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
+    });
+  }
+
+  const btnBack = document.getElementsByClassName('profile__back-btn')[0];
+  if (btnBack) {
+    btnBack.addEventListener('click', () => {
+      router.go('/');
     });
   }
 

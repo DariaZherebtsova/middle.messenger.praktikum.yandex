@@ -5,6 +5,7 @@ import { initAuthorizationPage } from '../pages/authorization/index';
 import { initRegistrationPage } from '../pages/registration/index';
 import { initProfileEditDataPage } from '../pages/profileEditData/index';
 import { initProfileEditPasswordPage } from '../pages/profileEditPassword/index';
+import { initError404Page, initError500Page } from '../pages/errorPages/index';
 import 'regenerator-runtime/runtime';
 
 router
@@ -14,6 +15,8 @@ router
   .use('/profile', initProfilePage)
   .use('/profile/edit-data', initProfileEditDataPage)
   .use('/profile/edit-password', initProfileEditPasswordPage)
+  .use('/404', initError404Page)
+  .use('/500', initError500Page)
   .start();
 
 // Через секунду контент изменится сам, достаточно дёрнуть переход

@@ -23,10 +23,11 @@
   margin-bottom: 60px;
 }
 
-.error-page__link {
+.error-page__back-link {
   font-size: 11px;
   color: $green;
   text-decoration: none;
+  cursor: pointer;
   transition: color 0.3s ease-in;
 
   &:hover {

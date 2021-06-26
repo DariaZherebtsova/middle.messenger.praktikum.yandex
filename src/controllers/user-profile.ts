@@ -24,14 +24,16 @@ class UserProfileController {
       console.log('---data', prepareDataToRequest(inputs));
       const userID = userAPI.profile(prepareDataToRequest(inputs));
 
-      // отправляем аватар
-
       // router.go('/chats');
 
       // Останавливаем крутилку
     } catch (error) {
       // TO DO YOUR DEALS WITH ERROR
     }
+  }
+
+  public async profileAvatar(formData: FormData) {
+    userAPI.profileAvatar(formData);
   }
 }
 

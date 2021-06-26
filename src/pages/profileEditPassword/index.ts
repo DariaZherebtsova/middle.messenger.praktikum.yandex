@@ -4,7 +4,6 @@ import { Input } from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import { validate, validateAllInputs } from '../../utils/validate/index';
 import Button from '../../components/button/button';
-import backBtnImg from '../../../static/img/back-btn.png';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { HTTPrequest } from '../../utils/HTTPrequest';
@@ -13,7 +12,6 @@ import { router } from '../../router/router';
 export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPasswordPage {
   const data = {
     page: {
-      backBtnImg,
       noImgAvatarLarge,
     },
     inputs: [
@@ -54,6 +52,13 @@ export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPassw
       if (event.code === 'Enter') {
         event.preventDefault();
       }
+    });
+  }
+
+  const btnBack = document.getElementsByClassName('profile__back-btn')[0];
+  if (btnBack) {
+    btnBack.addEventListener('click', () => {
+      router.go('/profile');
     });
   }
 
