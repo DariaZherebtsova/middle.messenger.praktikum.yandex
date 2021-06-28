@@ -50,7 +50,7 @@
   }
 
   .avatar-label {
-    &:enabled {
+    &.activ {
       cursor: pointer;
     }
 

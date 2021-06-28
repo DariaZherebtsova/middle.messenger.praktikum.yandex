@@ -5,7 +5,7 @@ export const profileTempl = `
   <main class="profile__main">
     <form class="profile__avatar-form" id="profile-avatar">
       <label class="avatar-label" for="avatar"><img class="avatar-img" src="{{noImgAvatarLarge}}" width="130" /></label>
-      <input disabled class="avatar-input" id="avatar" type="file" accept="image/*" name="avatar">
+      <input class="avatar-input" id="avatar" type="file" accept="image/*" name="avatar">
     </form>
     <div class="profile__name">
       Vano

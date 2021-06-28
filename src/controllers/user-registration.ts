@@ -1,8 +1,9 @@
 // import { LoginFormModel } from './types';
 import { IInputBlock } from '../components/input/inputs.type';
 import AuthAPI from '../api/auth-api';
-import { router } from '../router/router';
+import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
+import prepareDataToRequest from '../utils/prepareDataToRequest';
 
 const authAPI = new AuthAPI();
 
@@ -39,12 +40,3 @@ class UserRegistrationController {
 }
 
 export const userRegistrationController = new UserRegistrationController();
-
-function prepareDataToRequest(inputs: Record<string, IInputBlock>) {
-  const result: Record<string, string> = {};
-  const arrInputs = Object.values(inputs);
-  arrInputs.forEach(item => {
-    result[<string>item.props.name] = item.inputElement.value;
-  });
-  return result;
-}

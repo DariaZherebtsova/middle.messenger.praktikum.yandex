@@ -1,4 +1,4 @@
-import { router } from './router';
+import { router } from '../services/router';
 import { initChatPage } from '../pages/chat/index';
 import { initProfilePage } from '../pages/profile/index';
 import { initAuthorizationPage } from '../pages/authorization/index';

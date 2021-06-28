@@ -5,7 +5,7 @@ import { IInputBlock } from './inputs.type';
 
 import { TProps } from '../block/block.type';
 
-export class Input extends Block implements IInputBlock {
+export default class Input extends Block implements IInputBlock {
   constructor(props: TProps) {
     // Создаём враппер DOM-элемент для input
     super('div', props);

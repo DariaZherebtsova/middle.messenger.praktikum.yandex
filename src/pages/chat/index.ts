@@ -3,11 +3,12 @@ import ChatPage from './chat';
 import СhatList from './components/chatList/chatList';
 import ChatPreview from './components/chatPreview/chatPreview';
 import MsgFeed from './components/msgFeed/msgFeed';
-import { Input } from '../../components/input/input';
+import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import { HTTPrequest } from '../../utils/HTTPrequest';
 import noImgAvatar from '../../../static/img/no_img_circle.svg';
-import { router } from '../../router/router';
+import { router } from '../../services/router';
+import { userAuthController } from '../../controllers/user-auth';
 
 export function initChatPage(rootQuery:string): ChatPage {
   const data = {
@@ -131,6 +132,7 @@ export function initChatPage(rootQuery:string): ChatPage {
   if (authLink) {
     authLink.addEventListener('click', (event: Event) => {
       event.preventDefault();
+      userAuthController.logout();
       router.go('/auth');
     });
   }

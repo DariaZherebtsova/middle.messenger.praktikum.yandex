@@ -1,6 +1,6 @@
 import ErrorPage from './errorPage';
 import insertInDOM from '../../utils/insertInDOM';
-import { router } from '../../router/router';
+import { router } from '../../services/router';
 
 export function initError404Page(rootQuery:string): ErrorPage {
   const data = {

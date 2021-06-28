@@ -11,15 +11,22 @@ export default class LoginAPI extends BaseAPI {
       data: user,
     };
     return authAPIInstance.post('/signin', options)
-      .then(({user_id}) => user_id); // Обрабатываем получение данных из сервиса далее
+      .then(({ user_id }) => user_id); // Обрабатываем получение данных из сервиса далее
   }
 
   public signup(user: SignUpRequest): Promise<Record<string, string>> {
-    console.log('---LoginAPI request');
+    console.log('---LoginAPI signup');
     const options = {
       data: user,
     };
     return authAPIInstance.post('/signup', options)
-      .then(({user_id}) => user_id); // Обрабатываем получение данных из сервиса далее
+      .then(({ user_id }) => user_id); // Обрабатываем получение данных из сервиса далее
+  }
+
+  public logout(): Promise<Record<string, string>> {
+    console.log('---LoginAPI logout');
+
+    return authAPIInstance.post('/logout')
+      .then(({ ok }) => ok); // Обрабатываем получение данных из сервиса далее
   }
 }

@@ -1,14 +1,13 @@
 import ProfileEditDataPage from './profileEditData';
 import insertInDOM from '../../utils/insertInDOM';
-import { Input } from '../../components/input/input';
+import Input from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
-import { validate, validateAllInputs } from '../../utils/validate/index';
+import { validate } from '../../utils/validate/index';
 import Button from '../../components/button/button';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
-import { HTTPrequest } from '../../utils/HTTPrequest';
 import { userProfileController } from '../../controllers/user-profile';
-import { router } from '../../router/router';
+import { router } from '../../services/router';
 
 export function initProfileEditDataPage(rootQuery: string): ProfilePage {
   const data = {
@@ -139,32 +138,21 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
     event.preventDefault();
     console.log('----edit data submit');
     userProfileController.profile(inputs);
-
-
-    // if (validateAllInputs(Object.values(inputs))) {
-    //   // валидация прошла
-
-    //   // отправляем форму
-    //   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('profile-form');
-    //   new HTTPrequest().post('https://chats', { data: new FormData(form) })
-    //     .catch((err) => {
-    //       console.error('profile form submit error', err);
-    //     })
-    //     .finally(() => {
-    //       // возвращаемся в профиль
-    //       router.go('/profile');
-    //     });
-    // }
   }
 
   const avatarForm = document.getElementById('profile-avatar');
   const avatarInput = document.getElementById('avatar');
-  avatarInput.addEventListener('change', event => {
-    const form = new FormData(avatarForm);
-  
-  });
-
-    
-
+  if (avatarInput) {
+    avatarInput.addEventListener('change', event => {
+      if (avatarForm) {
+        const form = new FormData(<HTMLFormElement>avatarForm);
+        userProfileController.profileAvatar(form);
+      }
+    });
+    const avatarLabel = document.getElementsByClassName('avatar-label')[0];
+    if (avatarLabel) {
+      avatarLabel.classList.add('activ');
+    }
+  }
   return profileEditDataPage;
 }

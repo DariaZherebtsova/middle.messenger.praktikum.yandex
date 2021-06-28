@@ -1,7 +1,7 @@
 import Route from './route';
 import { Block } from '../components/block/block';
 
-class Router {
+export default class Router {
   routes: Route[];
 
   history: History;
@@ -83,4 +83,4 @@ class Router {
   }
 }
 
-export const router = new Router('#root');
+// export const router = new Router('#root');

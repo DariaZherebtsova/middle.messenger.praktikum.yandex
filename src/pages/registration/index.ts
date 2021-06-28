@@ -1,11 +1,11 @@
 import RegistrationPage from './registration';
 import insertInDOM from '../../utils/insertInDOM';
-import { Input } from '../../components/input/input';
+import Input from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
-import { validate, validateAllInputs } from '../../utils/validate/index';
-import { HTTPrequest } from '../../utils/HTTPrequest';
+import { validate } from '../../utils/validate/index';
 import { userRegistrationController } from '../../controllers/user-registration';
+import { router } from '../../services/router';
 
 export function initRegistrationPage(rootQuery:string): RegistrationPage {
   console.log('---initRegistrationPage rootQuery', rootQuery);
@@ -138,25 +138,16 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
     event.preventDefault();
     console.log('----registration submit');
     userRegistrationController.signup(inputs);
-
-    // if (validateAllInputs(Object.values(inputs))) {
-    //   // валидация прошла
-
-    //   // сравниваю пароли
-    //   const { password, passwordRepeat } = inputs;
-    //   if (password.inputElement.value !== passwordRepeat.inputElement.value) {
-    //     password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-    //     passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-    //     return;
-    //   }
-
-    //   // отправляем форму
-    //   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
-    //   new HTTPrequest().post('https://chats', { data: new FormData(form) })
-    //     .catch((err) => {
-    //       console.error('registration form submit error', err);
-    //     });
-    // }
   }
+
+  const loginFormLink = document.getElementsByClassName('login-form__link')[0];
+  if (loginFormLink) {
+    loginFormLink.addEventListener('click', (event: Event) => {
+      console.log('---click');
+      event.preventDefault();
+      router.go('/auth');
+    });
+  }
+
   return registrationPage;
 }

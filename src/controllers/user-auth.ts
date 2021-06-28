@@ -1,8 +1,9 @@
 // import { LoginFormModel } from './types';
 import { IInputBlock } from '../components/input/inputs.type';
 import AuthAPI from '../api/auth-api';
-import { router } from '../router/router';
+import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
+import prepareDataToRequest from '../utils/prepareDataToRequest';
 
 const authAPI = new AuthAPI();
 // const userLoginValidator = validateLoginFields(validateRules);
@@ -10,7 +11,7 @@ const authAPI = new AuthAPI();
 class UserAuthController {
   // public async login(data: LoginFormModel) {
   public async signin(inputs: Record<string, IInputBlock>) {
-    console.log('---UserLoginController login');
+    console.log('---UserAuthController signin');
     try {
       // Запускаем крутилку
       console.log('---try');
@@ -30,15 +31,22 @@ class UserAuthController {
       // TO DO YOUR DEALS WITH ERROR
     }
   }
+
+  public async logout() {
+    console.log('---UserAuthController logout');
+    try {
+      // Запускаем крутилку
+      console.log('---try');
+
+      const result = authAPI.logout();
+
+      router.go('/chats');
+
+      // Останавливаем крутилку
+    } catch (error) {
+      // TO DO YOUR DEALS WITH ERROR
+    }
+  }
 }
 
 export const userAuthController = new UserAuthController();
-
-function prepareDataToRequest(inputs: Record<string, IInputBlock>) {
-  const result: Record<string, string> = {};
-  const arrInputs = Object.values(inputs);
-  arrInputs.forEach(item => {
-    result[<string>item.props.name] = item.inputElement.value;
-  });
-  return result;
-}

@@ -1,12 +1,11 @@
 import AuthorizationPage from './authorization';
 import insertInDOM from '../../utils/insertInDOM';
-import { Input } from '../../components/input/input';
+import Input from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
-import { validate, validateAllInputs } from '../../utils/validate/index';
-import { HTTPrequest } from '../../utils/HTTPrequest';
+import { validate } from '../../utils/validate/index';
 import { userAuthController } from '../../controllers/user-auth';
-import { router } from '../../router/router';
+import { router } from '../../services/router';
 
 export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
   const data = {
@@ -96,19 +95,6 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
     event.preventDefault();
     console.log('----auth submit');
     userAuthController.signin(inputs);
-
-    // if (validateAllInputs(Object.values(inputs))) {
-    //   // валидация прошла
-
-    //   // отправляем форму
-    //   userLoginController.login(formData);
-
-    //   const form: HTMLFormElement | null = <HTMLFormElement>document.getElementById('loginForm');
-    //   new HTTPrequest().post('https://chats', { data: new FormData(form) })
-    //     .catch((err) => {
-    //       console.error('loginForm submit error', err);
-    //     });
-    // }
   }
 
   const loginFormLink = document.getElementsByClassName('login-form__link')[0];

@@ -1,11 +1,11 @@
 import ProfilePage from './profile';
 import insertInDOM from '../../utils/insertInDOM';
-import { Input } from '../../components/input/input';
+import Input from '../../components/input/input';
 import { IInputBlock } from '../../components/input/inputs.type';
 import Button from '../../components/button/button';
 import noImgAvatarLarge from '../../../static/img/ava.JPG';
 import { TProps } from '../../components/block/block.type';
-import { router } from '../../router/router';
+import { router } from '../../services/router';
 
 export function initProfilePage(rootQuery: string): ProfilePage {
   const data = {
@@ -104,6 +104,11 @@ export function initProfilePage(rootQuery: string): ProfilePage {
     insertInDOM('.profile__input-box', input);
     input.inputElement.disabled = true;
     inputs[data.inputs[i].name] = input;
+  }
+
+  const avatarInput = document.getElementById('avatar');
+  if (avatarInput) {
+    avatarInput.disabled = true;
   }
 
   const buttons: Button[] = [];
