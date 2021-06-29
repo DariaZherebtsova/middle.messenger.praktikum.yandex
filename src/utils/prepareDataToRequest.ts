@@ -1,4 +1,4 @@
-import { IInputBlock } from '../components/input/inputs.type';
+import { IInputBlock } from '../components/pureInput/inputs.type';
 
 export default function prepareDataToRequest(
   inputs: Record<string,

@@ -1,7 +1,7 @@
 import ProfilePage from './profile';
 import insertInDOM from '../../utils/insertInDOM';
-import Input from '../../components/input/input';
-import { IInputBlock } from '../../components/input/inputs.type';
+import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
+import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import Button from '../../components/button/button';
 import noImgAvatarLarge from '../../../static/img/ava.JPG';
 import { TProps } from '../../components/block/block.type';
@@ -100,7 +100,7 @@ export function initProfilePage(rootQuery: string): ProfilePage {
       wrapperClass: 'profile__input',
       ...data.inputs[i],
     };
-    const input = new Input(props);
+    const input = new InputWithLabel(props);
     insertInDOM('.profile__input-box', input);
     input.inputElement.disabled = true;
     inputs[data.inputs[i].name] = input;

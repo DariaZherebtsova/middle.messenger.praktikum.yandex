@@ -5,7 +5,7 @@ import validateLogin from './login';
 import validateName from './name';
 import validatePhone from './phone';
 import validatePassword from './password';
-import { IInputBlock } from '../../components/input/inputs.type';
+import { IInputBlock } from '../../components/pureInput/inputs.type';
 
 export function validate(value: string, type: string): ValidationResult {
   console.log(`validate type=${type} value=${value}`);

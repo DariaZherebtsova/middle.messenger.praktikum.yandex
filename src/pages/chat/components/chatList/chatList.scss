@@ -11,6 +11,34 @@
   margin-bottom: 20px;
 }
 
+.chat-list__create-chat-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-list__chat-title-input {
+  width: 86%;
+  padding-left: 10px;
+  border-color: transparent;
+  border-radius: 30px;
+  background-color: $light-grey;
+}
+
+.chat-list__create-btn {
+  border: none;
+  width: 34px;
+  height: 34px;
+  background: url(../../../static/img/create.svg) no-repeat;
+  // margin-right: 8px;
+}
+
+.chat-list__send-btn {
+  border: none;
+  width: 34px;
+  height: 34px;
+  background: url(../../../static/img/create.svg) no-repeat;
+}
+
 .chat-list__search {
   text-align: center;
 }

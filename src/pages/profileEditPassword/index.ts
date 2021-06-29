@@ -1,7 +1,7 @@
 import ProfileEditPasswordPage from './profileEditPassword';
 import insertInDOM from '../../utils/insertInDOM';
-import Input from '../../components/input/input';
-import { IInputBlock } from '../../components/input/inputs.type';
+import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
+import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import { validate } from '../../utils/validate/index';
 import Button from '../../components/button/button';
 import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
@@ -75,7 +75,7 @@ export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPassw
         blur: (event: Event) => onBlur(event),
       },
     };
-    const input = new Input(props);
+    const input = new InputWithLabel(props);
     insertInDOM('.profile__input-box', input);
     inputs[data.inputs[i].name] = input;
   }

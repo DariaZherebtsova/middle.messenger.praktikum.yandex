@@ -1,7 +1,7 @@
 import AuthorizationPage from './authorization';
 import insertInDOM from '../../utils/insertInDOM';
-import Input from '../../components/input/input';
-import { IInputBlock } from '../../components/input/inputs.type';
+import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
+import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import Button from '../../components/button/button';
 import { validate } from '../../utils/validate/index';
 import { userAuthController } from '../../controllers/user-auth';
@@ -36,6 +36,8 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
     },
   };
 
+  console.log('--window.history.state', window.history.state);
+
   const authorizationPage = new AuthorizationPage(data.page);
   insertInDOM(rootQuery, authorizationPage);
 
@@ -61,7 +63,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
         blur: (event: Event) => onBlur(event),
       },
     };
-    const input: Input = new Input(props);
+    const input: Input = new InputWithLabel(props);
     insertInDOM('.login-form__input-box', input);
     inputs[data.inputs[i].name] = input;
   }

@@ -1,4 +1,4 @@
-export const inputTmp = `
+export const inputWithLabelTmp = `
   <div class="input-wrapper">
    <label>{{label}}</label>
     <input name="{{name}}" type="{{type}}" value="{{value}}"> 

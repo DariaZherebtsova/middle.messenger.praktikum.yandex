@@ -3,15 +3,32 @@ import ChatPage from './chat';
 import СhatList from './components/chatList/chatList';
 import ChatPreview from './components/chatPreview/chatPreview';
 import MsgFeed from './components/msgFeed/msgFeed';
+import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import { HTTPrequest } from '../../utils/HTTPrequest';
 import noImgAvatar from '../../../static/img/no_img_circle.svg';
 import { router } from '../../services/router';
 import { userAuthController } from '../../controllers/user-auth';
+import { chatController } from '../../controllers/chats';
 
 export function initChatPage(rootQuery:string): ChatPage {
   const data = {
+    createBtn: {
+      wrapperClass: 'chat-list__create-btn',
+      events: {
+        click: (event: Event) => createChat(event),
+      },
+    },
+    sendNameBtn: {
+      wrapperClass: 'chat-list__send-btn',
+      events: {
+        click: (event: Event) => requestCreateChat(event),
+      },
+    },
+    chatTitleInput: {
+      wrapperClass: 'chat-list__chat-title-input',
+    },
     chats: [
       {
         name: 'Илья',
@@ -37,8 +54,7 @@ export function initChatPage(rootQuery:string): ChatPage {
         },
       },
       msgInput: {
-        type: 'text',
-        name: 'message',
+        wrapperClass: 'msg-feed__input',
       },
       noImgAvatar: `${noImgAvatar}`,
       name: 'Илья',
@@ -62,6 +78,18 @@ export function initChatPage(rootQuery:string): ChatPage {
   const chatList = new СhatList({});
   insertInDOM('.chat-page-wrapper', chatList);
 
+  const createBtn = new Button(data.createBtn);
+  insertInDOM('.chat-list__create-chat-box', createBtn);
+
+  const chatTitleInput = new Input(data.chatTitleInput);
+  chatTitleInput.element.setAttribute('placeholder', 'введите название чата');
+  chatTitleInput.hide();
+  insertInDOM('.chat-list__create-chat-box', chatTitleInput);
+
+  const sendNameBtn = new Button(data.sendNameBtn);
+  sendNameBtn.hide();
+  insertInDOM('.chat-list__create-chat-box', sendNameBtn);
+
   // создаем сhatPreview
   for (let i = 0; i < data.chats.length; i += 1) {
     const сhatPreview = new ChatPreview(data.chats[i]);
@@ -82,13 +110,9 @@ export function initChatPage(rootQuery:string): ChatPage {
   attachBtn.getWrapperElement().setAttribute('type', 'button');
   insertInDOM('.msg-feed__send-msg-form', attachBtn);
 
-  const inputBlock = new Input(data.msgFeed.msgInput);
-  const input = inputBlock.getElementForEvent();
-  input.classList.add('msg-feed__input');
-  const box = document.querySelector('.msg-feed__send-msg-form');
-  if (box) {
-    box.appendChild(input);
-  }
+  const msgInput = new Input(data.msgFeed.msgInput);
+  msgInput.element.setAttribute('name', 'message');
+  insertInDOM('.msg-feed__send-msg-form', msgInput);
 
   const sendBtn = new Button(data.msgFeed.sendBtn);
   attachBtn.getWrapperElement().setAttribute('type', 'submit');
@@ -117,6 +141,19 @@ export function initChatPage(rootQuery:string): ChatPage {
     event.preventDefault();
 
     sendMsg();
+  }
+
+  function createChat(event: Event) {
+    event.preventDefault();
+    createBtn.hide();
+    chatTitleInput.show();
+    sendNameBtn.show();
+  }
+
+  function requestCreateChat(event: Event) {
+    console.log('---requestCreateChat');
+    event.preventDefault();
+    chatController.create('new chatik');
   }
 
   const profileLink = document.getElementsByClassName('chat-list__profile-link')[0];
@@ -152,6 +189,8 @@ export function initChatPage(rootQuery:string): ChatPage {
       router.go('/500');
     });
   }
+
+  chatController.get();
 
   return chatPage;
 }

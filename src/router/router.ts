@@ -64,8 +64,8 @@ export default class Router {
   }
 
   go(pathname: string): void {
-    console.log('--go');
-    this.history.pushState({}, '', pathname);
+    // console.log('--go');
+    this.history.pushState({ }, '', pathname);
     this._onRoute(pathname);
   }
 

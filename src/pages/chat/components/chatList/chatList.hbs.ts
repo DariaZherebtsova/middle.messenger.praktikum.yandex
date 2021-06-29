@@ -9,4 +9,7 @@ export const chatListTmpl = `
     <input class="chat-list__search-input type="text" placeholder="Поиск">
   </div>
   <ul class="chat-list__preview-list">
-  </ul>`;
+  </ul>
+  <footer class="chat-list__footer">
+    <div class="chat-list__create-chat-box"></div>
+  </footer>`;

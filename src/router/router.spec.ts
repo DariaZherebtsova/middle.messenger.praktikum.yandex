@@ -4,7 +4,7 @@ import { Block } from '../components/block/block';
 import Router from './router';
 
 describe('Проверяем переходы у Роута', () => {
-  beforeEach(() => {
+  before(() => {
     const dom = new JSDOM(
       `<html>
         <body>
@@ -16,17 +16,24 @@ describe('Проверяем переходы у Роута', () => {
 
     global.window = dom.window;
     global.document = dom.window.document;
-  });
-
-  it('Переход на новую страницу должен менять состояние сущности history', () => {
     const router = new Router('#root');
     function initBlock() {
       return new Block();
     }
     router.use('/404', initBlock);
+    router.use('/500', initBlock);
     router.start();
-    router.go('/404');
+    global.router = router;
+  });
 
-    expect(router._currentRoute._pathname).to.eq('/404');
+  it('Переход на новую страницу меняет размер history', () => {
+    router.go('/404');
+    router.go('/500');
+    expect(router.history.length).to.eq(3);
+  });
+
+  it('Переход на новую страницу меняет window.location.pathname', () => {
+    router.go('/404');
+    expect(window.location.pathname).to.eq('/404');
   });
 });

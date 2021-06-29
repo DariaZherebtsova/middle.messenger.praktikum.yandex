@@ -1,5 +1,5 @@
 // import { LoginFormModel } from './types';
-import { IInputBlock } from '../components/input/inputs.type';
+import { IInputBlock } from '../components/pureInput/inputs.type';
 import AuthAPI from '../api/auth-api';
 import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
