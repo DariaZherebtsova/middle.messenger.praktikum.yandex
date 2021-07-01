@@ -4,6 +4,10 @@
   height: 72px;
   display: flex;
   justify-content: space-between;
+
+  &:hover {
+    background-color: $light-green;
+  }
 }
 
 .chat-preview__avatar {
@@ -20,6 +24,6 @@
   min-width: 40px;
 }
 
-.chat-preview__chat-name {
+.chat-preview__chat-title {
   margin-bottom: 4px;
 }

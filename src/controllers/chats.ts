@@ -1,5 +1,8 @@
 import ChatAPI from '../api/chat-api';
+import { globalStore } from '../store/globalStore';
 import { router } from '../services/router';
+import noImgAvatar from '../../static/img/no_img_circle.svg';
+import { ChatsResponse } from './types';
 
 const chatAPI = new ChatAPI();
 
@@ -10,11 +13,10 @@ class ChatController {
       // Запускаем крутилку
       console.log('---try');
 
-      const chats = await chatAPI.get();
-
+      const answer = await chatAPI.get();
+      const chats = JSON.parse(answer);
       console.log('--chats', chats);
-
-      // router.go('/chats');
+      globalStore.setStore('chats', chats);
 
       // Останавливаем крутилку
     } catch (error) {
@@ -22,19 +24,21 @@ class ChatController {
     }
   }
 
+  getDataForChats() {
+    console.log('---getDataForChats');
+    const result = globalStore.getStore('chats').map((item) => {
+      item.avatar = item.avatar ? item.avatar : `${noImgAvatar}`;
+      return item;
+    });
+    return result;
+  }
+
   public async create(title: string) {
     console.log('---ChatController create');
     try {
-      // Запускаем крутилку
-      console.log('---try');
-
-      const chats = await chatAPI.create(title);
-
-      console.log('--chats', chats);
-
-      // router.go('/chats');
-
-      // Останавливаем крутилку
+      await chatAPI.create(title);
+      // получаем новый список
+      this.get();
     } catch (error) {
       // TO DO YOUR DEALS WITH ERROR
     }

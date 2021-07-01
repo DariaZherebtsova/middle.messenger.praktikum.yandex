@@ -3,7 +3,6 @@ import ChatPage from './chat';
 import СhatList from './components/chatList/chatList';
 import ChatPreview from './components/chatPreview/chatPreview';
 import MsgFeed from './components/msgFeed/msgFeed';
-import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import Input from '../../components/input/input';
 import Button from '../../components/button/button';
 import { HTTPrequest } from '../../utils/HTTPrequest';
@@ -11,38 +10,22 @@ import noImgAvatar from '../../../static/img/no_img_circle.svg';
 import { router } from '../../services/router';
 import { userAuthController } from '../../controllers/user-auth';
 import { chatController } from '../../controllers/chats';
+import { globalStore } from '../../store/globalStore';
+import { initChatList } from './components/chatList';
+import { initMsgFeed } from './components/msgFeed';
 
 export function initChatPage(rootQuery:string): ChatPage {
+  // запрашиваем список чатов
+  chatController.get();
+
+  // const globalStoreEventBus = globalStore.eventBus();
+  // globalStoreEventBus.on('flow:something-has-changed', doChange);
+
+  // function doChange(...args) {
+  //   console.log('---doChange', args);
+  // }
+
   const data = {
-    createBtn: {
-      wrapperClass: 'chat-list__create-btn',
-      events: {
-        click: (event: Event) => createChat(event),
-      },
-    },
-    sendNameBtn: {
-      wrapperClass: 'chat-list__send-btn',
-      events: {
-        click: (event: Event) => requestCreateChat(event),
-      },
-    },
-    chatTitleInput: {
-      wrapperClass: 'chat-list__chat-title-input',
-    },
-    chats: [
-      {
-        name: 'Илья',
-        lastMsg: 'В траве сидел кузнечик ...',
-        time: '12:15',
-        img: `${noImgAvatar}`,
-      },
-      {
-        name: 'Олег',
-        lastMsg: 'Представьте себе, представьте себе Совсем как огуречик...',
-        time: 'Пн',
-        img: `${noImgAvatar}`,
-      },
-    ],
     msgFeed: {
       attachBtn: {
         wrapperClass: 'msg-feed__attach-btn',
@@ -66,95 +49,11 @@ export function initChatPage(rootQuery:string): ChatPage {
   const chatPage = new ChatPage({});
   insertInDOM(rootQuery, chatPage);
 
-  // // render chatPageTmpl
-  // const hbsTemplateFn = Handlebars.compile(chatPageTmpl);
-  // const htmlStr = hbsTemplateFn({});
-  // const root = document.getElementById('root');
-  // if (root) {
-  //   root.innerHTML = htmlStr;
-  // }
-
   // создаем chatList
-  const chatList = new СhatList({});
-  insertInDOM('.chat-page-wrapper', chatList);
-
-  const createBtn = new Button(data.createBtn);
-  insertInDOM('.chat-list__create-chat-box', createBtn);
-
-  const chatTitleInput = new Input(data.chatTitleInput);
-  chatTitleInput.element.setAttribute('placeholder', 'введите название чата');
-  chatTitleInput.hide();
-  insertInDOM('.chat-list__create-chat-box', chatTitleInput);
-
-  const sendNameBtn = new Button(data.sendNameBtn);
-  sendNameBtn.hide();
-  insertInDOM('.chat-list__create-chat-box', sendNameBtn);
-
-  // создаем сhatPreview
-  for (let i = 0; i < data.chats.length; i += 1) {
-    const сhatPreview = new ChatPreview(data.chats[i]);
-    const сhatPreviewLi = document.createElement('li');
-    сhatPreviewLi.appendChild(document.createElement('hr'));
-    сhatPreviewLi.appendChild(сhatPreview.getWrapperElement());
-    const previewList = document.querySelector('.chat-list__preview-list');
-    if (previewList) {
-      previewList.appendChild(сhatPreviewLi);
-    }
-  }
+  initChatList('.chat-page-wrapper');
 
   // создаем msgFeed
-  const msgFeed = new MsgFeed(data.msgFeed);
-  insertInDOM('.chat-page-wrapper', msgFeed);
-
-  const attachBtn = new Button(data.msgFeed.attachBtn);
-  attachBtn.getWrapperElement().setAttribute('type', 'button');
-  insertInDOM('.msg-feed__send-msg-form', attachBtn);
-
-  const msgInput = new Input(data.msgFeed.msgInput);
-  msgInput.element.setAttribute('name', 'message');
-  insertInDOM('.msg-feed__send-msg-form', msgInput);
-
-  const sendBtn = new Button(data.msgFeed.sendBtn);
-  attachBtn.getWrapperElement().setAttribute('type', 'submit');
-  insertInDOM('.msg-feed__send-msg-form', sendBtn);
-
-  const sendMsgForm: HTMLFormElement | null = <HTMLFormElement>document.getElementById('send-msg-form');
-  if (sendMsgForm) {
-    sendMsgForm.addEventListener('keydown', (event: Event) => {
-      if (event.code === 'Enter') {
-        event.preventDefault();
-
-        sendMsg();
-      }
-    });
-  }
-
-  function sendMsg() {
-    // отправляем форму
-    new HTTPrequest().post('https://chats', { data: new FormData(<HTMLFormElement>sendMsgForm) })
-      .catch((err) => {
-        console.error('sendMsg error', err);
-      });
-  }
-
-  function submit(event: Event) {
-    event.preventDefault();
-
-    sendMsg();
-  }
-
-  function createChat(event: Event) {
-    event.preventDefault();
-    createBtn.hide();
-    chatTitleInput.show();
-    sendNameBtn.show();
-  }
-
-  function requestCreateChat(event: Event) {
-    console.log('---requestCreateChat');
-    event.preventDefault();
-    chatController.create('new chatik');
-  }
+  initMsgFeed('.chat-page-wrapper');
 
   const profileLink = document.getElementsByClassName('chat-list__profile-link')[0];
   if (profileLink) {
@@ -189,8 +88,6 @@ export function initChatPage(rootQuery:string): ChatPage {
       router.go('/500');
     });
   }
-
-  chatController.get();
 
   return chatPage;
 }

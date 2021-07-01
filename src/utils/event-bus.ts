@@ -1,5 +1,5 @@
 export interface IEventBus {
-  on(event: string, callback: () => void): void;
+  on(event: string, callback: (any) => void): void;
   off(event: string, callback: () => void): void;
   emit(event: string, ...args: []): void;
 }
@@ -33,6 +33,7 @@ export class EventBus implements IEventBus {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
+    console.log('---emit', args);
 
     this.listeners[event].forEach((listener) => {
       listener(...args);

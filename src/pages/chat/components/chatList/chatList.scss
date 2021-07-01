@@ -17,11 +17,12 @@
 }
 
 .chat-list__chat-title-input {
-  width: 86%;
-  padding-left: 10px;
+  width: 70%;
   border-color: transparent;
   border-radius: 30px;
   background-color: $light-grey;
+  text-align: center;
+  font-size: 16px;
 }
 
 .chat-list__create-btn {
@@ -30,6 +31,10 @@
   height: 34px;
   background: url(../../../static/img/create.svg) no-repeat;
   // margin-right: 8px;
+
+  &.cancel {
+    background: url(../../../static/img/close.svg) no-repeat;
+  }
 }
 
 .chat-list__send-btn {

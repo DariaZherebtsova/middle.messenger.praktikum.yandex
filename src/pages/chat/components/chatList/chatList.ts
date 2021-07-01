@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatListTmpl } from './chatList.hbs';
 import { TProps } from '../../../../components/block/block.type';
+import { ChatsResponse } from '../../../../controllers/types';
 
 export default class СhatList extends Block {
   constructor(props: TProps) {
@@ -17,4 +18,6 @@ export default class СhatList extends Block {
     const htmlStr = hbsTemplateFn(this.props);
     return htmlStr;
   }
+
+  renderChatPrewiews(chats: Array<ChatsResponse>): void {}
 }
