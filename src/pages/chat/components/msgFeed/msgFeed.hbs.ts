@@ -4,10 +4,8 @@ export const msgFeedTmpl = `
       <img src="{{avatar}}">
     </div>
     <div class="msg-feed__name">{{title}}</div>
-    <div class="dropdown-box">
-      <ul class="dropdown">
-        <li><button>Добавить пользователя</button></li>
-        <li><button>Удалить пользователя</button></li>
+    <div class="msg-feed__dropdown-box">
+      <ul class="msg-feed__dropdown">
       </ul>
     </div>
   </div>

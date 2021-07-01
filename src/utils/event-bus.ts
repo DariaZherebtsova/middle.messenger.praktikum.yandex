@@ -33,7 +33,6 @@ export class EventBus implements IEventBus {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
-    console.log('---emit', args);
 
     this.listeners[event].forEach((listener) => {
       listener(...args);

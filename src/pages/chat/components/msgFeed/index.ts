@@ -2,13 +2,34 @@ import MsgFeed from './msgFeed';
 import insertInDOM from '../../../../utils/insertInDOM';
 import Input from '../../../../components/input/input';
 import Button from '../../../../components/button/button';
+import { initModal } from '../modal/index';
 import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
 
 export function initMsgFeed(parentElSelector:string): MsgFeed {
   const data = {
-    menuBtn: {
+    openMenuBtn: {
       wrapperClass: 'msg-feed__header__menu-btn',
+      open: false,
+      events: {
+        click: (event: Event) => openMenu(event),
+      },
     },
+    menuBtns: [
+      {
+        wrapperClass: 'msg-feed__add-user-btn',
+        text: 'Добавить пользователя',
+        events: {
+          click: (event: Event) => addUser(event),
+        },
+      },
+      {
+        wrapperClass: 'msg-feed__delete-user-btn',
+        text: 'Удалить пользователя',
+        events: {
+          click: (event: Event) => openMenu(event),
+        },
+      },
+    ],
     attachBtn: {
       wrapperClass: 'msg-feed__attach-btn',
     },
@@ -21,6 +42,7 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
     msgInput: {
       wrapperClass: 'msg-feed__input',
     },
+    modal_title: 'Добавить пользователя',
     avatar: `${noImgAvatar}`,
     title: 'Илья',
     date: '31 июня',
@@ -31,8 +53,20 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
   insertInDOM(parentElSelector, msgFeed);
 
   // msg-feed__header__menu
-  const menuBtn = new Button(data.menuBtn);
-  insertInDOM('.msg-feed__header', menuBtn);
+  const openMenuBtn = new Button(data.openMenuBtn);
+  insertInDOM('.msg-feed__header', openMenuBtn);
+
+  for (let i = 0; i < data.menuBtns.length; i += 1) {
+    const menuBtn = new Button(data.menuBtns[i]);
+    const menuBtnLi = document.createElement('li');
+    menuBtnLi.appendChild(menuBtn.element);
+    const dropdown = document.querySelector('.msg-feed__dropdown');
+    if (dropdown) {
+      dropdown.appendChild(menuBtnLi);
+    }
+  }
+
+  const modal = initModal('.msg-feed');
 
   const attachBtn = new Button(data.attachBtn);
   attachBtn.getWrapperElement().setAttribute('type', 'button');
@@ -55,6 +89,28 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
         sendMsg();
       }
     });
+  }
+
+  function openMenu(event: Event) {
+    console.log('---openMenu');
+    event.preventDefault();
+    const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    if (openMenuBtn.props.open) {
+      dropdownBox.style.display = 'none';
+      openMenuBtn.props.open = false;
+    } else {
+      dropdownBox.style.display = 'block';
+      openMenuBtn.props.open = true;
+    }
+  }
+
+  function addUser(event: Event) {
+    console.log('---addUser');
+    event.preventDefault();
+    const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    dropdownBox.style.display = 'none';
+    openMenuBtn.props.open = false;
+    modal.show();
   }
 
   function sendMsg() {

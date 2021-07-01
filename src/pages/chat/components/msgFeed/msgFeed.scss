@@ -36,11 +36,12 @@
   }
 }
 
-.dropdown-box {
+.msg-feed__dropdown-box {
   position: relative;
+  display: none;
 }
 
-.dropdown {
+.msg-feed__dropdown {
   display: block;
   position: absolute;
   right: -15px;

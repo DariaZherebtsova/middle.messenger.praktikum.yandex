@@ -1,0 +1,62 @@
+.modal {
+  position: fixed;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  padding: 15px;
+}
+
+.modal_active {
+  position: fixed;
+  top: 0;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.modal__close-button {
+  background: url(../../../../../static/img/cross.svg) no-repeat;
+  height: 15px;
+  width: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+
+.modal__content {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px 40px;
+  background: #FFFFFF;
+  position: relative;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+  border-radius: 12px;
+}
+
+.modal__title {
+  font-size: 18px;
+  text-align: center;
+  margin: 10px auto 40px;
+}
+
+.modal__button-box {
+  margin-top: 30px;
+  text-align: center;
+}
