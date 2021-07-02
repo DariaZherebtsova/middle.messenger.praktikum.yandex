@@ -3,6 +3,7 @@ import insertInDOM from '../../../../utils/insertInDOM';
 import InputWithLabel from '../../../../components/inputWithLabel/inputWithLabel';
 import Button from '../../../../components/button/button';
 import { validate } from '../../../../utils/validate/index';
+import { chatController } from '../../../../controllers/chats';
 
 export function initModal(parentElSelector:string): Modal {
   console.log('--initModal');
@@ -58,6 +59,8 @@ export function initModal(parentElSelector:string): Modal {
 
   function done() {
     console.log('---done');
+    chatController.addUsers(input.inputElement.value);
+    modal.hide();
   }
 
   function close() {

@@ -30,7 +30,7 @@ class UserRegistrationController {
       console.log('---data', prepareDataToRequest(inputs));
       const userID = authAPI.signup(prepareDataToRequest(inputs));
 
-      // router.go('/chats');
+      router.go('/');
 
       // Останавливаем крутилку
     } catch (error) {

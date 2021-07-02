@@ -4,6 +4,9 @@ import Input from '../../../../components/input/input';
 import Button from '../../../../components/button/button';
 import { initModal } from '../modal/index';
 import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
+import { chatController } from '../../../../controllers/chats';
+import ChatTitle from '../chatTitle/chatTitle';
+import { initDropdown } from '../dropdown/index';
 
 export function initMsgFeed(parentElSelector:string): MsgFeed {
   const data = {
@@ -19,7 +22,7 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
         wrapperClass: 'msg-feed__add-user-btn',
         text: 'Добавить пользователя',
         events: {
-          click: (event: Event) => addUser(event),
+          click: (event: Event) => showModal(event),
         },
       },
       {
@@ -42,29 +45,35 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
     msgInput: {
       wrapperClass: 'msg-feed__input',
     },
+    currentChat: chatController.getCurrentChat(),
     modal_title: 'Добавить пользователя',
-    avatar: `${noImgAvatar}`,
-    title: 'Илья',
-    date: '31 июня',
-    last_message: 'В траве сидел кузнечик, В траве сидел кузнечик, Совсем как огуречик Зелененький он был.',
   };
 
   const msgFeed = new MsgFeed(data);
   insertInDOM(parentElSelector, msgFeed);
 
+  // if (!data.currentChat) {
+  //   msgFeed.element.classList.add('empty');
+  //   msgFeed.element.textContent = 'Выберите чат чтобы отправить сообщение';
+  //   return msgFeed;
+  // }
+  msgFeed.element.classList.remove('empty');
+
+  // chat title
+  // const chatTitleData = {
+  //   wrapperClass: 'msg-feed__header',
+  //   currentChat: data.currentChat,
+  // };
+  const chatTitle = new ChatTitle(data.currentChat);
+  insertInDOM('.msg-feed__header', chatTitle);
+
+  // dropdown
+  const dropdownBox = initDropdown('msg-feed__dropdown-box', data.menuBtns);
+  insertInDOM('.msg-feed__header', dropdownBox);
+
   // msg-feed__header__menu
   const openMenuBtn = new Button(data.openMenuBtn);
   insertInDOM('.msg-feed__header', openMenuBtn);
-
-  for (let i = 0; i < data.menuBtns.length; i += 1) {
-    const menuBtn = new Button(data.menuBtns[i]);
-    const menuBtnLi = document.createElement('li');
-    menuBtnLi.appendChild(menuBtn.element);
-    const dropdown = document.querySelector('.msg-feed__dropdown');
-    if (dropdown) {
-      dropdown.appendChild(menuBtnLi);
-    }
-  }
 
   const modal = initModal('.msg-feed');
 
@@ -104,8 +113,8 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
     }
   }
 
-  function addUser(event: Event) {
-    console.log('---addUser');
+  function showModal(event: Event) {
+    console.log('---showModal');
     event.preventDefault();
     const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
     dropdownBox.style.display = 'none';
@@ -113,12 +122,40 @@ export function initMsgFeed(parentElSelector:string): MsgFeed {
     modal.show();
   }
 
-  function sendMsg() {
+  async function sendMsg() {
     // отправляем форму
-    new HTTPrequest().post('https://chats', { data: new FormData(<HTMLFormElement>sendMsgForm) })
-      .catch((err) => {
-        console.error('sendMsg error', err);
-      });
+    const userId = await chatController.getUserId();
+    console.log('---eee userId', userId);
+    const token = await chatController.getChatToken('130');
+    console.log('---tttoken', token);
+    const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/133/${token}`);
+
+    socket.addEventListener('open', () => {
+      console.log('Соединение установлено');
+
+      socket.send(JSON.stringify({
+        content: 'Моё первое сообщение миру!',
+        type: 'message',
+      }));
+    });
+
+    socket.addEventListener('close', event => {
+      if (event.wasClean) {
+        console.log('Соединение закрыто чисто');
+      } else {
+        console.log('Обрыв соединения');
+      }
+
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+    });
+
+    socket.addEventListener('message', event => {
+      console.log('Получены данные', event.data);
+    });
+
+    socket.addEventListener('error', event => {
+      console.log('Ошибка', event.message);
+    });
   }
 
   function submit(event: Event) {

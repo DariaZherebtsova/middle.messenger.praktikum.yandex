@@ -75,10 +75,10 @@ export function initChatList(parentElSelector:string): СhatList {
   chatList.renderChatPrewiews(data.chats);
 
   const globalStoreEventBus = globalStore.eventBus();
-  globalStoreEventBus.on('flow:something-has-changed', doChange);
+  globalStoreEventBus.on('flow:something-has-changed', doChangeChatPrewiews);
 
-  function doChange(...args) {
-    console.log('---doChange', args);
+  function doChangeChatPrewiews(...args) {
+    console.log('---doChangeChatPrewiews', args);
     if (args[0] === 'chats') {
       const newChats = chatController.getDataForChats();
       const previewList = document.querySelector('.chat-list__preview-list');

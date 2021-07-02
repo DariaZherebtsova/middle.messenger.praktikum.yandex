@@ -17,4 +17,8 @@ export default class ChatPreview extends Block {
     const htmlStr = hbsTemplateFn(this.props);
     return htmlStr;
   }
+
+  get chatInfo(): TProps {
+    return this._meta.props;
+  }
 }

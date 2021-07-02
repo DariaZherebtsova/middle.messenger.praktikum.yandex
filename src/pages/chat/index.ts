@@ -53,7 +53,19 @@ export function initChatPage(rootQuery:string): ChatPage {
   initChatList('.chat-page-wrapper');
 
   // создаем msgFeed
-  initMsgFeed('.chat-page-wrapper');
+  const msgFeed = initMsgFeed('.chat-page-wrapper');
+
+  const globalStoreEventBus = globalStore.eventBus();
+  globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
+
+  function doChangeMsgFeed(...args) {
+    console.log('---doChangeMsgFeed', args);
+    if (args[0] === 'currentChat') {
+      // msgFeed.props.currentChat = chatController.getCurrentChat();
+      
+      initMsgFeed('.chat-page-wrapper');
+    }
+  }
 
   const profileLink = document.getElementsByClassName('chat-list__profile-link')[0];
   if (profileLink) {

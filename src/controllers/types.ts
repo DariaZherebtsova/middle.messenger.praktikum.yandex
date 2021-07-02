@@ -48,3 +48,8 @@ export interface ChatsResponse {
     content: string,
   }
 }
+
+export interface ChatUserRequest {
+  users: number[],
+  chatId: number,
+}

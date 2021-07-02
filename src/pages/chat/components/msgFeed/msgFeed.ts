@@ -13,8 +13,9 @@ export default class MsgFeed extends Block {
   }
 
   render(): string {
+    console.log('--render MsgFeed', this._meta.props);
     const hbsTemplateFn = Handlebars.compile(msgFeedTmpl);
-    const htmlStr = hbsTemplateFn(this.props);
+    const htmlStr = hbsTemplateFn(this._meta.props);
     return htmlStr;
   }
 }
