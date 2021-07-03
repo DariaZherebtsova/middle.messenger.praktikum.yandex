@@ -16,6 +16,10 @@
   height: 40px;
   display: flex;
   justify-content: space-between;
+
+  .chat-title {
+    width: 95%;
+  }
 }
 
 .msg-feed__header__menu-btn {

@@ -79,7 +79,6 @@ export class HTTPrequest {
       });
 
       xhr.withCredentials = true;
-      console.log('---mode', xhr.mode);
       xhr.onload = function onload() {
         resolve(xhr);
       };

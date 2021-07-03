@@ -45,16 +45,16 @@ export function initModal(parentElSelector:string): Modal {
   insertInDOM('.modal__button-box', doneBtn);
 
   function onBlur(event: Event) {
-    const msgEl = input.getElementForErrorMessage();
-    if (msgEl) {
-      const resultValidate = validate(input.element.value, data.input.validateRule);
-      if (!resultValidate.valid) {
-        msgEl.textContent = resultValidate.message;
-      } else {
-        console.log('validate OK');
-        msgEl.textContent = '';
-      }
-    }
+    // const msgEl = input.getElementForErrorMessage();
+    // if (msgEl) {
+    //   const resultValidate = validate(input.element.value, data.input.validateRule);
+    //   if (!resultValidate.valid) {
+    //     msgEl.textContent = resultValidate.message;
+    //   } else {
+    //     console.log('validate OK');
+    //     msgEl.textContent = '';
+    //   }
+    // }
   }
 
   function done() {

@@ -23,10 +23,10 @@ export default class AuthAPI extends BaseAPI {
       .then(({ user_id }) => user_id); // Обрабатываем получение данных из сервиса далее
   }
 
-  public getUserInfo() {
+  public getUserInfo(): Promise<unknown> {
     console.log('---AuthAPI getUserInfo');
 
-    return authAPIInstance.post('/user')
+    return authAPIInstance.get('/user')
       .then((response) => response); // Обрабатываем получение данных из сервиса далее
   }
 

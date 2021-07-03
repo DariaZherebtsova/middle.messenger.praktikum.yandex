@@ -5,7 +5,7 @@ import Button from '../../../../components/button/button';
 import { initChatPreview } from '../chatPreview/index';
 import { chatController } from '../../../../controllers/chats';
 import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
-import { globalStore } from '../../../../store/globalStore';
+import { globalStoreEventBus } from '../../../../store/globalStore';
 
 export function initChatList(parentElSelector:string): СhatList {
   const data = {
@@ -74,7 +74,6 @@ export function initChatList(parentElSelector:string): СhatList {
 
   chatList.renderChatPrewiews(data.chats);
 
-  const globalStoreEventBus = globalStore.eventBus();
   globalStoreEventBus.on('flow:something-has-changed', doChangeChatPrewiews);
 
   function doChangeChatPrewiews(...args) {

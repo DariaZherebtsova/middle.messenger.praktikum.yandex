@@ -1,5 +1,5 @@
 // import { LoginFormModel } from './types';
-import { IInputBlock } from '../components/pureInput/inputs.type';
+import { IInputBlock } from '../components/inputWithLabel/inputWithLabel.type';
 import AuthAPI from '../api/auth-api';
 import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
@@ -42,12 +42,16 @@ class UserAuthController {
       // Запускаем крутилку
       console.log('---try');
 
-      const result = authAPI.getUserInfo();
+      const { response } = await authAPI.getUserInfo();
+      console.log('---------------response', response);
 
-      globalStore.setStore('userId', result.id);
-      globalStore.setStore('userInfo', result);
+      const data = JSON.parse(response);
+      console.log('--data', data);
 
-      return result.id;
+      globalStore.setStore('userId', data.id);
+      globalStore.setStore('userInfo', data);
+
+      return data.id;
 
       // Останавливаем крутилку
     } catch (error) {
@@ -70,8 +74,6 @@ class UserAuthController {
       // TO DO YOUR DEALS WITH ERROR
     }
   }
-
-
 }
 
 export const userAuthController = new UserAuthController();

@@ -45,6 +45,10 @@ class ChatController {
     return globalStore.getStore('currentChat');
   }
 
+  getCurrentChatId() {
+    return globalStore.getStore('currentChatId');
+  }
+
   setCurrentChat(chatInfo) {
     globalStore.setStore('currentChat', chatInfo);
     globalStore.setStore('currentChatId', chatInfo.id);
@@ -52,6 +56,7 @@ class ChatController {
 
   async getUserId() {
     let userId = globalStore.getStore('userId');
+    console.log('');
     if (userId) {
       return userId;
     }
@@ -61,6 +66,17 @@ class ChatController {
     } catch (error) {
       // TO DO YOUR DEALS WITH ERROR
     }
+  }
+
+  async getParamsForWebSoket() {
+    const userId = await this.getUserId();
+    console.log('--- userId', userId);
+    const chatId = this.getCurrentChatId();
+    console.log('---chatId', chatId);
+    const token = await this.getChatToken(chatId);
+    console.log('---tttoken', token);
+
+    return [userId, chatId, token];
   }
 
   public async create(title: string) {
@@ -92,11 +108,14 @@ class ChatController {
     }
   }
 
-  public async getChatToken(chatId) {
-    console.log('---ChatController getChatToken', chatId);
+  public async getChatToken(chatId): Promise<any> {
+    console.log('--------------------ChatController getChatToken', chatId);
     try {
-      const token = await chatAPI.getChatToken(chatId);
-      return token;
+      const { response } = await chatAPI.getChatToken(chatId);
+      console.log('---response', response);
+      const tokenObj = JSON.parse(response);
+      console.log('---tokenObj', tokenObj);
+      return tokenObj.token;
     } catch (error) {
       // TO DO YOUR DEALS WITH ERROR
     }

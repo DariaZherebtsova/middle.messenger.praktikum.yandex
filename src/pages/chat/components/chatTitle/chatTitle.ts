@@ -1,12 +1,14 @@
 import Handlebars from 'handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatTitleTmpl } from './chatTitle.hbs';
+import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
 
 export default class ChatTitle extends Block {
   constructor(props: Record<string, any>) {
-    if (!props.wrapperClass) {
-      // eslint-disable-next-line no-param-reassign
-      props.wrapperClass = 'chat-title';
+    // eslint-disable-next-line no-param-reassign
+    props.wrapperClass = 'chat-title';
+    if (!props.avatar) {
+      props.avatar = `${noImgAvatar}`;
     }
     super('div', props);
   }

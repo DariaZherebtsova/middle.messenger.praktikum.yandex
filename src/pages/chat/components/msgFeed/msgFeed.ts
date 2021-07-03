@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import { Block } from '../../../../components/block/block';
 import { msgFeedTmpl } from './msgFeed.hbs';
 import { TProps } from '../../../../components/block/block.type';
+import { ChatsResponse } from '../../../../controllers/types';
 
 export default class MsgFeed extends Block {
   constructor(props: TProps) {
@@ -18,4 +19,6 @@ export default class MsgFeed extends Block {
     const htmlStr = hbsTemplateFn(this._meta.props);
     return htmlStr;
   }
+
+  updateChatTitle(newCurrentChat: ChatsResponse): void {}
 }

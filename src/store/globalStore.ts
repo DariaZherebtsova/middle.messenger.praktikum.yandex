@@ -2,13 +2,11 @@ import Store from './store';
 
 const initProps = {
   userId: null,
+  userInfo: null,
   chats: [],
   currentChatId: null,
-  currentChat: {
-    avatar: '',
-    title: 'Илья',
-    last_message: 'В траве сидел кузнечик, В траве сидел кузнечик'
-  },
+  currentChat: null,
 };
 
 export const globalStore = new Store(initProps);
+export const globalStoreEventBus = globalStore.eventBus();
