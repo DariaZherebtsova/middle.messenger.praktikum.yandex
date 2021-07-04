@@ -1,3 +1,5 @@
+import { globalStore } from '../store/globalStore';
+
 type MsgFormat = {
   content: string,
   type: string
@@ -44,6 +46,11 @@ export default class WebSocketService {
 
   receivedMsg(event): void {
     console.log('Получены данные', event.data);
+    const data = JSON.parse(event.data);
+    console.log('--data', data);
+    globalStore.setStore('lastMessage', data.content);
+    globalStore.setMessage(data);
+
     // const state = payload.state;
     // chat.setProps(state);
   }

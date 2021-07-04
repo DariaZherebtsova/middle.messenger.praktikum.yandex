@@ -52,6 +52,15 @@ class ChatController {
   setCurrentChat(chatInfo) {
     globalStore.setStore('currentChat', chatInfo);
     globalStore.setStore('currentChatId', chatInfo.id);
+    globalStore.setStore('lastMessage', chatInfo.last_message);
+  }
+
+  getLastMessage() {
+    return globalStore.getStore('lastMessage');
+  }
+
+  getMessages() {
+    return globalStore.getStore('messages');
   }
 
   async getUserId() {

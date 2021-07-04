@@ -28,7 +28,7 @@ class UserAuthController {
 
       globalStore.setStore('userID', userID);
 
-      // router.go('/chats');
+      router.go('/');
 
       // Останавливаем крутилку
     } catch (error) {

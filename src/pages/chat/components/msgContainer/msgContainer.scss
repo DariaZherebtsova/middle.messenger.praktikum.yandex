@@ -1,0 +1,13 @@
+.msg-feed__msg-container {
+  list-style-type: none;
+  padding: 0;
+}
+
+.msg-container__msg {
+  background: $light-grey;
+  border-radius: 15px;
+  border-top-left-radius: 1px;
+  max-width: 200px;
+  padding: 10px;
+  margin: 15px;
+}

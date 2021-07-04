@@ -62,4 +62,8 @@ export default class Store {
     console.log('getStore', fild);
     return this._globalStore[fild];
   }
+
+  setMessage(msg: string): void {
+    this._globalStore.messages.push(msg);
+  }
 }

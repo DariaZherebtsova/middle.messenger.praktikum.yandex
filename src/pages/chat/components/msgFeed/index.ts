@@ -7,6 +7,8 @@ import { chatController } from '../../../../controllers/chats';
 import ChatTitle from '../chatTitle/chatTitle';
 import { initDropdown } from '../dropdown/index';
 import WebSocketService from '../../../../services/webSocketService';
+import MsgContainer from '../msgContainer/msgContainer';
+import { globalStoreEventBus } from '../../../../store/globalStore';
 
 export async function initMsgFeed(parentElSelector:string): MsgFeed {
   const data = {
@@ -47,6 +49,11 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
       wrapperClass: 'msg-feed__input',
     },
     currentChat: chatController.getCurrentChat(),
+    lastMessage: chatController.getLastMessage(),
+    msgContainer: {
+      wrapperClass: 'msg-feed__msg-container',
+      messages: chatController.getMessages(),
+    },
     modal_title: 'Добавить пользователя',
   };
 
@@ -104,6 +111,21 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
     dropdownBox.style.display = 'none';
     openMenuBtn.props.open = false;
     modal.show();
+  }
+
+  // ----msgContainer----
+  const msgContainer = new MsgContainer(data.msgContainer);
+  insertInDOM('.msg-feed__feed', msgContainer);
+
+  // подписываемся на изменение currentChat
+  globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
+
+  async function doChangeMsgFeed(...args) {
+    console.log('---doChangeMsgFeed', args);
+    if (args[0] === 'lastMessage') {
+      console.log('----update messages');
+      msgContainer.props.messages = chatController.getMessages();
+    }
   }
 
   const attachBtn = new Button(data.attachBtn);
