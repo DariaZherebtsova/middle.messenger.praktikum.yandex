@@ -29,7 +29,7 @@ export default class WebSocketService {
     console.log('Соединение установлено');
 
     this._socket.send(JSON.stringify({
-      content: 'Моё второе сообщение миру!',
+      content: 'Всем привет!',
       type: 'message',
     }));
   }
@@ -48,9 +48,8 @@ export default class WebSocketService {
     console.log('Получены данные', event.data);
     const data = JSON.parse(event.data);
     console.log('--data', data);
-    globalStore.setStore('lastMessage', data.content);
     globalStore.setMessage(data);
-
+    globalStore.setStore('lastMessage', data.content);
     // const state = payload.state;
     // chat.setProps(state);
   }
@@ -61,6 +60,8 @@ export default class WebSocketService {
 
   send(message: MsgFormat): void {
     console.log('---send', message);
+    // globalStore.setMessage(message);
+    // globalStore.setStore('lastMessage', message.content);
     this._socket.send(JSON.stringify(message));
   }
 }

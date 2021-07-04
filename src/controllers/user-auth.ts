@@ -14,23 +14,13 @@ class UserAuthController {
   public async signin(inputs: Record<string, IInputBlock>) {
     console.log('---UserAuthController signin');
     try {
-      // Запускаем крутилку
-      console.log('---try');
-
       if (!validateAllInputs(Object.values(inputs))) {
-        console.log('---ne valid');
         throw new Error('данные не прошли валидацию');
       }
 
-      // console.log('---data', prepareDataToRequest(inputs));
-      const userID = await authAPI.signin(prepareDataToRequest(inputs));
-      console.log('---userID', userID);
-
-      globalStore.setStore('userID', userID);
-
+      await authAPI.signin(prepareDataToRequest(inputs));
+      console.log('---go /');
       router.go('/');
-
-      // Останавливаем крутилку
     } catch (error) {
       // TO DO YOUR DEALS WITH ERROR
     }

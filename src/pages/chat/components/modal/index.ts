@@ -6,7 +6,6 @@ import { validate } from '../../../../utils/validate/index';
 import { chatController } from '../../../../controllers/chats';
 
 export function initModal(parentElSelector:string): Modal {
-  console.log('--initModal');
   const data = {
     modal_title: 'Добавить пользователя',
     closeBtn: {
@@ -23,9 +22,9 @@ export function initModal(parentElSelector:string): Modal {
       },
     },
     input: {
-      label: 'Логин',
+      label: 'id',
       wrapperClass: 'custom-input',
-      validateRule: 'login',
+      validateRule: 'number',
       events: {
         blur: (event: Event) => onBlur(event),
       },
@@ -45,26 +44,26 @@ export function initModal(parentElSelector:string): Modal {
   insertInDOM('.modal__button-box', doneBtn);
 
   function onBlur(event: Event) {
-    // const msgEl = input.getElementForErrorMessage();
-    // if (msgEl) {
-    //   const resultValidate = validate(input.element.value, data.input.validateRule);
-    //   if (!resultValidate.valid) {
-    //     msgEl.textContent = resultValidate.message;
-    //   } else {
-    //     console.log('validate OK');
-    //     msgEl.textContent = '';
-    //   }
-    // }
+    const msgEl = input.getElementForErrorMessage();
+    if (msgEl) {
+      const resultValidate = validate(input.element.value, data.input.validateRule);
+      if (!resultValidate.valid) {
+        msgEl.textContent = resultValidate.message;
+      } else {
+        console.log('validate OK');
+        msgEl.textContent = '';
+      }
+    }
   }
 
   function done() {
-    console.log('---done');
     chatController.addUsers(input.inputElement.value);
+    input.inputElement.value = '';
     modal.hide();
   }
 
   function close() {
-    console.log('---done');
+    input.inputElement.value = '';
     modal.hide();
   }
 

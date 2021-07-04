@@ -10,7 +10,7 @@ import WebSocketService from '../../../../services/webSocketService';
 import MsgContainer from '../msgContainer/msgContainer';
 import { globalStoreEventBus } from '../../../../store/globalStore';
 
-export async function initMsgFeed(parentElSelector:string): MsgFeed {
+export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   const data = {
     firstRender: true,
     openMenuBtn: {
@@ -75,14 +75,12 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
   insertInDOM('.msg-feed__header', chatTitle);
 
   msgFeed.updateChatTitle = async function updateChatTitle(newCurrentChat) {
-    console.log('----updateChatTitle', newCurrentChat);
     chatTitle.props.title = newCurrentChat.title;
     chatTitle.props.avatar = newCurrentChat.avatar;
     const params = await chatController.getParamsForWebSoket();
     webSocketService = new WebSocketService(...params);
   };
 
-  // dropdown
   const dropdownBox = initDropdown('msg-feed__dropdown-box', data.menuBtns);
   insertInDOM('.msg-feed__header', dropdownBox);
 
@@ -92,7 +90,6 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
   const modal = initModal('.msg-feed');
 
   function openMenu(event: Event) {
-    console.log('---openMenu');
     event.preventDefault();
     const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
     if (openMenuBtn.props.open) {
@@ -105,7 +102,6 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
   }
 
   function showModal(event: Event) {
-    console.log('---showModal');
     event.preventDefault();
     const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
     dropdownBox.style.display = 'none';
@@ -113,18 +109,15 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
     modal.show();
   }
 
-  // ----msgContainer----
   const msgContainer = new MsgContainer(data.msgContainer);
   insertInDOM('.msg-feed__feed', msgContainer);
 
-  // подписываемся на изменение currentChat
+  // подписываемся на изменение lastMessage
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
-
   async function doChangeMsgFeed(...args) {
-    console.log('---doChangeMsgFeed', args);
     if (args[0] === 'lastMessage') {
-      console.log('----update messages');
-      msgContainer.props.messages = chatController.getMessages();
+      const msgList = chatController.getMessages();
+      msgContainer.props.messages = msgList;
     }
   }
 
@@ -145,7 +138,6 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
     sendMsgForm.addEventListener('keydown', (event: Event) => {
       if (event.code === 'Enter') {
         event.preventDefault();
-
         sendMsg();
       }
     });
@@ -153,21 +145,17 @@ export async function initMsgFeed(parentElSelector:string): MsgFeed {
 
   function sendMsg() {
     const msg = {
-      contend: msgInput.element.value,
+      content: msgInput.element.value,
       type: 'message',
     };
     webSocketService.send(msg);
+    msgInput.element.value = '';
   }
 
   function submit(event: Event) {
     event.preventDefault();
-
     sendMsg();
   }
-
-  webSocketService.receivedMsg = function msgFeedReceivedMsg() {
-    console.log('мне пришло сообщение!!!!');
-  };
 
   return msgFeed;
 }

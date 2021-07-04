@@ -19,13 +19,13 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
         label: 'Логин',
         name: 'login',
         type: 'text',
-        value: 'vano2022',
+        value: 'dazhe',
       },
       {
         label: 'Пароль',
         name: 'password',
         type: 'password',
-        value: '12345',
+        value: '1q2w3e4r',
       },
     ],
     button: {

@@ -6,12 +6,9 @@ const initProps = {
   chats: [],
   currentChatId: null,
   currentChat: null,
-  messages: [
-    { content: 'Привет 1' },
-    { content: 'Привет 2' },
-    { content: 'Привет 3' },
-  ],
+  messages: [],
   lastMessage: null,
+  firstRenderMsgFeed: true,
 };
 
 export const globalStore = new Store(initProps);

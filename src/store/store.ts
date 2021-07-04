@@ -63,7 +63,7 @@ export default class Store {
     return this._globalStore[fild];
   }
 
-  setMessage(msg: string): void {
+  setMessage(msg): void {
     this._globalStore.messages.push(msg);
   }
 }

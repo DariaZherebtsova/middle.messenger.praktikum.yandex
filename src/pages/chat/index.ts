@@ -33,12 +33,12 @@ export async function initChatPage(rootQuery:string): ChatPage {
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
 
   async function doChangeMsgFeed(...args) {
-    console.log('---doChangeMsgFeed', args);
+    console.log('---doChange currentChat', args);
     if (args[0] === 'currentChat') {
       const newCurrentChat = chatController.getCurrentChat();
       if (msgFeed.props.firstRender) {
         msgFeed.element.remove();
-        msgFeed = initMsgFeed('.chat-page-wrapper');
+        msgFeed = await initMsgFeed('.chat-page-wrapper');
       } else {
         msgFeed.updateChatTitle(newCurrentChat);
       }

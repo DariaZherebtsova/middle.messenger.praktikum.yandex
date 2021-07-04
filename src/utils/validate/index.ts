@@ -5,6 +5,7 @@ import validateLogin from './login';
 import validateName from './name';
 import validatePhone from './phone';
 import validatePassword from './password';
+import validateNumber from './number';
 import { IInputBlock } from '../../components/pureInput/inputs.type';
 
 export function validate(value: string, type: string): ValidationResult {
@@ -17,6 +18,7 @@ export function validate(value: string, type: string): ValidationResult {
     email: validateEmail,
     phone: validatePhone,
     name: validateName,
+    number: validateNumber,
   };
 
   if (validateRule[type]) {

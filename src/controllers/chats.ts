@@ -77,6 +77,14 @@ class ChatController {
     }
   }
 
+  getFirstRender() {
+    return globalStore.getStore('firstRenderMsgFeed');
+  }
+
+  setFirstRender(value: boolean) {
+    return globalStore.setStore('firstRenderMsgFeed', value);
+  }
+
   async getParamsForWebSoket() {
     const userId = await this.getUserId();
     console.log('--- userId', userId);
