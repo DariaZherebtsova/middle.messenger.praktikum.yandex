@@ -4,7 +4,7 @@ export const profileTempl = `
   </nav>
   <main class="profile__main">
     <form class="profile__avatar-form" id="profile-avatar">
-      <label class="avatar-label" for="avatar"><img class="avatar-img" src="{{noImgAvatarLarge}}" width="130" /></label>
+      <label class="avatar-label" for="avatar"><img class="avatar-img" src="{{avatar}}" width="130" height="130" /></label>
       <input class="avatar-input" id="avatar" type="file" accept="image/*" name="avatar">
     </form>
     <div class="profile__name">

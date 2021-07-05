@@ -36,8 +36,6 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
     },
   };
 
-  console.log('--window.history.state', window.history.state);
-
   const authorizationPage = new AuthorizationPage(data.page);
   insertInDOM(rootQuery, authorizationPage);
 
@@ -57,9 +55,6 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
       validateRule: 'required',
       ...data.inputs[i],
       events: {
-        focus: (event: Event) => {
-          console.log('focus on', event.target);
-        },
         blur: (event: Event) => onBlur(event),
       },
     };
@@ -87,7 +82,6 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {
-        console.log('validate OK');
         msgEl.textContent = '';
       }
     }
@@ -95,14 +89,12 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
 
   function submit(event: Event) {
     event.preventDefault();
-    console.log('----auth submit');
     userAuthController.signin(inputs);
   }
 
   const loginFormLink = document.getElementsByClassName('login-form__link')[0];
   if (loginFormLink) {
     loginFormLink.addEventListener('click', (event: Event) => {
-      console.log('---click');
       event.preventDefault();
       router.go('/registration');
     });

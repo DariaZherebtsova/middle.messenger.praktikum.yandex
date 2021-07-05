@@ -1,63 +1,77 @@
-// import { LoginFormModel } from './types';
-import { IInputBlock } from '../components/pureInput/inputs.type';
+import { IInputBlock } from '../components/inputWithLabel/inputWithLabel.type';
 import UresAPI from '../api/user-api';
 import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
 import prepareDataToRequest from '../utils/prepareDataToRequest';
+import { globalStore } from '../store/globalStore';
+import { userAuthController } from './user-auth';
 
 const userAPI = new UresAPI();
-// const userLoginValidator = validateLoginFields(validateRules);
 
 class UserProfileController {
-  // public async login(data: LoginFormModel) {
   public async profile(inputs: Record<string, IInputBlock>) {
-    console.log('---UserProfileController profile');
     try {
-      // Запускаем крутилку
-      console.log('---try');
-
       if (!validateAllInputs(Object.values(inputs))) {
-        console.log('---ne valid');
         throw new Error('данные не прошли валидацию');
       }
-
-      // отправляем данные
-      console.log('---data', prepareDataToRequest(inputs));
-      const userID = userAPI.profile(prepareDataToRequest(inputs));
-
-      // router.go('/chats');
-
-      // Останавливаем крутилку
+      const response = await userAPI.profile(prepareDataToRequest(inputs));
+      const result = JSON.parse(response);
+      result.avatar = globalStore.getStore('avatar');
+      globalStore.setStore('userInfo', result);
+      router.go('/profile');
     } catch (error) {
-      // TO DO YOUR DEALS WITH ERROR
+      console.warn('Error request profile', error);
     }
   }
 
   public async profileAvatar(formData: FormData) {
-    userAPI.profileAvatar(formData);
+    try {
+      const response = await userAPI.profileAvatar(formData);
+      const result = JSON.parse(response);
+      globalStore.setStore('userInfo', result);
+      globalStore.setStore('avatar', result?.avatar);
+      return result?.avatar;
+    } catch (error) {
+      console.warn('Error request profileAvatar', error);
+    }
+  }
+
+  getAvatar() {
+    return globalStore.getStore('avatar');
   }
 
   public async password(inputs: Record<string, IInputBlock>) {
-    console.log('---UserProfileController password');
     try {
-      // Запускаем крутилку
-      console.log('---try');
-
       if (!validateAllInputs(Object.values(inputs))) {
-        console.log('---ne valid');
         throw new Error('данные не прошли валидацию');
       }
+      // сравниваю пароли
+      const { newPassword, newPasswordRepeat } = inputs;
+      if (newPassword.inputElement.value !== newPasswordRepeat.inputElement.value) {
+        newPassword.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        newPasswordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        return;
+      }
 
-      // отправляем данные
-      console.log('---data', prepareDataToRequest(inputs));
-      const userID = userAPI.password(prepareDataToRequest(inputs));
+      const response = await userAPI.password(prepareDataToRequest(inputs));
+      if (response !== 'OK') {
+        const result = JSON.parse(response);
+        return result.reason;
+      }
 
-      // router.go('/chats');
-
-      // Останавливаем крутилку
+      router.go('/profile');
     } catch (error) {
-      // TO DO YOUR DEALS WITH ERROR
+      console.warn('Error request password', error);
     }
+  }
+
+  async getUserInfo() {
+    let userInfo = globalStore.getStore('userInfo');
+    if (userInfo !== null) {
+      return userInfo;
+    }
+    userInfo = await userAuthController.getUserInfo();
+    return userInfo;
   }
 }
 

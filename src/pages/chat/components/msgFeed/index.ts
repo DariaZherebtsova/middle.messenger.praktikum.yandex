@@ -74,11 +74,23 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   const chatTitle = new ChatTitle(data.currentChat);
   insertInDOM('.msg-feed__header', chatTitle);
 
-  msgFeed.updateChatTitle = async function updateChatTitle(newCurrentChat) {
+  const msgContainer = new MsgContainer(data.msgContainer);
+  insertInDOM('.msg-feed__feed', msgContainer);
+
+  // подписываемся на изменение lastMessage
+  globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
+  async function doChangeMsgFeed(...args) {
+    if (args[0] === 'lastMessage') {
+      const msgList = chatController.getMessages();
+      msgContainer.props.messages = msgList;
+    }
+  }
+
+  msgFeed.updateChat = async function updateChat(newCurrentChat) {
     chatTitle.props.title = newCurrentChat.title;
     chatTitle.props.avatar = newCurrentChat.avatar;
-    const params = await chatController.getParamsForWebSoket();
-    webSocketService = new WebSocketService(...params);
+    const newParams = await chatController.getParamsForWebSoket();
+    webSocketService = new WebSocketService(...newParams);
   };
 
   const dropdownBox = initDropdown('msg-feed__dropdown-box', data.menuBtns);
@@ -91,12 +103,12 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   function openMenu(event: Event) {
     event.preventDefault();
-    const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    const dropdownEl = document.getElementsByClassName('msg-feed__dropdown-box')[0];
     if (openMenuBtn.props.open) {
-      dropdownBox.style.display = 'none';
+      dropdownEl.style.display = 'none';
       openMenuBtn.props.open = false;
     } else {
-      dropdownBox.style.display = 'block';
+      dropdownEl.style.display = 'block';
       openMenuBtn.props.open = true;
     }
   }
@@ -107,18 +119,6 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
     dropdownBox.style.display = 'none';
     openMenuBtn.props.open = false;
     modal.show();
-  }
-
-  const msgContainer = new MsgContainer(data.msgContainer);
-  insertInDOM('.msg-feed__feed', msgContainer);
-
-  // подписываемся на изменение lastMessage
-  globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
-  async function doChangeMsgFeed(...args) {
-    if (args[0] === 'lastMessage') {
-      const msgList = chatController.getMessages();
-      msgContainer.props.messages = msgList;
-    }
   }
 
   const attachBtn = new Button(data.attachBtn);

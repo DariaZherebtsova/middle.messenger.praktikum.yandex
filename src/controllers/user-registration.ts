@@ -9,16 +9,10 @@ const authAPI = new AuthAPI();
 
 class UserRegistrationController {
   public async signup(inputs: Record<string, IInputBlock>) {
-    console.log('---UserRegistrationController login');
     try {
-      // Запускаем крутилку
-      console.log('---try');
-
       if (!validateAllInputs(Object.values(inputs))) {
-        console.log('---ne valid');
         throw new Error('данные не прошли валидацию');
       }
-
       // сравниваю пароли
       const { password, passwordRepeat } = inputs;
       if (password.inputElement.value !== passwordRepeat.inputElement.value) {
@@ -27,14 +21,11 @@ class UserRegistrationController {
         return;
       }
 
-      console.log('---data', prepareDataToRequest(inputs));
-      const userID = authAPI.signup(prepareDataToRequest(inputs));
+      await authAPI.signup(prepareDataToRequest(inputs));
 
       router.go('/');
-
-      // Останавливаем крутилку
     } catch (error) {
-      // TO DO YOUR DEALS WITH ERROR
+      console.warn('Error signup request', error);
     }
   }
 }

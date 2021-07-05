@@ -12,7 +12,6 @@ export function initChatPreview(props): ChatPreview {
 
   function selectChat(event) {
     event.preventDefault();
-    console.log('---selectChat', chatPreview.chatInfo);
     chatController.setCurrentChat(chatPreview.chatInfo);
   }
   return chatPreview;

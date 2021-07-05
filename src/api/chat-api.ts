@@ -5,7 +5,7 @@ import { ChatUserRequest } from '../controllers/types';
 const chatAPIInstance = new HTTPrequest(`${baseUrl}/chats`);
 
 export default class ChatAPI extends BaseAPI {
-  public get(): Promise<any> {
+  get(): Promise<any> {
     return chatAPIInstance.get('/')
       .then(({ response }) => response);
   }
@@ -17,7 +17,6 @@ export default class ChatAPI extends BaseAPI {
     return chatAPIInstance.post('/', options);
   }
 
-  // PUT /chats/users
   addUsers(data: ChatUserRequest): Promise<any> {
     const options = {
       data,

@@ -50,7 +50,6 @@ export function initModal(parentElSelector:string): Modal {
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {
-        console.log('validate OK');
         msgEl.textContent = '';
       }
     }

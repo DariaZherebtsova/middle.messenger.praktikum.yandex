@@ -18,13 +18,3 @@ router
   .use('/404', initError404Page)
   .use('/500', initError500Page)
   .start();
-
-// Через секунду контент изменится сам, достаточно дёрнуть переход
-// setTimeout(() => {
-//   router.go('/registration');
-//   console.log('window.history', window.history);
-// }, 2000);
-
-// setTimeout(() => {
-//   router.go('/');
-// }, 4000);

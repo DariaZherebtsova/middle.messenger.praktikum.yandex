@@ -6,47 +6,56 @@ import Button from '../../components/button/button';
 import noImgAvatarLarge from '../../../static/img/ava.JPG';
 import { TProps } from '../../components/block/block.type';
 import { router } from '../../services/router';
+import { userProfileController } from '../../controllers/user-profile';
+import { baseUrl } from '../../api/base-api';
 
-export function initProfilePage(rootQuery: string): ProfilePage {
+export async function initProfilePage(rootQuery: string): ProfilePage {
+  const storeData = await userProfileController.getUserInfo();
+
+  if (storeData === null || storeData === undefined) {
+    router.go('/auth');
+  }
+
+  const avatarUrl = storeData.avatar ? `${baseUrl}/resources${storeData.avatar}` : noImgAvatarLarge;
   const data = {
     page: {
-      noImgAvatarLarge,
+      avatar: avatarUrl,
     },
     inputs: [
       {
         label: 'Почта',
         name: 'email',
-        value: 'pochta@yandex.ru',
+        value: storeData.email,
         type: 'email',
       },
       {
         label: 'Логин',
         name: 'login',
-        value: 'vano2021',
+        value: storeData.login,
         type: 'text',
       },
       {
         label: 'Имя',
         name: 'first_name',
-        value: 'Иван',
+        value: storeData.first_name,
         type: 'text',
       },
       {
         label: 'Фамилия',
         name: 'second_name',
-        value: 'Иванов',
+        value: storeData.second_name,
         type: 'text',
       },
       {
         label: 'Имя в чате',
         name: 'display_name',
-        value: 'Vano',
+        value: storeData.display_name,
         type: 'text',
       },
       {
         label: 'Телефон',
         name: 'phone',
-        value: '+7 (909) 967 30 30',
+        value: storeData.phone,
         type: 'tel',
       },
     ],

@@ -8,47 +8,56 @@ import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../services/router';
+import { baseUrl } from '../../api/base-api';
+import { globalStoreEventBus } from '../../store/globalStore';
 
-export function initProfileEditDataPage(rootQuery: string): ProfilePage {
+export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
+  const storeData = await userProfileController.getUserInfo();
+
+  if (storeData === null || storeData === undefined) {
+    router.go('/auth');
+  }
+
+  const avatarUrl = storeData.avatar ? `${baseUrl}/resources${storeData.avatar}` : noImgAvatarLarge;
   const data = {
     page: {
-      noImgAvatarLarge,
+      avatar: avatarUrl,
     },
     inputs: [
       {
         label: 'Почта',
         name: 'email',
-        value: 'pochta@yandex.ru',
+        value: storeData.email,
         type: 'email',
       },
       {
         label: 'Логин',
         name: 'login',
-        value: 'vano2021',
+        value: storeData.login,
         type: 'text',
       },
       {
         label: 'Имя',
         name: 'first_name',
-        value: 'Иван',
+        value: storeData.first_name,
         type: 'text',
       },
       {
         label: 'Фамилия',
         name: 'second_name',
-        value: 'Иванов',
+        value: storeData.second_name,
         type: 'text',
       },
       {
         label: 'Имя в чате',
         name: 'display_name',
-        value: 'Vano',
+        value: storeData.display_name,
         type: 'text',
       },
       {
         label: 'Телефон',
         name: 'phone',
-        value: '+7 (909) 967 30 30',
+        value: storeData.phone,
         type: 'tel',
       },
     ],
@@ -98,9 +107,6 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
       validateRule: validateRuleName[data.inputs[i].name],
       ...data.inputs[i],
       events: {
-        focus: (event: Event) => {
-          console.log('focus on', event.target);
-        },
         blur: (event: Event) => onBlur(event),
       },
     };
@@ -128,31 +134,40 @@ export function initProfileEditDataPage(rootQuery: string): ProfilePage {
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {
-        console.log('validate OK');
         msgEl.textContent = '';
       }
     }
   }
 
-  function submit(event: Event) {
+  async function submit(event: Event) {
     event.preventDefault();
-    console.log('----edit data submit');
-    userProfileController.profile(inputs);
+    await userProfileController.profile(inputs);
   }
 
   const avatarForm = document.getElementById('profile-avatar');
   const avatarInput = document.getElementById('avatar');
+  const avatarImg = avatarForm.getElementsByClassName('avatar-img')[0];
   if (avatarInput) {
-    avatarInput.addEventListener('change', event => {
-      if (avatarForm) {
-        const form = new FormData(<HTMLFormElement>avatarForm);
-        userProfileController.profileAvatar(form);
-      }
-    });
+    avatarInput.addEventListener('change', changeAvatar);
     const avatarLabel = document.getElementsByClassName('avatar-label')[0];
     if (avatarLabel) {
       avatarLabel.classList.add('activ');
     }
   }
+
+  async function changeAvatar() {
+    const form = new FormData(<HTMLFormElement>avatarForm);
+    const result = await userProfileController.profileAvatar(form);
+  }
+
+  // подписываемся на изменение avatar
+  globalStoreEventBus.on('flow:something-has-changed', doChangeAvatar);
+  async function doChangeAvatar(...args) {
+    if (args[0] === 'avatar') {
+      const newAvatar = userProfileController.getAvatar();
+      avatarImg.setAttribute('src', `${baseUrl}/resources${newAvatar}`);
+    }
+  }
+
   return profileEditDataPage;
 }

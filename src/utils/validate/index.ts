@@ -9,7 +9,6 @@ import validateNumber from './number';
 import { IInputBlock } from '../../components/pureInput/inputs.type';
 
 export function validate(value: string, type: string): ValidationResult {
-  console.log(`validate type=${type} value=${value}`);
 
   const validateRule = {
     required: requred,
@@ -38,10 +37,8 @@ export function validateAllInputs(inputs: IInputBlock[]): boolean {
     if (!resultValidate.valid) {
       // eslint-disable-next-line no-param-reassign
       item.getElementForErrorMessage().textContent = resultValidate.message;
-      console.log('ERR  ', resultValidate.message);
       result = false;
     } else {
-      console.log('OK');
       // eslint-disable-next-line no-param-reassign
       item.getElementForErrorMessage().textContent = '';
     }

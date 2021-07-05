@@ -27,9 +27,9 @@ export default class WebSocketService {
 
   didOpen(): void {
     console.log('Соединение установлено');
-
+    const userLogin = globalStore.getStore('userInfo')?.login ?? '';
     this._socket.send(JSON.stringify({
-      content: 'Всем привет!',
+      content: `Всем привет от ${userLogin}!`,
       type: 'message',
     }));
   }
@@ -47,11 +47,8 @@ export default class WebSocketService {
   receivedMsg(event): void {
     console.log('Получены данные', event.data);
     const data = JSON.parse(event.data);
-    console.log('--data', data);
-    globalStore.setMessage(data);
+    globalStore.addMessage(data);
     globalStore.setStore('lastMessage', data.content);
-    // const state = payload.state;
-    // chat.setProps(state);
   }
 
   didError(event): void {
@@ -59,9 +56,6 @@ export default class WebSocketService {
   }
 
   send(message: MsgFormat): void {
-    console.log('---send', message);
-    // globalStore.setMessage(message);
-    // globalStore.setStore('lastMessage', message.content);
     this._socket.send(JSON.stringify(message));
   }
 }

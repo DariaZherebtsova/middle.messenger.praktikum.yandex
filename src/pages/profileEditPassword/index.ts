@@ -8,30 +8,36 @@ import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../services/router';
+import { baseUrl } from '../../api/base-api';
 
-export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPasswordPage {
+export async function initProfileEditPasswordPage(rootQuery: string): ProfileEditPasswordPage {
+  const storeData = await userProfileController.getUserInfo();
+  if (storeData === null || storeData === undefined) {
+    router.go('/auth');
+  }
+  const avatarUrl = storeData.avatar ? `${baseUrl}/resources${storeData.avatar}` : noImgAvatarLarge;
   const data = {
     page: {
-      noImgAvatarLarge,
+      avatar: avatarUrl,
     },
     inputs: [
       {
         label: 'Старый пароль',
         name: 'oldPassword',
         type: 'password',
-        value: '11111111',
+        value: '12345678',
       },
       {
         label: 'Новый пароль',
         name: 'newPassword',
         type: 'password',
-        value: '12344321',
+        value: '1q2w3e4r',
       },
       {
         label: 'Повторите новый пароль',
         name: 'newPasswordRepeat',
         type: 'password',
-        value: '12344321',
+        value: '1q2w3e4r',
       },
     ],
     button: {
@@ -69,9 +75,6 @@ export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPassw
       validateRule: 'password',
       ...data.inputs[i],
       events: {
-        focus: (event: Event) => {
-          console.log('focus on', event.target);
-        },
         blur: (event: Event) => onBlur(event),
       },
     };
@@ -99,15 +102,20 @@ export function initProfileEditPasswordPage(rootQuery: string): ProfileEditPassw
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {
-        console.log('validate OK');
         msgEl.textContent = '';
       }
     }
   }
 
-  function submit(event: Event) {
+  async function submit(event: Event) {
     event.preventDefault();
-    userProfileController.password(inputs);
+    const result = await userProfileController.password(inputs);
+    if (result === 'Password is incorrect') {
+      const msgEl = inputs.oldPassword.getElementForErrorMessage();
+      if (msgEl) {
+        msgEl.textContent = 'Неверный пароль';
+      }
+    }
   }
 
   return profileEditPasswordPage;

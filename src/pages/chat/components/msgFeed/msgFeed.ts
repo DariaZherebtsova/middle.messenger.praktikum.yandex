@@ -14,11 +14,10 @@ export default class MsgFeed extends Block {
   }
 
   render(): string {
-    console.log('--render MsgFeed', this._meta.props);
     const hbsTemplateFn = Handlebars.compile(msgFeedTmpl);
     const htmlStr = hbsTemplateFn(this._meta.props);
     return htmlStr;
   }
 
-  updateChatTitle(newCurrentChat: ChatsResponse): void {}
+  updateChat(newCurrentChat: ChatsResponse): void {}
 }

@@ -19,8 +19,6 @@ export default class Store {
     this._globalStore = this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
-
-    // this._registerEvents(eventBus);
   }
 
   private _makePropsProxy(props: TProps): TProps {
@@ -34,7 +32,6 @@ export default class Store {
       set(target, prop: string, value) {
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
-        console.log('--- emit Store.EVENTS.FLOW_SHC');
         // Запускаем обновление компоненты
         self.eventBus().emit(Store.EVENTS.FLOW_SHC, prop);
         return true;
@@ -45,25 +42,19 @@ export default class Store {
     });
   }
 
-  // private _registerEvents(eventBus: IEventBus): void {
-  //   eventBus.on(Store.EVENTS.FLOW_SHC, this._emitSHC.bind(this));
-  // }
-
-  // _emitSHC() {
-  //   // this.eventBus().emit('???');
-  // }
-
   setStore(fild: string, data: any): void {
-    console.log('setStore', fild);
     this._globalStore[fild] = data;
   }
 
   getStore(fild: string): any {
-    console.log('getStore', fild);
     return this._globalStore[fild];
   }
 
-  setMessage(msg): void {
+  setMessages(msgList): void {
+    this._globalStore.messages = msgList;
+  }
+
+  addMessage(msg): void {
     this._globalStore.messages.push(msg);
   }
 }

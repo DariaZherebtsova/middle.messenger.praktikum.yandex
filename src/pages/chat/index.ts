@@ -13,13 +13,6 @@ export async function initChatPage(rootQuery:string): ChatPage {
   //  и информацию о пользователе
   userAuthController.getUserInfo();
 
-  // const globalStoreEventBus = globalStore.eventBus();
-  // globalStoreEventBus.on('flow:something-has-changed', doChange);
-
-  // function doChange(...args) {
-  //   console.log('---doChange', args);
-  // }
-
   const chatPage = new ChatPage({});
   insertInDOM(rootQuery, chatPage);
 
@@ -33,14 +26,13 @@ export async function initChatPage(rootQuery:string): ChatPage {
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
 
   async function doChangeMsgFeed(...args) {
-    console.log('---doChange currentChat', args);
     if (args[0] === 'currentChat') {
       const newCurrentChat = chatController.getCurrentChat();
       if (msgFeed.props.firstRender) {
         msgFeed.element.remove();
         msgFeed = await initMsgFeed('.chat-page-wrapper');
       } else {
-        msgFeed.updateChatTitle(newCurrentChat);
+        msgFeed.updateChat(newCurrentChat);
       }
     }
   }
@@ -48,7 +40,6 @@ export async function initChatPage(rootQuery:string): ChatPage {
   const profileLink = document.getElementsByClassName('chat-list__profile-link')[0];
   if (profileLink) {
     profileLink.addEventListener('click', (event: Event) => {
-      console.log('---click');
       event.preventDefault();
       router.go('/profile');
     });

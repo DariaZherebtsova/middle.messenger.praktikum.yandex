@@ -4,7 +4,6 @@ import Input from '../../../../components/input/input';
 import Button from '../../../../components/button/button';
 import { initChatPreview } from '../chatPreview/index';
 import { chatController } from '../../../../controllers/chats';
-import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
 import { globalStoreEventBus } from '../../../../store/globalStore';
 
 export function initChatList(parentElSelector:string): СhatList {
@@ -25,21 +24,7 @@ export function initChatList(parentElSelector:string): СhatList {
     chatTitleInput: {
       wrapperClass: 'chat-list__chat-title-input',
     },
-    // chats: chatController.getDataForChats(),
-    chats: [
-      {
-        title: 'Илья',
-        last_message: 'В траве сидел кузнечик ...',
-        time: '12:15',
-        avatar: `${noImgAvatar}`,
-      },
-      {
-        title: 'Олег',
-        last_message: 'Представьте себе, представьте себе Совсем как огуречик...',
-        time: 'Пн',
-        avatar: `${noImgAvatar}`,
-      },
-    ],
+    chats: chatController.getDataForChats(),
   };
 
   const chatList = new СhatList({});
@@ -59,7 +44,6 @@ export function initChatList(parentElSelector:string): СhatList {
 
   // создаем сhatPreview
   chatList.renderChatPrewiews = function(chats) {
-    console.log('chatList.renderChatPrewiews', chats[0]);
     for (let i = 0; i < chats.length; i += 1) {
       const сhatPreview = initChatPreview(chats[i]);
       const сhatPreviewLi = document.createElement('li');
@@ -77,14 +61,12 @@ export function initChatList(parentElSelector:string): СhatList {
   globalStoreEventBus.on('flow:something-has-changed', doChangeChatPrewiews);
 
   function doChangeChatPrewiews(...args) {
-    console.log('---doChangeChatPrewiews', args);
     if (args[0] === 'chats') {
       const newChats = chatController.getDataForChats();
       const previewList = document.querySelector('.chat-list__preview-list');
       if (previewList) {
         previewList.textContent = '';
       }
-      console.log('newChats', newChats);
       chatList.renderChatPrewiews(newChats);
     }
   }
@@ -107,10 +89,8 @@ export function initChatList(parentElSelector:string): СhatList {
   }
 
   function requestCreateChat(event: Event) {
-    console.log('---requestCreateChat');
     event.preventDefault();
     const chatTitle = chatTitleInput.element.value;
-    console.log('--chatTitle', chatTitle);
     chatController.create(chatTitle);
     chatTitleInput.element.value = '';
     toggleCreateChat();

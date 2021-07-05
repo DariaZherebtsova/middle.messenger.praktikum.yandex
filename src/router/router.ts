@@ -34,37 +34,31 @@ export default class Router {
   }
 
   start(): void {
-    console.log('start window.location.pathname', window.location.pathname);
     window.onpopstate = (event => {
-      // console.log('----------onpopstate----------', event.currentTarget.location.pathname);
       this._onRoute(event.currentTarget.location.pathname);
+    // eslint-disable-next-line no-extra-bind
     }).bind(this);
 
     this._onRoute(window.location.pathname);
   }
 
   _onRoute(pathname:string): void {
-    // console.log('_onRoute pathname', pathname);
-
     const route = this.getRoute(pathname);
 
     if (!route) {
       return;
     }
 
-    // console.log('---_currentRoute', this._currentRoute);
-    
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 
     this._currentRoute = route;
-    // route.render(route, pathname);
+
     route.render();
   }
 
   go(pathname: string): void {
-    // console.log('--go');
     this.history.pushState({ }, '', pathname);
     this._onRoute(pathname);
   }
@@ -78,9 +72,6 @@ export default class Router {
   }
 
   getRoute(pathname: string): Route {
-    // console.log('---getRoute');
     return this.routes.find(route => route.match(pathname));
   }
 }
-
-// export const router = new Router('#root');

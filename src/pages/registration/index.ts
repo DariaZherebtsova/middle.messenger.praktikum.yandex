@@ -8,7 +8,6 @@ import { userRegistrationController } from '../../controllers/user-registration'
 import { router } from '../../services/router';
 
 export function initRegistrationPage(rootQuery:string): RegistrationPage {
-  console.log('---initRegistrationPage rootQuery', rootQuery);
   const data = {
     page: {
       header: 'Регистрация',
@@ -68,8 +67,6 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
     },
   };
 
-  console.log('--window.history.state', window.history.state);
-
   // соответствие правил валидации и имени инпута
   const validateRuleName: Record<string, string> = {
     login: 'login',
@@ -100,9 +97,6 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
       validateRule: validateRuleName[data.inputs[i].name],
       ...data.inputs[i],
       events: {
-        focus: (event: Event) => {
-          console.log('focus on', event.target);
-        },
         blur: (event: Event) => onBlur(event),
       },
     };
@@ -130,7 +124,6 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {
-        console.log('validate OK');
         msgEl.textContent = '';
       }
     }
@@ -138,17 +131,14 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
 
   function submit(event: Event) {
     event.preventDefault();
-    console.log('----registration submit');
     userRegistrationController.signup(inputs);
   }
 
   const loginFormLink = document.getElementsByClassName('login-form__link')[0];
   if (loginFormLink) {
     loginFormLink.addEventListener('click', (event: Event) => {
-      console.log('---click back---');
       event.preventDefault();
-      // router.go('/auth');
-      router.back();
+      router.go('/auth');
     });
   }
 
