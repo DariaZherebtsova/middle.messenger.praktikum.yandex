@@ -24,6 +24,10 @@
 - `npm run serve` — запуск dev-сервера
 - `npm run start` — сборка и запуск dev-сервера
 
+#### Тесты
+
+- `npm run test`
+
 #### Линтинг
 
 - `npm run eslint`
