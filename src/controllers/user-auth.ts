@@ -38,6 +38,7 @@ class UserAuthController {
   public async logout() {
     try {
       await authAPI.logout();
+      globalStore.clearStore();
     } catch (error) {
       console.warn('Error request logout', error);
     }

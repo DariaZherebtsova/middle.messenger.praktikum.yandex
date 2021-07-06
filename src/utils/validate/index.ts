@@ -9,7 +9,6 @@ import validateNumber from './number';
 import { IInputBlock } from '../../components/pureInput/inputs.type';
 
 export function validate(value: string, type: string): ValidationResult {
-
   const validateRule = {
     required: requred,
     login: validateLogin,

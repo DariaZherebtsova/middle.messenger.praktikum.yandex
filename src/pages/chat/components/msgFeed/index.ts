@@ -89,6 +89,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   msgFeed.updateChat = async function updateChat(newCurrentChat) {
     chatTitle.props.title = newCurrentChat.title;
     chatTitle.props.avatar = newCurrentChat.avatar;
+    // chatController.setMessages()
     const newParams = await chatController.getParamsForWebSoket();
     webSocketService = new WebSocketService(...newParams);
   };
@@ -115,8 +116,8 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   function showModal(event: Event) {
     event.preventDefault();
-    const dropdownBox = document.getElementsByClassName('msg-feed__dropdown-box')[0];
-    dropdownBox.style.display = 'none';
+    const dropdown = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    dropdown.style.display = 'none';
     openMenuBtn.props.open = false;
     modal.show();
   }

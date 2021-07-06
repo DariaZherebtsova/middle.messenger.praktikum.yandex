@@ -6,8 +6,8 @@
   "scripts": {
     "serve": "node server.js",
     "start": "parcel build src/pages/*.html --no-cache --public-url ./ && node server.js",
-    "build": "parcel build src/pages/*.html --no-cache --public-url ./",
-    "dev": "parcel src/pages/test.html",
+    "build": "parcel build src/pages/index.html --no-cache --public-url ./",
+    "dev": "parcel src/pages/index.html",
     "stylelint": "npx stylelint **/*.scss",
     "eslint": "node_modules/.bin/eslint ./src",
     "test": "./node_modules/.bin/mocha"

@@ -57,4 +57,18 @@ export default class Store {
   addMessage(msg): void {
     this._globalStore.messages.push(msg);
   }
+
+  clearStore(): void {
+    const initProps = {
+      userId: null,
+      userInfo: null,
+      avatar: null,
+      chats: [],
+      currentChatId: null,
+      currentChat: null,
+      messages: [],
+      lastMessage: null,
+    };
+    this._globalStore = this._makePropsProxy(initProps);
+  }
 }

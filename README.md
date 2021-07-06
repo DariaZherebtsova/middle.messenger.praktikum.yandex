@@ -1,6 +1,9 @@
-https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/7
 
 ## Описание
+
+##### sprint 3
+
+Добавила роутинг, внедрила API, подключила WebSocket, написала немножко тестов.
 
 ##### sprint 2
 

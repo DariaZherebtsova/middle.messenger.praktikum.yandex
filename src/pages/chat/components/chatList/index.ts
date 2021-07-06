@@ -43,7 +43,7 @@ export function initChatList(parentElSelector:string): СhatList {
   insertInDOM('.chat-list__create-chat-box', sendTitleBtn);
 
   // создаем сhatPreview
-  chatList.renderChatPrewiews = function(chats) {
+  chatList.renderChatPrewiews = function renderChatPrewiews(chats) {
     for (let i = 0; i < chats.length; i += 1) {
       const сhatPreview = initChatPreview(chats[i]);
       const сhatPreviewLi = document.createElement('li');

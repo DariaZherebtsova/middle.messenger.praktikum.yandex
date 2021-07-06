@@ -34,7 +34,7 @@ describe('Проверяем компонент Button', () => {
     const props = {
       text: 'Авторизация',
       events: {
-        click: (event) => {
+        click: (event: Event) => {
           event.preventDefault();
           event.target.textContent = 'Click';
           return 'click';

@@ -7,7 +7,7 @@ const chatAPIInstance = new HTTPrequest(`${baseUrl}/chats`);
 export default class ChatAPI extends BaseAPI {
   get(): Promise<any> {
     return chatAPIInstance.get('/')
-      .then(({ response }) => response);
+      .then((response) => response);
   }
 
   create(title: string): Promise<any> {

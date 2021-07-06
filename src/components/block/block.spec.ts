@@ -29,7 +29,7 @@ describe('Проверяем класс Block', () => {
   it('Экземпляр класса Block может получать в props обработчики событий', () => {
     const props = {
       events: {
-        click: (event) => {
+        click: (event: Event) => {
           event.preventDefault();
           event.target.textContent = 'Click';
           return 'click';

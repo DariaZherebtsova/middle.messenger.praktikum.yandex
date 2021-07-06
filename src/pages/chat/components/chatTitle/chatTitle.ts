@@ -8,6 +8,7 @@ export default class ChatTitle extends Block {
     // eslint-disable-next-line no-param-reassign
     props.wrapperClass = 'chat-title';
     if (!props.avatar) {
+      // eslint-disable-next-line no-param-reassign
       props.avatar = `${noImgAvatar}`;
     }
     super('div', props);

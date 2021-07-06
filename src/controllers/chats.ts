@@ -1,17 +1,24 @@
 import ChatAPI from '../api/chat-api';
 import { globalStore } from '../store/globalStore';
-import { router } from '../services/router';
 import noImgAvatar from '../../static/img/no_img_circle.svg';
 import { userAuthController } from './user-auth';
+import { ChatsResponse } from './types';
+import { router } from '../services/router';
 
 const chatAPI = new ChatAPI();
 
 class ChatController {
   public async get() {
+    let chats = [];
     try {
       const answer = await chatAPI.get();
-      const chats = JSON.parse(answer);
-      chats.forEach(chat => {
+      if (answer.status !== 200) {
+        return router.go('/auth');
+      }
+
+      chats = JSON.parse(answer.response);
+      chats.forEach((chat: ChatsResponse) => {
+        // eslint-disable-next-line no-param-reassign
         chat.last_message = JSON.parse(chat.last_message);
       });
       globalStore.setStore('chats', chats);
@@ -19,6 +26,7 @@ class ChatController {
     } catch (error) {
       console.warn('Error ChatController get request', error);
     }
+    return chats;
   }
 
   public async getChats() {
@@ -46,11 +54,9 @@ class ChatController {
   }
 
   setCurrentChat(chatInfo) {
+    globalStore.setMessages([chatInfo.last_message]);
     globalStore.setStore('currentChat', chatInfo);
     globalStore.setStore('currentChatId', chatInfo.id);
-    const lastMsg = JSON.parse(chatInfo.last_message);
-    globalStore.setMessages([lastMsg]);
-    globalStore.setStore('lastMessage', lastMsg);
   }
 
   getLastMessage() {
@@ -59,6 +65,10 @@ class ChatController {
 
   getMessages() {
     return globalStore.getStore('messages');
+  }
+
+  setMessages(msgList) {
+    globalStore.setMessages(msgList);
   }
 
   async getUserId() {
