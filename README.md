@@ -1,4 +1,4 @@
-https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/7
+https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/11
 
 ## Описание
 
