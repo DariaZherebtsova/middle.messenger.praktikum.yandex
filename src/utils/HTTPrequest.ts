@@ -25,6 +25,12 @@ type Options = {
 };
 
 export class HTTPrequest {
+  baseUrl: string;
+
+  constructor(baseUrl = '/') {
+    this.baseUrl = baseUrl;
+  }
+
   get = (url: string, options: Options = {}): Promise<unknown> => this.request(
     url,
     { ...options, method: METHODS.GET },
@@ -65,13 +71,14 @@ export class HTTPrequest {
         method,
         isGet && !!data
           ? `${url}${queryStringify(<Record<string, string>>data)}`
-          : url,
+          : `${this.baseUrl}${url}`,
       );
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
+      xhr.withCredentials = true;
       xhr.onload = function onload() {
         resolve(xhr);
       };

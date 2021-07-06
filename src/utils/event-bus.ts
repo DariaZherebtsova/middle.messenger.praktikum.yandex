@@ -1,5 +1,5 @@
 export interface IEventBus {
-  on(event: string, callback: () => void): void;
+  on(event: string, callback: (any) => void): void;
   off(event: string, callback: () => void): void;
   emit(event: string, ...args: []): void;
 }

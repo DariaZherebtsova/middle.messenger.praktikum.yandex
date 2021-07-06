@@ -9,7 +9,6 @@ export default function getFormData({ formId, formFields }: T): Record<string, s
       formFields.forEach((item) => {
         result[item] = formData.get(item);
       });
-      console.log(`${formId}`, result);
     };
   }
   return result;

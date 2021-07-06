@@ -8,7 +8,7 @@ export const loginFormTmpl = `
       <div class="login-form__button-box">
       </div>
       <div class="login-form__link-box">
-        <a class="custom-link color-green" href="{{link}}">{{linkText}}</a>
+        <a class="login-form__link custom-link color-green" href="{{link}}">{{linkText}}</a>
       </div>
     </div>
   </form>
