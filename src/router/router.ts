@@ -6,7 +6,7 @@ export default class Router {
 
   history: History;
 
-  _currentRoute: Route;
+  _currentRoute: Route | null;
 
   _rootQuery: string;
 
@@ -25,7 +25,7 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use(pathname:string, block: (rootQuery:string) => Block): Router {
+  use(pathname:string, block: any): Router {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
     this.routes.push(route);
@@ -34,7 +34,7 @@ export default class Router {
   }
 
   start(): void {
-    window.onpopstate = (event => {
+    window.onpopstate = ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
     // eslint-disable-next-line no-extra-bind
     }).bind(this);

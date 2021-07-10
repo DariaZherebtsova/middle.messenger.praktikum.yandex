@@ -20,7 +20,7 @@ function queryStringify(data: Record<string, string>) {
 type Options = {
   headers?: Record<string, string>,
   method?: METHODS,
-  data?: Record<string, string> | FormData,
+  data?: Record<string, any> | FormData,
   timeout?: number,
 };
 

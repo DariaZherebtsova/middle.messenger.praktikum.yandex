@@ -4,6 +4,7 @@ import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
 import prepareDataToRequest from '../utils/prepareDataToRequest';
 import { globalStore } from '../store/globalStore';
+import { SignInRequest } from './types';
 
 const authAPI = new AuthAPI();
 
@@ -13,7 +14,7 @@ class UserAuthController {
       if (!validateAllInputs(Object.values(inputs))) {
         throw new Error('данные не прошли валидацию');
       }
-      await authAPI.signin(prepareDataToRequest(inputs));
+      await authAPI.signin(<SignInRequest>prepareDataToRequest(inputs));
       router.go('/');
     } catch (error) {
       console.warn('Error request signin', error);
@@ -23,8 +24,8 @@ class UserAuthController {
   public async getUserInfo() {
     let result = null;
     try {
-      const { response } = await authAPI.getUserInfo();
-      result = JSON.parse(response);
+      const answer: any = await authAPI.getUserInfo();
+      result = JSON.parse(answer.response);
       globalStore.setStore('userInfo', result);
       globalStore.setStore('avatar', result.avatar);
       globalStore.setStore('userId', result.id);

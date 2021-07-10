@@ -19,5 +19,6 @@ export default class MsgFeed extends Block {
     return htmlStr;
   }
 
-  updateChat(newCurrentChat: ChatsResponse): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateChat(_newCurrentChat: ChatsResponse): void {}
 }

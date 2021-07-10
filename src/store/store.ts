@@ -1,4 +1,4 @@
-import { EventBus, IEventBus } from '../utils/event-bus';
+import { EventBus } from '../utils/event-bus';
 
 type TProps = Record<string, any>;
 
@@ -7,7 +7,7 @@ export default class Store {
 
   public props: TProps = <TProps>{};
 
-  eventBus: () => IEventBus;
+  eventBus: () => EventBus;
 
   static EVENTS = {
     FLOW_SHC: 'flow:something-has-changed',
@@ -50,11 +50,11 @@ export default class Store {
     return this._globalStore[fild];
   }
 
-  setMessages(msgList): void {
+  setMessages(msgList: any[]): void {
     this._globalStore.messages = msgList;
   }
 
-  addMessage(msg): void {
+  addMessage(msg: any): void {
     this._globalStore.messages.push(msg);
   }
 

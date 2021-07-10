@@ -10,7 +10,8 @@ import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../services/router';
 import { baseUrl } from '../../api/base-api';
 
-export async function initProfileEditPasswordPage(rootQuery: string): ProfileEditPasswordPage {
+// eslint-disable-next-line max-len
+export async function initProfileEditPasswordPage(rootQuery: string): Promise<ProfileEditPasswordPage> {
   const storeData = await userProfileController.getUserInfo();
   if (storeData === null || storeData === undefined) {
     router.go('/auth');
@@ -54,7 +55,7 @@ export async function initProfileEditPasswordPage(rootQuery: string): ProfileEdi
 
   const profileForm = document.getElementById('profile-form');
   if (profileForm) {
-    profileForm.addEventListener('keydown', (event: Event) => {
+    profileForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
@@ -87,7 +88,7 @@ export async function initProfileEditPasswordPage(rootQuery: string): ProfileEdi
   insertInDOM('.submit-btn-box', submitBtn);
 
   function onBlur(event: Event) {
-    const inputEl: HTMLElement | null = <HTMLElement>event.target;
+    const inputEl: HTMLInputElement | null = <HTMLInputElement>event.target;
     if (inputEl === null) {
       return;
     }

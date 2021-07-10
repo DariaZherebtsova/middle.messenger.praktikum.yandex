@@ -10,7 +10,7 @@ export default class InputWithLabel extends Block implements IInputBlock {
     super('div', props);
   }
 
-  get inputElement(): HTMLElement {
+  get inputElement(): HTMLInputElement {
     return this.element.getElementsByTagName('input')[0];
   }
 

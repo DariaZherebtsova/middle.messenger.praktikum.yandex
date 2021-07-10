@@ -2,8 +2,9 @@ import ChatAPI from '../api/chat-api';
 import { globalStore } from '../store/globalStore';
 import noImgAvatar from '../../static/img/no_img_circle.svg';
 import { userAuthController } from './user-auth';
-import { ChatsResponse } from './types';
+import { ChatsResponse, LastMessage } from './types';
 import { router } from '../services/router';
+import { WebSocketInitData } from '../services/webSocketService';
 
 const chatAPI = new ChatAPI();
 
@@ -19,7 +20,7 @@ class ChatController {
       chats = JSON.parse(answer.response);
       chats.forEach((chat: ChatsResponse) => {
         // eslint-disable-next-line no-param-reassign
-        chat.last_message = JSON.parse(chat.last_message);
+        chat.last_message = JSON.parse(<string>chat.last_message);
       });
       globalStore.setStore('chats', chats);
       return chats;
@@ -30,7 +31,7 @@ class ChatController {
   }
 
   public async getChats() {
-    let chats = globalStore.getStore('chats');
+    const chats = globalStore.getStore('chats');
     if (chats.length) {
       return chats;
     }
@@ -38,7 +39,8 @@ class ChatController {
   }
 
   getDataForChats() {
-    const result = globalStore.getStore('chats').map((item) => {
+    const result = globalStore.getStore('chats').map((item: ChatsResponse) => {
+      // eslint-disable-next-line no-param-reassign
       item.avatar = item.avatar ? item.avatar : `${noImgAvatar}`;
       return item;
     });
@@ -53,7 +55,7 @@ class ChatController {
     return globalStore.getStore('currentChatId');
   }
 
-  setCurrentChat(chatInfo) {
+  setCurrentChat(chatInfo: ChatsResponse) {
     globalStore.setMessages([chatInfo.last_message]);
     globalStore.setStore('currentChat', chatInfo);
     globalStore.setStore('currentChatId', chatInfo.id);
@@ -67,7 +69,7 @@ class ChatController {
     return globalStore.getStore('messages');
   }
 
-  setMessages(msgList) {
+  setMessages(msgList: LastMessage[]) {
     globalStore.setMessages(msgList);
   }
 
@@ -82,9 +84,10 @@ class ChatController {
     } catch (error) {
       console.warn('Error ChatController getUserId', error);
     }
+    return null;
   }
 
-  async getParamsForWebSoket() {
+  async getParamsForWebSoket(): Promise<WebSocketInitData> {
     const userId = await this.getUserId();
     const chatId = this.getCurrentChatId();
     const token = await this.getChatToken(chatId);
@@ -102,7 +105,7 @@ class ChatController {
     }
   }
 
-  public async addUsers(users) {
+  public async addUsers(users: number) {
     const data = {
       users: [users],
       chatId: globalStore.getStore('currentChatId'),
@@ -114,7 +117,7 @@ class ChatController {
     }
   }
 
-  public async getChatToken(chatId): Promise<any> {
+  public async getChatToken(chatId: number): Promise<any> {
     try {
       const { response } = await chatAPI.getChatToken(chatId);
       const tokenObj = JSON.parse(response);
@@ -122,6 +125,7 @@ class ChatController {
     } catch (error) {
       console.warn('Error ChatController getChatToken', error);
     }
+    return null;
   }
 }
 

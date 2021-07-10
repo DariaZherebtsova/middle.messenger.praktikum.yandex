@@ -11,14 +11,14 @@ export function initModal(parentElSelector:string): Modal {
     closeBtn: {
       wrapperClass: 'modal__close-button',
       events: {
-        click: (event: Event) => close(event),
+        click: () => close(),
       },
     },
     button: {
       text: 'Добавить',
       wrapperClass: 'custom-button',
       events: {
-        click: (event: Event) => done(event),
+        click: () => done(),
       },
     },
     input: {
@@ -26,7 +26,7 @@ export function initModal(parentElSelector:string): Modal {
       wrapperClass: 'custom-input',
       validateRule: 'number',
       events: {
-        blur: (event: Event) => onBlur(event),
+        blur: () => onBlur(),
       },
     },
   };
@@ -43,10 +43,11 @@ export function initModal(parentElSelector:string): Modal {
   const doneBtn = new Button(data.button);
   insertInDOM('.modal__button-box', doneBtn);
 
-  function onBlur(event: Event) {
+  function onBlur() {
     const msgEl = input.getElementForErrorMessage();
     if (msgEl) {
-      const resultValidate = validate(input.element.value, data.input.validateRule);
+      const inputEl: HTMLInputElement = <HTMLInputElement>input.element;
+      const resultValidate = validate(inputEl.value, data.input.validateRule);
       if (!resultValidate.valid) {
         msgEl.textContent = resultValidate.message;
       } else {

@@ -41,7 +41,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
 
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
-    loginForm.addEventListener('keydown', (event: Event) => {
+    loginForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
@@ -58,7 +58,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
         blur: (event: Event) => onBlur(event),
       },
     };
-    const input: Input = new InputWithLabel(props);
+    const input = new InputWithLabel(props);
     insertInDOM('.login-form__input-box', input);
     inputs[data.inputs[i].name] = input;
   }
@@ -67,7 +67,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
   insertInDOM('.login-form__button-box', button);
 
   function onBlur(event: Event) {
-    const inputEl: HTMLElement | null = <HTMLElement>event.target;
+    const inputEl: HTMLInputElement | null = <HTMLInputElement>event.target;
     if (inputEl === null) {
       return;
     }

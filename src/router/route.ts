@@ -5,7 +5,7 @@ export default class Route {
 
   _blockInit: (rootQuery:string) => Block;
 
-  _block: Block;
+  _block: Block | null;
 
   _props: Record<string, string>;
 
@@ -45,12 +45,6 @@ export default class Route {
   }
 }
 
-function isEqual(lhs, rhs) {
+function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
-}
-
-function render(query, block) {
-  const root = document.querySelector(query);
-  root.textContent = block.getWrapperElement();
-  return root;
 }

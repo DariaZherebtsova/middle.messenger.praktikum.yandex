@@ -1,9 +1,10 @@
 // import { LoginFormModel } from './types';
-import { IInputBlock } from '../components/pureInput/inputs.type';
+import { IInputBlock } from '../components/inputWithLabel/inputWithLabel.type';
 import AuthAPI from '../api/auth-api';
 import { router } from '../services/router';
 import { validateAllInputs } from '../utils/validate/index';
 import prepareDataToRequest from '../utils/prepareDataToRequest';
+import { SignUpRequest } from './types';
 
 const authAPI = new AuthAPI();
 
@@ -16,12 +17,16 @@ class UserRegistrationController {
       // сравниваю пароли
       const { password, passwordRepeat } = inputs;
       if (password.inputElement.value !== passwordRepeat.inputElement.value) {
-        password.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        passwordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        const errMsgElPass = password.getElementForErrorMessage();
+        const errMsgElPassRep = passwordRepeat.getElementForErrorMessage();
+        if (errMsgElPass && errMsgElPassRep) {
+          errMsgElPass.textContent = 'Пароли не совпадают';
+          errMsgElPassRep.textContent = 'Пароли не совпадают';
+        }
         return;
       }
 
-      await authAPI.signup(prepareDataToRequest(inputs));
+      await authAPI.signup(<SignUpRequest>prepareDataToRequest(inputs));
 
       router.go('/');
     } catch (error) {

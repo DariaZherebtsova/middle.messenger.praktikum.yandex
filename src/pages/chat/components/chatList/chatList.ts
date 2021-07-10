@@ -19,5 +19,6 @@ export default class СhatList extends Block {
     return htmlStr;
   }
 
-  renderChatPrewiews(chats: Array<ChatsResponse>): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  renderChatPrewiews(_chats: Array<ChatsResponse>): void {}
 }

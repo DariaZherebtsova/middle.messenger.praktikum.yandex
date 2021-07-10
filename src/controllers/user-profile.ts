@@ -5,6 +5,7 @@ import { validateAllInputs } from '../utils/validate/index';
 import prepareDataToRequest from '../utils/prepareDataToRequest';
 import { globalStore } from '../store/globalStore';
 import { userAuthController } from './user-auth';
+import { ChangePasswordRequest, UserRequest } from './types';
 
 const userAPI = new UresAPI();
 
@@ -14,7 +15,7 @@ class UserProfileController {
       if (!validateAllInputs(Object.values(inputs))) {
         throw new Error('данные не прошли валидацию');
       }
-      const response = await userAPI.profile(prepareDataToRequest(inputs));
+      const response = await userAPI.profile(<UserRequest>prepareDataToRequest(inputs));
       const result = JSON.parse(response);
       result.avatar = globalStore.getStore('avatar');
       globalStore.setStore('userInfo', result);
@@ -34,6 +35,7 @@ class UserProfileController {
     } catch (error) {
       console.warn('Error request profileAvatar', error);
     }
+    return null;
   }
 
   getAvatar() {
@@ -48,14 +50,19 @@ class UserProfileController {
       // сравниваю пароли
       const { newPassword, newPasswordRepeat } = inputs;
       if (newPassword.inputElement.value !== newPasswordRepeat.inputElement.value) {
-        newPassword.getElementForErrorMessage().textContent = 'Пароли не совпадают';
-        newPasswordRepeat.getElementForErrorMessage().textContent = 'Пароли не совпадают';
+        const errMsgElNewPass = newPassword.getElementForErrorMessage();
+        const errMsgElNewPassRep = newPasswordRepeat.getElementForErrorMessage();
+        if (errMsgElNewPass && errMsgElNewPassRep) {
+          errMsgElNewPass.textContent = 'Пароли не совпадают';
+          errMsgElNewPassRep.textContent = 'Пароли не совпадают';
+        }
         return;
       }
 
-      const response = await userAPI.password(prepareDataToRequest(inputs));
+      const response = await userAPI.password(<ChangePasswordRequest>prepareDataToRequest(inputs));
       if (response !== 'OK') {
         const result = JSON.parse(response);
+        // eslint-disable-next-line consistent-return
         return result.reason;
       }
 
