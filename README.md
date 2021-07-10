@@ -1,6 +1,8 @@
-https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/11
-
 ## Описание
+
+##### sprint 3
+
+Добавила роутинг, внедрила API, подключила WebSocket, написала немножко тестов.
 
 ##### sprint 2
 
@@ -20,6 +22,10 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/11
 - `npm run build` — сборка
 - `npm run serve` — запуск dev-сервера
 - `npm run start` — сборка и запуск dev-сервера
+
+#### Тесты
+
+- `npm run test`
 
 #### Линтинг
 

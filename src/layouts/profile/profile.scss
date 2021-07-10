@@ -17,10 +17,17 @@
 }
 
 .profile__back-btn {
-  padding-left: 10px;
+  width: 28px;
+  height: 28px;
+  margin-left: 16px;
   text-align: center;
   border: none;
-  background-color: transparent;
+  background: url(../../../static/img/back-btn.png) no-repeat;
+  transition: background 0.3s ease-in;
+
+  &:hover {
+    background: url(../../../static/img/back-btn-hover.png) no-repeat;
+  }
 }
 
 .profile__main {
@@ -29,8 +36,28 @@
 
 .profile__data {
   width: 510px;
-  min-height: 350px;
+  min-height: 200px;
   margin: 30px auto 0;
+}
+
+.profile__avatar-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  .avatar-input {
+    display: none;
+  }
+
+  .avatar-label {
+    &.activ {
+      cursor: pointer;
+    }
+
+    .avatar-img {
+      border-radius: 50%;
+    }
+  }
 }
 
 .profile__avatar {
@@ -39,6 +66,7 @@
 }
 
 .profile__name {
+  margin-top: 20px;
   margin-bottom: 30px;
   text-align: center;
   font-size: x-large;

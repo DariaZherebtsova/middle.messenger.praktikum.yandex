@@ -154,7 +154,7 @@ export class Block implements IBlock {
       set(target, prop: string, value) {
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
-
+        
         // Запускаем обновление компоненты
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;

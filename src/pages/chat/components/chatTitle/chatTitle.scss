@@ -1,0 +1,16 @@
+.chat-title {
+  display: flex;
+  align-items: center;
+}
+
+.chat-title__avatar img {
+  width: 34px;
+  height: 34px;
+}
+
+.chat-title__title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 10px;
+}

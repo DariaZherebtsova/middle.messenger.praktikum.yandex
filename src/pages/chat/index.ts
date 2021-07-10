@@ -1,115 +1,74 @@
-import Handlebars from 'handlebars';
 import insertInDOM from '../../utils/insertInDOM';
-import { chatPageTmpl } from './chat.hbs';
-import СhatList from '../../modules/chatList/chatList';
-import ChatPreview from '../../modules/chatPreview/chatPreview';
-import MsgFeed from '../../modules/msgFeed/msgFeed';
-import { Input } from '../../components/input/input';
-import Button from '../../components/button/button';
-import { HTTPrequest } from '../../utils/HTTPrequest';
-import noImgAvatar from '../../../static/img/no_img_circle.svg';
+import ChatPage from './chat';
+import { router } from '../../services/router';
+import { userAuthController } from '../../controllers/user-auth';
+import { chatController } from '../../controllers/chats';
+import { globalStoreEventBus } from '../../store/globalStore';
+import { initChatList } from './components/chatList';
+import { initMsgFeed } from './components/msgFeed';
 
-const data = {
-  chats: [
-    {
-      name: 'Илья',
-      lastMsg: 'В траве сидел кузнечик ...',
-      time: '12:15',
-      img: `${noImgAvatar}`,
-    },
-    {
-      name: 'Олег',
-      lastMsg: 'Представьте себе, представьте себе Совсем как огуречик...',
-      time: 'Пн',
-      img: `${noImgAvatar}`,
-    },
-  ],
-  msgFeed: {
-    attachBtn: {
-      wrapperClass: 'msg-feed__attach-btn',
-    },
-    sendBtn: {
-      wrapperClass: 'msg-feed__send-btn',
-      events: {
-        click: (event: Event) => submit(event),
-      },
-    },
-    msgInput: {
-      type: 'text',
-      name: 'message',
-    },
-    noImgAvatar: `${noImgAvatar}`,
-    name: 'Илья',
-    date: '31 июня',
-    msg: 'В траве сидел кузнечик, В траве сидел кузнечик, Совсем как огуречик Зелененький он был.',
-  },
-};
+export async function initChatPage(rootQuery:string): ChatPage {
+  // запрашиваем список чатов
+  chatController.get();
+  //  и информацию о пользователе
+  userAuthController.getUserInfo();
 
-// render chatPageTmpl
-const hbsTemplateFn = Handlebars.compile(chatPageTmpl);
-const htmlStr = hbsTemplateFn({});
-const root = document.getElementById('root');
-if (root) {
-  root.innerHTML = htmlStr;
-}
+  const chatPage = new ChatPage({});
+  insertInDOM(rootQuery, chatPage);
 
-// создаем chatList
-const chatList = new СhatList({});
-insertInDOM('.chat-page-wrapper', chatList);
+  // создаем chatList
+  initChatList('.chat-page-wrapper');
 
-// создаем сhatPreview
-for (let i = 0; i < data.chats.length; i += 1) {
-  const сhatPreview = new ChatPreview(data.chats[i]);
-  const сhatPreviewLi = document.createElement('li');
-  сhatPreviewLi.appendChild(document.createElement('hr'));
-  сhatPreviewLi.appendChild(сhatPreview.getWrapperElement());
-  const previewList = document.querySelector('.chat-list__preview-list');
-  if (previewList) {
-    previewList.appendChild(сhatPreviewLi);
-  }
-}
+  // создаем msgFeed
+  let msgFeed = await initMsgFeed('.chat-page-wrapper');
 
-// создаем msgFeed
-const msgFeed = new MsgFeed(data.msgFeed);
-insertInDOM('.chat-page-wrapper', msgFeed);
+  // подписываемся на изменение currentChat
+  globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
 
-const attachBtn = new Button(data.msgFeed.attachBtn);
-attachBtn.getWrapperElement().setAttribute('type', 'button');
-insertInDOM('.msg-feed__send-msg-form', attachBtn);
-
-const inputBlock = new Input(data.msgFeed.msgInput);
-const input = inputBlock.getElementForEvent();
-input.classList.add('msg-feed__input');
-const box = document.querySelector('.msg-feed__send-msg-form');
-if (box) {
-  box.appendChild(input);
-}
-
-const sendBtn = new Button(data.msgFeed.sendBtn);
-attachBtn.getWrapperElement().setAttribute('type', 'submit');
-insertInDOM('.msg-feed__send-msg-form', sendBtn);
-
-const sendMsgForm: HTMLFormElement | null = <HTMLFormElement>document.getElementById('send-msg-form');
-if (sendMsgForm) {
-  sendMsgForm.addEventListener('keydown', (event: Event) => {
-    if (event.code === 'Enter') {
-      event.preventDefault();
-
-      sendMsg();
+  async function doChangeMsgFeed(...args) {
+    if (args[0] === 'currentChat') {
+      const newCurrentChat = chatController.getCurrentChat();
+      if (msgFeed.props.firstRender) {
+        msgFeed.element.remove();
+        msgFeed = await initMsgFeed('.chat-page-wrapper');
+      } else {
+        msgFeed.updateChat(newCurrentChat);
+      }
     }
-  });
-}
+  }
 
-function sendMsg() {
-  // отправляем форму
-  new HTTPrequest().post('https://chats', { data: new FormData(<HTMLFormElement>sendMsgForm) })
-    .catch((err) => {
-      console.error('sendMsg error', err);
+  const profileLink = document.getElementsByClassName('chat-list__profile-link')[0];
+  if (profileLink) {
+    profileLink.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/profile');
     });
-}
+  }
 
-function submit(event: Event) {
-  event.preventDefault();
+  const authLink = document.getElementsByClassName('chat-list__auth-link')[0];
+  if (authLink) {
+    authLink.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      userAuthController.logout();
+      router.go('/auth');
+    });
+  }
 
-  sendMsg();
+  const page404Link = document.getElementsByClassName('chat-list__404-link')[0];
+  if (page404Link) {
+    page404Link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/404');
+    });
+  }
+
+  const page500Link = document.getElementsByClassName('chat-list__500-link')[0];
+  if (page500Link) {
+    page500Link.addEventListener('click', (event: Event) => {
+      event.preventDefault();
+      router.go('/500');
+    });
+  }
+
+  return chatPage;
 }
