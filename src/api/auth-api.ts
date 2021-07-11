@@ -1,10 +1,10 @@
 import { HTTPrequest } from '../utils/HTTPrequest';
-import { BaseAPI, baseUrl } from './base-api';
+import { baseUrl } from './base-api';
 import { SignInRequest, SignUpRequest } from '../controllers/types';
 
 const authAPIInstance = new HTTPrequest(`${baseUrl}/auth`);
 
-export default class AuthAPI extends BaseAPI {
+export default class AuthAPI {
   public signin(user: SignInRequest): Promise<Record<string, string>> {
     const options = {
       data: user,

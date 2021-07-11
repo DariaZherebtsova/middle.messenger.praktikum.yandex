@@ -1,5 +1,4 @@
 import Route from './route';
-import { Block } from '../components/block/block';
 
 export default class Router {
   routes: Route[];
@@ -71,7 +70,7 @@ export default class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string): Route {
+  getRoute(pathname: string): Route | undefined {
     return this.routes.find(route => route.match(pathname));
   }
 }

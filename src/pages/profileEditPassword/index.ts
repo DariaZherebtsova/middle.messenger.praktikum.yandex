@@ -4,11 +4,13 @@ import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import { validate } from '../../utils/validate/index';
 import Button from '../../components/button/button';
-import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
+// import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../services/router';
 import { baseUrl } from '../../api/base-api';
+
+const noImgAvatarLarge = 'img/noImgAvatar-large.png';
 
 // eslint-disable-next-line max-len
 export async function initProfileEditPasswordPage(rootQuery: string): Promise<ProfileEditPasswordPage> {

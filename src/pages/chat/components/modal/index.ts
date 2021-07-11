@@ -57,7 +57,7 @@ export function initModal(parentElSelector:string): Modal {
   }
 
   function done() {
-    chatController.addUsers(input.inputElement.value);
+    chatController.addUsers(Number(input.inputElement.value));
     input.inputElement.value = '';
     modal.hide();
   }

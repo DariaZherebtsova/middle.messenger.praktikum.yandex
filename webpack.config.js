@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/router/index.ts',
@@ -9,6 +10,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
   },
   module: {
     rules: [
@@ -30,6 +36,17 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(png|jpg|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -42,6 +59,14 @@ module.exports = {
         removeRedundantAttributes: true,
         useShortDoctype: true,
       },
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'static/img',
+          to: './img',
+        },
+      ],
     }),
   ],
 };

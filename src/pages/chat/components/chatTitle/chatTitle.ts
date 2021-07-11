@@ -1,7 +1,8 @@
 import Handlebars from 'handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatTitleTmpl } from './chatTitle.hbs';
-import noImgAvatar from '../../../../../static/img/no_img_circle.svg';
+
+const noImgAvatar = 'img/no_img_circle.svg';
 
 export default class ChatTitle extends Block {
   constructor(props: Record<string, any>) {

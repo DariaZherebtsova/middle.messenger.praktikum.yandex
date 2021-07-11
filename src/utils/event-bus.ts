@@ -1,11 +1,11 @@
 export interface IEventBus {
   on(event: string, callback: () => void): void;
   off(event: string, callback: () => void): void;
-  emit(event: string, ...args: []): void;
+  emit(event: string, args?: any, arg?: any): void;
 }
 
 export class EventBus implements IEventBus {
-  listeners: Record<string, Array<()=>void>>;
+  listeners: Record<string, Array<(...args: any[])=>void>>;
 
   constructor() {
     this.listeners = {};
@@ -29,7 +29,7 @@ export class EventBus implements IEventBus {
     );
   }
 
-  emit(event: string, ...args: []): void {
+  emit(event: string, ...args: any[]): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

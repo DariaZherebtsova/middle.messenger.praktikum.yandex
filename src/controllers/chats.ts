@@ -1,10 +1,12 @@
 import ChatAPI from '../api/chat-api';
 import { globalStore } from '../store/globalStore';
-import noImgAvatar from '../../static/img/no_img_circle.svg';
+// import noImgAvatar from '../../static/img/no_img_circle.svg';
 import { userAuthController } from './user-auth';
 import { ChatsResponse, LastMessage } from './types';
 import { router } from '../services/router';
 import { WebSocketInitData } from '../services/webSocketService';
+
+const noImgAvatar = 'img/no_img_circle.svg';
 
 const chatAPI = new ChatAPI();
 

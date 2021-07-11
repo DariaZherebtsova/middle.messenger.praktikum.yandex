@@ -1,5 +1,6 @@
 import ChatPreview from './chatPreview';
 import { chatController } from '../../../../controllers/chats';
+import { ChatsResponse } from '../../../../controllers/types';
 
 export function initChatPreview(props: Record<string, any>): ChatPreview {
   const data = {
@@ -12,7 +13,7 @@ export function initChatPreview(props: Record<string, any>): ChatPreview {
 
   function selectChat(event: Event) {
     event.preventDefault();
-    chatController.setCurrentChat(chatPreview.chatInfo);
+    chatController.setCurrentChat(<ChatsResponse>chatPreview.chatInfo);
   }
   return chatPreview;
 }

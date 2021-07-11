@@ -19,6 +19,6 @@ export default class ChatPreview extends Block {
   }
 
   get chatInfo(): TProps {
-    return this._meta.props;
+    return this.meta.props;
   }
 }
