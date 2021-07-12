@@ -6,10 +6,12 @@
   "scripts": {
     "serve": "webpack serve",
     "build": "webpack --mode production",
+    "webpack": "webpack --config webpack.config.js",
     "build:dev": "webpack-dev-server --mode development",
     "stylelint": "npx stylelint **/*.scss",
     "eslint": "node_modules/.bin/eslint ./src",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "pre-commit": "npm run test"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
@@ -28,9 +30,12 @@
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.22.0",
     "express": "^4.17.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
+    "husky": "^7.0.1",
     "jsdom": "^16.6.0",
+    "mini-css-extract-plugin": "^2.1.0",
     "mocha": "^9.0.1",
     "node-sass": "^6.0.1",
     "parcel-bundler": "^1.12.5",

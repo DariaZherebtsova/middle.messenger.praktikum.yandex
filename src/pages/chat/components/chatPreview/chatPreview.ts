@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from 'handlebars/dist/cjs/handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatPreviewTmpl } from './chatPreview.hbs';
 import { TProps } from '../../../../components/block/block.type';

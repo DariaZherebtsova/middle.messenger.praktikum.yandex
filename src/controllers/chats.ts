@@ -20,10 +20,10 @@ class ChatController {
       }
 
       chats = JSON.parse(answer.response);
-      chats.forEach((chat: ChatsResponse) => {
-        // eslint-disable-next-line no-param-reassign
-        chat.last_message = JSON.parse(<string>chat.last_message);
-      });
+      // chats.forEach((chat: ChatsResponse) => {
+      //   // eslint-disable-next-line no-param-reassign
+      //   chat.last_message = JSON.parse(<string>chat.last_message);
+      // });
       globalStore.setStore('chats', chats);
       return chats;
     } catch (error) {

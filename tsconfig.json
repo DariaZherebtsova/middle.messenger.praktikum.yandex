@@ -10,7 +10,10 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
   },
   "exclude": [
     "node_modules",

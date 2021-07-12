@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars/dist/cjs/handlebars
+import Handlebars from 'handlebars/dist/cjs/handlebars';
 import { Block } from '../../components/block/block';
 import { TProps } from '../../components/block/block.type';
 

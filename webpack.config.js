@@ -1,12 +1,14 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/router/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'project-name.bundle.js',
+    filename: 'bundle.js',
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
@@ -33,16 +35,18 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
           'sass-loader',
         ],
       },
       {
-        test: /\.(png|jpg|svg)$/i,
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-              limit: 8192,
+              outputPath: 'img',
             },
           },
         ],
@@ -50,15 +54,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/pages/index.html',
-      filename: 'index.html',
-      minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-      },
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -67,6 +64,10 @@ module.exports = {
           to: './img',
         },
       ],
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      filename: 'index.html',
     }),
   ],
 };
