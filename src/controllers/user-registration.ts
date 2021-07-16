@@ -1,4 +1,3 @@
-// import { LoginFormModel } from './types';
 import { IInputBlock } from '../components/inputWithLabel/inputWithLabel.type';
 import AuthAPI from '../api/auth-api';
 import { router } from '../services/router';

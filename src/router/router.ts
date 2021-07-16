@@ -42,19 +42,21 @@ export default class Router {
   }
 
   _onRoute(pathname:string): void {
-    const route = this.getRoute(pathname);
+    let route = this.getRoute(pathname);
 
     if (!route) {
-      return;
+      route = this.getRoute('/404');
     }
 
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 
-    this._currentRoute = route;
+    this._currentRoute = <Route>route;
 
-    route.render();
+    if (route) {
+      route.render();
+    }
   }
 
   go(pathname: string): void {

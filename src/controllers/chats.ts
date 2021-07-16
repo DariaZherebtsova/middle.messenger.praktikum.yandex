@@ -39,7 +39,7 @@ class ChatController {
   getDataForChats() {
     const result = globalStore.getStore('chats').map((item: ChatsResponse) => {
       // eslint-disable-next-line no-param-reassign
-      item.avatar = item.avatar ? item.avatar : `${noImgAvatar}`;
+      item.avatar = item.avatar || `${noImgAvatar}`;
       return item;
     });
     return result;

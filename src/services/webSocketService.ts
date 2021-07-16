@@ -1,4 +1,4 @@
-import { globalStore } from '../store/globalStore';
+import { socketController } from '../controllers/web-socket';
 
 type MsgFormat = {
   content: string,
@@ -33,7 +33,7 @@ export class WebSocketService {
 
   didOpen(): void {
     console.log('Соединение установлено');
-    const userLogin = globalStore.getStore('userInfo')?.login ?? '';
+    const userLogin = socketController.getUserInfo();
     this._socket.send(JSON.stringify({
       content: `Всем привет от ${userLogin}!`,
       type: 'message',
@@ -53,8 +53,8 @@ export class WebSocketService {
   receivedMsg(event: any): void {
     console.log('Получены данные', event.data);
     const data = JSON.parse(event.data);
-    globalStore.addMessage(data);
-    globalStore.setStore('lastMessage', data.content);
+    socketController.setMessage(data);
+    socketController.setLastMessage(data.content);
   }
 
   didError(event: any): void {

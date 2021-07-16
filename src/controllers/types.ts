@@ -51,7 +51,15 @@ export interface ChatsResponse extends Record<string, any> {
   last_message: LastMessage,
 }
 
-export interface ChatUserRequest extends Record<string, any>{
+export interface ChatUserRequest extends Record<string, any> {
   users: number[],
   chatId: number,
+}
+
+export interface SocketMessage {
+  chat_id: number,
+  time: string,
+  type: string,
+  user_id: string,
+  content: string,
 }
