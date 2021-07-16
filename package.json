@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "webpack:serve": "webpack serve",
+    "start": "webpack --config webpack.config.js && node server.js",
     "serve": "node server.js",
     "build": "webpack --mode production",
     "build:dev": "webpack --config webpack.config.js",
