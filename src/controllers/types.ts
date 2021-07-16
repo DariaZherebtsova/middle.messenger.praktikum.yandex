@@ -1,9 +1,9 @@
-export interface SignInRequest {
+export interface SignInRequest extends Record<string, string> {
   email: string;
   password: string;
 }
 
-export interface SignUpRequest{
+export interface SignUpRequest extends Record<string, string> {
   first_name: string;
   second_name: string;
   login: string;
@@ -12,7 +12,7 @@ export interface SignUpRequest{
   phone: string; // Phone /^((8|+7)[- ]?)?((?\d{3})?[- ]?)?[\d- ]{7,10}$/
 }
 
-export interface UserRequest {
+export interface UserRequest extends Record<string, string> {
   first_name: string,
   second_name: string,
   display_name: string,
@@ -21,12 +21,12 @@ export interface UserRequest {
   phone: string
 }
 
-export interface ChangePasswordRequest {
+export interface ChangePasswordRequest extends Record<string, string> {
   oldPassword: string,
   newPassword: string
 }
 
-export interface UserResponse {
+export interface UserResponse extends Record<string, string | number> {
   id: number,
   first_name: string,
   second_name: string,
@@ -37,19 +37,29 @@ export interface UserResponse {
   avatar: string,
 }
 
-export interface ChatsResponse {
+export type LastMessage = {
+  user: UserResponse;
+  time: string, // timestamp
+  content: string,
+} | string;
+
+export interface ChatsResponse extends Record<string, any> {
   id: number,
   title: string,
   avatar: string,
   unread_count: number,
-  last_message: {
-    user: UserResponse;
-    time: string, // timestamp
-    content: string,
-  }
+  last_message: LastMessage,
 }
 
-export interface ChatUserRequest {
+export interface ChatUserRequest extends Record<string, any> {
   users: number[],
   chatId: number,
+}
+
+export interface SocketMessage {
+  chat_id: number,
+  time: string,
+  type: string,
+  user_id: string,
+  content: string,
 }

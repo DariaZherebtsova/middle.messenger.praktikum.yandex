@@ -60,7 +60,7 @@ export function initChatList(parentElSelector:string): СhatList {
 
   globalStoreEventBus.on('flow:something-has-changed', doChangeChatPrewiews);
 
-  function doChangeChatPrewiews(...args) {
+  function doChangeChatPrewiews(...args: any) {
     if (args[0] === 'chats') {
       const newChats = chatController.getDataForChats();
       const previewList = document.querySelector('.chat-list__preview-list');
@@ -90,9 +90,10 @@ export function initChatList(parentElSelector:string): СhatList {
 
   function requestCreateChat(event: Event) {
     event.preventDefault();
-    const chatTitle = chatTitleInput.element.value;
+    const inputEl: HTMLInputElement = <HTMLInputElement>chatTitleInput.element;
+    const chatTitle = inputEl.value;
     chatController.create(chatTitle);
-    chatTitleInput.element.value = '';
+    inputEl.value = '';
     toggleCreateChat();
   }
 

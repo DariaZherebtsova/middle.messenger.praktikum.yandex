@@ -1,12 +1,11 @@
 import Route from './route';
-import { Block } from '../components/block/block';
 
 export default class Router {
   routes: Route[];
 
   history: History;
 
-  _currentRoute: Route;
+  _currentRoute: Route | null;
 
   _rootQuery: string;
 
@@ -25,7 +24,7 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use(pathname:string, block: (rootQuery:string) => Block): Router {
+  use(pathname:string, block: any): Router {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
     this.routes.push(route);
@@ -34,7 +33,7 @@ export default class Router {
   }
 
   start(): void {
-    window.onpopstate = (event => {
+    window.onpopstate = ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
     // eslint-disable-next-line no-extra-bind
     }).bind(this);
@@ -43,19 +42,21 @@ export default class Router {
   }
 
   _onRoute(pathname:string): void {
-    const route = this.getRoute(pathname);
+    let route = this.getRoute(pathname);
 
     if (!route) {
-      return;
+      route = this.getRoute('/404');
     }
 
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 
-    this._currentRoute = route;
+    this._currentRoute = <Route>route;
 
-    route.render();
+    if (route) {
+      route.render();
+    }
   }
 
   go(pathname: string): void {
@@ -71,7 +72,7 @@ export default class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string): Route {
+  getRoute(pathname: string): Route | undefined {
     return this.routes.find(route => route.match(pathname));
   }
 }

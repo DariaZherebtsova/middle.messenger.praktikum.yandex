@@ -3,13 +3,15 @@ import insertInDOM from '../../utils/insertInDOM';
 import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import Button from '../../components/button/button';
-import noImgAvatarLarge from '../../../static/img/ava.JPG';
+// import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { router } from '../../services/router';
 import { userProfileController } from '../../controllers/user-profile';
 import { baseUrl } from '../../api/base-api';
 
-export async function initProfilePage(rootQuery: string): ProfilePage {
+const noImgAvatarLarge = 'img/noImgAvatar-large.png';
+
+export async function initProfilePage(rootQuery: string): Promise<ProfilePage> {
   const storeData = await userProfileController.getUserInfo();
 
   if (storeData === null || storeData === undefined) {
@@ -89,7 +91,7 @@ export async function initProfilePage(rootQuery: string): ProfilePage {
 
   const profileForm = document.getElementById('profile-form');
   if (profileForm) {
-    profileForm.addEventListener('keydown', (event: Event) => {
+    profileForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
@@ -115,7 +117,7 @@ export async function initProfilePage(rootQuery: string): ProfilePage {
     inputs[data.inputs[i].name] = input;
   }
 
-  const avatarInput = document.getElementById('avatar');
+  const avatarInput = <HTMLInputElement>document.getElementById('avatar');
   if (avatarInput) {
     avatarInput.disabled = true;
   }

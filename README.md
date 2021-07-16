@@ -1,5 +1,8 @@
-
 ## Описание
+
+##### sprint 4
+
+Настроила Webpack, настроила Husky precommit, провела аудит пакетов, собрала Docker контейнер и задеплоила его в Heroku.
 
 ##### sprint 3
 
@@ -20,9 +23,13 @@
 ## Установка
 
 - `npm install` — установка
-- `npm run build` — сборка
-- `npm run serve` — запуск dev-сервера
-- `npm run start` — сборка и запуск dev-сервера
+- `npm run build:dev` — development-сборка
+- `npm run webpack:serve` - запуск webpack dev-сервера
+- `npm run serve` — запуск express dev-сервера
+
+#### Тесты
+
+- `npm run test`
 
 #### Линтинг
 

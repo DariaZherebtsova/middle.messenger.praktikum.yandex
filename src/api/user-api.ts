@@ -1,10 +1,10 @@
 import { HTTPrequest } from '../utils/HTTPrequest';
-import { BaseAPI, baseUrl } from './base-api';
+import { baseUrl } from './base-api';
 import { UserRequest, ChangePasswordRequest } from '../controllers/types';
 
 const userAPIInstance = new HTTPrequest(`${baseUrl}/user`);
 
-export default class UserAPI extends BaseAPI {
+export default class UserAPI {
   public profile(user: UserRequest): Promise<string> {
     const options = {
       data: user,
