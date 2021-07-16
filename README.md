@@ -36,6 +36,10 @@
 - `npm run eslint`
 - `npm run stylelint`
 
+## Деплой в Heroku
+
+https://fathomless-reaches-22735.herokuapp.com/
+
 ## Деплой с Netlify
 
 https://keen-snyder-c66cf5.netlify.app/
