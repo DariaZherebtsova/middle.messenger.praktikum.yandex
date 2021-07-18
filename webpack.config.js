@@ -51,6 +51,15 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(woff|woff2)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'fonts',
+          },
+        },
+      },
     ],
   },
   plugins: [
@@ -62,6 +71,10 @@ module.exports = {
         {
           from: 'static/img',
           to: './img',
+        },
+        {
+          from: 'static/fonts',
+          to: './fonts',
         },
         {
           from: 'favicon.ico',

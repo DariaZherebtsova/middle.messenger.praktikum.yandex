@@ -7,6 +7,7 @@ import { initProfileEditDataPage } from '../pages/profileEditData/index';
 import { initProfileEditPasswordPage } from '../pages/profileEditPassword/index';
 import { initError404Page, initError500Page } from '../pages/errorPages/index';
 
+import '../scss/font.scss';
 import '../pages/chat/chat.scss';
 import '../layouts/profile/profile.scss';
 import '../layouts/loginForm/loginForm.scss';
