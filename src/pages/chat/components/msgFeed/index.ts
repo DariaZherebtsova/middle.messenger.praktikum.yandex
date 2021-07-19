@@ -60,18 +60,16 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   const msgFeed = new MsgFeed(data);
   insertInDOM(parentElSelector, msgFeed);
 
-  if (!data.currentChat) {
-    msgFeed.element.classList.add('empty');
-    msgFeed.element.textContent = 'Выберите чат чтобы отправить сообщение';
-    return msgFeed;
-  }
   msgFeed.element.classList.remove('empty');
   msgFeed.props.firstRender = false;
+  console.log('data.currentChat', data.currentChat);
 
-  const params: WebSocketInitData = await chatController.getParamsForWebSoket();
-  let webSocketService = new WebSocketService(...params);
+  const params: WebSocketInitData | null = data.currentChat
+    ? await chatController.getParamsForWebSoket()
+    : null;
+  let webSocketService = params ? new WebSocketService(...params) : null;
 
-  const chatTitle = new ChatTitle(data.currentChat);
+  const chatTitle = new ChatTitle(data.currentChat || {});
   insertInDOM('.msg-feed__header', chatTitle);
 
   const msgContainer = new MsgContainer(data.msgContainer);
@@ -89,7 +87,6 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   msgFeed.updateChat = async function updateChat(newCurrentChat) {
     chatTitle.props.title = newCurrentChat.title;
     chatTitle.props.avatar = newCurrentChat.avatar;
-    // chatController.setMessages()
     const newParams: WebSocketInitData = await chatController.getParamsForWebSoket();
     webSocketService = new WebSocketService(...newParams);
   };
@@ -150,7 +147,9 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
       content: inputEl.value,
       type: 'message',
     };
-    webSocketService.send(msg);
+    if (webSocketService) {
+      webSocketService.send(msg);
+    }
     inputEl.value = '';
   }
 

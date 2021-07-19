@@ -2,7 +2,7 @@ import ChatPreview from './chatPreview';
 import { chatController } from '../../../../controllers/chats';
 import { ChatsResponse } from '../../../../controllers/types';
 
-export function initChatPreview(props: Record<string, any>): ChatPreview {
+export function initChatPreview(props: Record<string, unknown>): ChatPreview {
   const data = {
     ...props,
     events: {

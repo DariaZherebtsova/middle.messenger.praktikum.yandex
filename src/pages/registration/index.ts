@@ -50,13 +50,13 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
         label: 'Пароль',
         name: 'password',
         type: 'password',
-        value: '12344321',
+        value: '',
       },
       {
         label: 'Пароль (ещё раз)',
         name: 'passwordRepeat',
         type: 'password',
-        value: '12344321',
+        value: '',
       },
     ],
     button: {

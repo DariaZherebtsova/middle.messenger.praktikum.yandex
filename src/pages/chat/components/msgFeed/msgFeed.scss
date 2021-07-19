@@ -39,8 +39,9 @@
 }
 
 .msg-feed__feed {
-  height: 100%;
+  height: 84%;
   padding: 10px;
+  overflow: auto;
 }
 
 .msg-feed__date {

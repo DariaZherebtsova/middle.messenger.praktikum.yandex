@@ -70,5 +70,6 @@ export default class Store {
       lastMessage: null,
     };
     this._globalStore = this._makePropsProxy(initProps);
+    this.eventBus().listeners = {};
   }
 }

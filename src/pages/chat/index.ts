@@ -20,20 +20,18 @@ export async function initChatPage(rootQuery:string): Promise<ChatPage> {
   initChatList('.chat-page-wrapper');
 
   // создаем msgFeed
-  let msgFeed = await initMsgFeed('.chat-page-wrapper');
+  const msgFeed = await initMsgFeed('.chat-page-wrapper');
+  msgFeed.hide();
 
   // подписываемся на изменение currentChat
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
 
   async function doChangeMsgFeed(...args: any) {
     if (args[0] === 'currentChat') {
+      console.log('---change currentChat');
       const newCurrentChat = chatController.getCurrentChat();
-      if (msgFeed.props.firstRender) {
-        msgFeed.element.remove();
-        msgFeed = await initMsgFeed('.chat-page-wrapper');
-      } else {
-        msgFeed.updateChat(newCurrentChat);
-      }
+      msgFeed.updateChat(newCurrentChat);
+      msgFeed.show();
     }
   }
 

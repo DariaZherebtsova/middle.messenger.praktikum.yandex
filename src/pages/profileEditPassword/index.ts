@@ -28,19 +28,19 @@ export async function initProfileEditPasswordPage(rootQuery: string): Promise<Pr
         label: 'Старый пароль',
         name: 'oldPassword',
         type: 'password',
-        value: '12345678',
+        value: '',
       },
       {
         label: 'Новый пароль',
         name: 'newPassword',
         type: 'password',
-        value: '1q2w3e4r',
+        value: '',
       },
       {
         label: 'Повторите новый пароль',
         name: 'newPasswordRepeat',
         type: 'password',
-        value: '1q2w3e4r',
+        value: '',
       },
     ],
     button: {

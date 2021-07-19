@@ -25,7 +25,7 @@ export function initAuthorizationPage(rootQuery:string): AuthorizationPage {
         label: 'Пароль',
         name: 'password',
         type: 'password',
-        value: '1q2w3e4r',
+        value: '',
       },
     ],
     button: {
