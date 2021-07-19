@@ -28,7 +28,6 @@ export async function initChatPage(rootQuery:string): Promise<ChatPage> {
 
   async function doChangeMsgFeed(...args: any) {
     if (args[0] === 'currentChat') {
-      console.log('---change currentChat');
       const newCurrentChat = chatController.getCurrentChat();
       msgFeed.updateChat(newCurrentChat);
       msgFeed.show();

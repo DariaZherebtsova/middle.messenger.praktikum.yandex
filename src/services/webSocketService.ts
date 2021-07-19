@@ -15,7 +15,6 @@ export class WebSocketService {
   _socket: WebSocket;
 
   constructor(userId: number, chatId: number, token: string) {
-    console.log(`--new WebSocket ${userId}/${chatId}`);
     const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
     this._socket = socket;
 

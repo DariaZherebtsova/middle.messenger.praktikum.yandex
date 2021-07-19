@@ -3,7 +3,7 @@ import { Block } from '../../../../components/block/block';
 import { dropdownTmpl } from './dropdown.hbs';
 
 export default class Dropdown extends Block {
-  constructor(props: Record<string, any>) {
+  constructor(props: Record<string, unknown>) {
     if (!props.wrapperClass) {
       // eslint-disable-next-line no-param-reassign
       props.wrapperClass = 'dropdown-box';

@@ -5,7 +5,7 @@ import { chatTitleTmpl } from './chatTitle.hbs';
 const noImgAvatar = 'img/no_img_circle.svg';
 
 export default class ChatTitle extends Block {
-  constructor(props: Record<string, any>) {
+  constructor(props: Record<string, unknown>) {
     // eslint-disable-next-line no-param-reassign
     props.wrapperClass = 'chat-title';
     if (!props.avatar) {

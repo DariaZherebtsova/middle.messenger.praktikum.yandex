@@ -38,7 +38,7 @@
 
 ## Деплой в Heroku
 
-https://fathomless-reaches-22735.herokuapp.com/
+https://sheltered-reef-45553.herokuapp.com/
 
 ## Деплой с Netlify
 

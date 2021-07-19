@@ -3,7 +3,6 @@ import insertInDOM from '../../utils/insertInDOM';
 import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import Button from '../../components/button/button';
-// import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { router } from '../../services/router';
 import { userProfileController } from '../../controllers/user-profile';

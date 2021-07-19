@@ -62,7 +62,6 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   msgFeed.element.classList.remove('empty');
   msgFeed.props.firstRender = false;
-  console.log('data.currentChat', data.currentChat);
 
   const params: WebSocketInitData | null = data.currentChat
     ? await chatController.getParamsForWebSoket()

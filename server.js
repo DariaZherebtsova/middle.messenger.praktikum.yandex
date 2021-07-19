@@ -1,6 +1,6 @@
 const history = require('connect-history-api-fallback');
 const express = require('express');
-const helmet = require("helmet");
+const helmet = require('helmet');
 
 const app = express();
 
@@ -17,13 +17,11 @@ app.use(
   }),
 );
 
-app.use(history({
-  verbose: true,
-}));
+app.use(history());
 
-const PORT = 3000;
-app.use("/", express.static(__dirname +'/dist'));
+const PORT = process.env.PORT || 3000;
+app.use('/', express.static(__dirname +'/dist'));
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(`Start on port ${PORT}!`);
 });
