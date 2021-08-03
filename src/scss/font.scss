@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../static/fonts/source-sans-pro-v14-latin_cyrillic-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', serif;
+}

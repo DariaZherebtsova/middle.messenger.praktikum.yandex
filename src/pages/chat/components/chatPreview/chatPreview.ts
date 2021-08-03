@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from 'handlebars/dist/cjs/handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatPreviewTmpl } from './chatPreview.hbs';
 import { TProps } from '../../../../components/block/block.type';
@@ -19,6 +19,6 @@ export default class ChatPreview extends Block {
   }
 
   get chatInfo(): TProps {
-    return this._meta.props;
+    return this.meta.props;
   }
 }

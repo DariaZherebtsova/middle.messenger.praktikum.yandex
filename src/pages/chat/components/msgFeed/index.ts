@@ -6,7 +6,7 @@ import { initModal } from '../modal/index';
 import { chatController } from '../../../../controllers/chats';
 import ChatTitle from '../chatTitle/chatTitle';
 import { initDropdown } from '../dropdown/index';
-import WebSocketService from '../../../../services/webSocketService';
+import { WebSocketInitData, WebSocketService } from '../../../../services/webSocketService';
 import MsgContainer from '../msgContainer/msgContainer';
 import { globalStoreEventBus } from '../../../../store/globalStore';
 
@@ -60,18 +60,15 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   const msgFeed = new MsgFeed(data);
   insertInDOM(parentElSelector, msgFeed);
 
-  if (!data.currentChat) {
-    msgFeed.element.classList.add('empty');
-    msgFeed.element.textContent = 'Выберите чат чтобы отправить сообщение';
-    return msgFeed;
-  }
   msgFeed.element.classList.remove('empty');
   msgFeed.props.firstRender = false;
 
-  const params = await chatController.getParamsForWebSoket();
-  let webSocketService = new WebSocketService(...params);
+  const params: WebSocketInitData | null = data.currentChat
+    ? await chatController.getParamsForWebSoket()
+    : null;
+  let webSocketService = params ? new WebSocketService(...params) : null;
 
-  const chatTitle = new ChatTitle(data.currentChat);
+  const chatTitle = new ChatTitle(data.currentChat || {});
   insertInDOM('.msg-feed__header', chatTitle);
 
   const msgContainer = new MsgContainer(data.msgContainer);
@@ -79,7 +76,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   // подписываемся на изменение lastMessage
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
-  async function doChangeMsgFeed(...args) {
+  async function doChangeMsgFeed(...args: any) {
     if (args[0] === 'lastMessage') {
       const msgList = chatController.getMessages();
       msgContainer.props.messages = msgList;
@@ -89,8 +86,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   msgFeed.updateChat = async function updateChat(newCurrentChat) {
     chatTitle.props.title = newCurrentChat.title;
     chatTitle.props.avatar = newCurrentChat.avatar;
-    // chatController.setMessages()
-    const newParams = await chatController.getParamsForWebSoket();
+    const newParams: WebSocketInitData = await chatController.getParamsForWebSoket();
     webSocketService = new WebSocketService(...newParams);
   };
 
@@ -104,7 +100,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   function openMenu(event: Event) {
     event.preventDefault();
-    const dropdownEl = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    const dropdownEl = <HTMLElement>document.getElementsByClassName('msg-feed__dropdown-box')[0];
     if (openMenuBtn.props.open) {
       dropdownEl.style.display = 'none';
       openMenuBtn.props.open = false;
@@ -116,7 +112,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   function showModal(event: Event) {
     event.preventDefault();
-    const dropdown = document.getElementsByClassName('msg-feed__dropdown-box')[0];
+    const dropdown = <HTMLElement>document.getElementsByClassName('msg-feed__dropdown-box')[0];
     dropdown.style.display = 'none';
     openMenuBtn.props.open = false;
     modal.show();
@@ -136,7 +132,7 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
 
   const sendMsgForm: HTMLFormElement | null = <HTMLFormElement>document.getElementById('send-msg-form');
   if (sendMsgForm) {
-    sendMsgForm.addEventListener('keydown', (event: Event) => {
+    sendMsgForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
         sendMsg();
@@ -145,12 +141,15 @@ export async function initMsgFeed(parentElSelector:string): Promise<MsgFeed> {
   }
 
   function sendMsg() {
+    const inputEl: HTMLInputElement = <HTMLInputElement>msgInput.element;
     const msg = {
-      content: msgInput.element.value,
+      content: inputEl.value,
       type: 'message',
     };
-    webSocketService.send(msg);
-    msgInput.element.value = '';
+    if (webSocketService) {
+      webSocketService.send(msg);
+    }
+    inputEl.value = '';
   }
 
   function submit(event: Event) {

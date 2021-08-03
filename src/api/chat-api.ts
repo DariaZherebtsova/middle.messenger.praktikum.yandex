@@ -1,10 +1,10 @@
 import { HTTPrequest } from '../utils/HTTPrequest';
-import { BaseAPI, baseUrl } from './base-api';
+import { baseUrl } from './base-api';
 import { ChatUserRequest } from '../controllers/types';
 
 const chatAPIInstance = new HTTPrequest(`${baseUrl}/chats`);
 
-export default class ChatAPI extends BaseAPI {
+export default class ChatAPI {
   get(): Promise<any> {
     return chatAPIInstance.get('/')
       .then((response) => response);

@@ -7,7 +7,7 @@ import { globalStoreEventBus } from '../../store/globalStore';
 import { initChatList } from './components/chatList';
 import { initMsgFeed } from './components/msgFeed';
 
-export async function initChatPage(rootQuery:string): ChatPage {
+export async function initChatPage(rootQuery:string): Promise<ChatPage> {
   // запрашиваем список чатов
   chatController.get();
   //  и информацию о пользователе
@@ -20,20 +20,17 @@ export async function initChatPage(rootQuery:string): ChatPage {
   initChatList('.chat-page-wrapper');
 
   // создаем msgFeed
-  let msgFeed = await initMsgFeed('.chat-page-wrapper');
+  const msgFeed = await initMsgFeed('.chat-page-wrapper');
+  msgFeed.hide();
 
   // подписываемся на изменение currentChat
   globalStoreEventBus.on('flow:something-has-changed', doChangeMsgFeed);
 
-  async function doChangeMsgFeed(...args) {
+  async function doChangeMsgFeed(...args: any) {
     if (args[0] === 'currentChat') {
       const newCurrentChat = chatController.getCurrentChat();
-      if (msgFeed.props.firstRender) {
-        msgFeed.element.remove();
-        msgFeed = await initMsgFeed('.chat-page-wrapper');
-      } else {
-        msgFeed.updateChat(newCurrentChat);
-      }
+      msgFeed.updateChat(newCurrentChat);
+      msgFeed.show();
     }
   }
 

@@ -4,14 +4,15 @@ import InputWithLabel from '../../components/inputWithLabel/inputWithLabel';
 import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 import { validate } from '../../utils/validate/index';
 import Button from '../../components/button/button';
-import noImgAvatarLarge from '../../../static/img/noImgAvatar-large.png';
 import { TProps } from '../../components/block/block.type';
 import { userProfileController } from '../../controllers/user-profile';
 import { router } from '../../services/router';
 import { baseUrl } from '../../api/base-api';
 import { globalStoreEventBus } from '../../store/globalStore';
 
-export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
+const noImgAvatarLarge = 'img/noImgAvatar-large.png';
+
+export async function initProfileEditDataPage(rootQuery: string): Promise<ProfileEditDataPage> {
   const storeData = await userProfileController.getUserInfo();
 
   if (storeData === null || storeData === undefined) {
@@ -86,7 +87,7 @@ export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
 
   const profileForm = document.getElementById('profile-form');
   if (profileForm) {
-    profileForm.addEventListener('keydown', (event: Event) => {
+    profileForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
@@ -119,7 +120,7 @@ export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
   insertInDOM('.submit-btn-box', submitBtn);
 
   function onBlur(event: Event) {
-    const inputEl: HTMLElement | null = <HTMLElement>event.target;
+    const inputEl: HTMLInputElement | null = <HTMLInputElement>event.target;
     if (inputEl === null) {
       return;
     }
@@ -146,7 +147,7 @@ export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
 
   const avatarForm = document.getElementById('profile-avatar');
   const avatarInput = document.getElementById('avatar');
-  const avatarImg = avatarForm.getElementsByClassName('avatar-img')[0];
+  const avatarImg = avatarForm ? avatarForm.getElementsByClassName('avatar-img')[0] : null;
   if (avatarInput) {
     avatarInput.addEventListener('change', changeAvatar);
     const avatarLabel = document.getElementsByClassName('avatar-label')[0];
@@ -157,15 +158,17 @@ export async function initProfileEditDataPage(rootQuery: string): ProfilePage {
 
   async function changeAvatar() {
     const form = new FormData(<HTMLFormElement>avatarForm);
-    const result = await userProfileController.profileAvatar(form);
+    await userProfileController.profileAvatar(form);
   }
 
   // подписываемся на изменение avatar
   globalStoreEventBus.on('flow:something-has-changed', doChangeAvatar);
-  async function doChangeAvatar(...args) {
+  async function doChangeAvatar(...args: any) {
     if (args[0] === 'avatar') {
       const newAvatar = userProfileController.getAvatar();
-      avatarImg.setAttribute('src', `${baseUrl}/resources${newAvatar}`);
+      if (avatarImg) {
+        avatarImg.setAttribute('src', `${baseUrl}/resources${newAvatar}`);
+      }
     }
   }
 

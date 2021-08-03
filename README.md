@@ -2,6 +2,10 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/15
 
 ## Описание
 
+##### sprint 4
+
+Настроила Webpack, настроила Husky precommit, провела аудит пакетов, собрала Docker контейнер и задеплоила его в Heroku.
+
 ##### sprint 3
 
 Добавила роутинг, внедрила API, подключила WebSocket, написала немножко тестов.
@@ -21,9 +25,9 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/15
 ## Установка
 
 - `npm install` — установка
-- `npm run build` — сборка
-- `npm run serve` — запуск dev-сервера
-- `npm run start` — сборка и запуск dev-сервера
+- `npm run build:dev` — development-сборка
+- `npm run webpack:serve` - запуск webpack dev-сервера
+- `npm run serve` — запуск express dev-сервера
 
 #### Тесты
 
@@ -33,6 +37,10 @@ https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/15
 
 - `npm run eslint`
 - `npm run stylelint`
+
+## Деплой в Heroku
+
+https://sheltered-reef-45553.herokuapp.com/
 
 ## Деплой с Netlify
 

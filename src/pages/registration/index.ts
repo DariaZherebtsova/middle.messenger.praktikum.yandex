@@ -50,13 +50,13 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
         label: 'Пароль',
         name: 'password',
         type: 'password',
-        value: '12344321',
+        value: '',
       },
       {
         label: 'Пароль (ещё раз)',
         name: 'passwordRepeat',
         type: 'password',
-        value: '12344321',
+        value: '',
       },
     ],
     button: {
@@ -83,7 +83,7 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
 
   const loginForm = document.getElementById('loginForm');
   if (loginForm) {
-    loginForm.addEventListener('keydown', (event: Event) => {
+    loginForm.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.code === 'Enter') {
         event.preventDefault();
       }
@@ -109,7 +109,7 @@ export function initRegistrationPage(rootQuery:string): RegistrationPage {
   insertInDOM('.login-form__button-box', button);
 
   function onBlur(event: Event) {
-    const inputEl: HTMLElement | null = <HTMLElement>event.target;
+    const inputEl: HTMLInputElement | null = <HTMLInputElement>event.target;
     if (inputEl === null) {
       return;
     }

@@ -16,7 +16,7 @@ export class Block implements IBlock {
 
   private _element: HTMLElement = document.createElement('div');
 
-  private _meta: Meta = <Meta>{};
+  protected meta: Meta = <Meta>{};
 
   public props: TProps = <TProps>{};
 
@@ -30,7 +30,7 @@ export class Block implements IBlock {
    */
   constructor(tagName = 'div', props = <TProps>{}) {
     const eventBus = new EventBus();
-    this._meta = {
+    this.meta = {
       tagName,
       props,
     };
@@ -72,7 +72,7 @@ export class Block implements IBlock {
   }
 
   private _createResources(): void {
-    const { tagName } = this._meta;
+    const { tagName } = this.meta;
     this._element = this._createDocumentElement(tagName);
     if (this.props.wrapperClass) {
       this._element.classList.add(this.props.wrapperClass);
@@ -106,7 +106,7 @@ export class Block implements IBlock {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
+  public componentDidUpdate(_oldProps: TProps, _newProps: TProps): boolean {
     return true;
   }
 
@@ -154,7 +154,7 @@ export class Block implements IBlock {
       set(target, prop: string, value) {
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
-        
+
         // Запускаем обновление компоненты
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;

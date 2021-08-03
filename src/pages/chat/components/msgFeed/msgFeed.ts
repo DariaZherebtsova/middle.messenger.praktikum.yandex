@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from 'handlebars/dist/cjs/handlebars';
 import { Block } from '../../../../components/block/block';
 import { msgFeedTmpl } from './msgFeed.hbs';
 import { TProps } from '../../../../components/block/block.type';
@@ -15,9 +15,10 @@ export default class MsgFeed extends Block {
 
   render(): string {
     const hbsTemplateFn = Handlebars.compile(msgFeedTmpl);
-    const htmlStr = hbsTemplateFn(this._meta.props);
+    const htmlStr = hbsTemplateFn(this.meta.props);
     return htmlStr;
   }
 
-  updateChat(newCurrentChat: ChatsResponse): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateChat(_newCurrentChat: ChatsResponse): void {}
 }

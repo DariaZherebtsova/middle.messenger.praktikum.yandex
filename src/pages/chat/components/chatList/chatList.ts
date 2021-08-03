@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from 'handlebars/dist/cjs/handlebars';
 import { Block } from '../../../../components/block/block';
 import { chatListTmpl } from './chatList.hbs';
 import { TProps } from '../../../../components/block/block.type';
@@ -19,5 +19,6 @@ export default class СhatList extends Block {
     return htmlStr;
   }
 
-  renderChatPrewiews(chats: Array<ChatsResponse>): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  renderChatPrewiews(_chats: Array<ChatsResponse>): void {}
 }

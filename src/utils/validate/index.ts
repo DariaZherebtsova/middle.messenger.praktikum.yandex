@@ -6,10 +6,10 @@ import validateName from './name';
 import validatePhone from './phone';
 import validatePassword from './password';
 import validateNumber from './number';
-import { IInputBlock } from '../../components/pureInput/inputs.type';
+import { IInputBlock } from '../../components/inputWithLabel/inputWithLabel.type';
 
 export function validate(value: string, type: string): ValidationResult {
-  const validateRule = {
+  const validateRule: Record<string, (val: string) => ValidationResult> = {
     required: requred,
     login: validateLogin,
     password: validatePassword,
@@ -33,13 +33,15 @@ export function validateAllInputs(inputs: IInputBlock[]): boolean {
   let result = true;
   inputs.forEach((item) => {
     const resultValidate = validate(item.inputElement.value, item.props.validateRule);
+    const errMsgEl = item.getElementForErrorMessage();
     if (!resultValidate.valid) {
       // eslint-disable-next-line no-param-reassign
-      item.getElementForErrorMessage().textContent = resultValidate.message;
+      if (errMsgEl) {
+        errMsgEl.textContent = resultValidate.message;
+      }
       result = false;
-    } else {
-      // eslint-disable-next-line no-param-reassign
-      item.getElementForErrorMessage().textContent = '';
+    } else if (errMsgEl) {
+      errMsgEl.textContent = '';
     }
   });
   return result;
