@@ -1,4 +1,4 @@
-https://github.com/DariaZherebtsova/middle.messenger.praktikum.yandex/pull/15
+учебный проект на JS, чтобы понять, что у React под капотом
 
 ## Описание
 
